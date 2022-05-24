@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import AccountPopover from '../dashboard/AccountPopover';
+import { PATH_DASHBOARD, PATH_PAGE, PATH_AUTH } from '../../routes/paths';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -36,12 +37,17 @@ export default function Navbar() {
         <div className={open ? 'show-navbar navbar-collapse' : 'collapse navbar-collapse'} id="navbarSupportedContent">
           <ul className="navbar-nav justify-content-end w-100">
             <li className="nav-item ">
-              <Link className="nav-link" to="/about">
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item ">
+              <Link className="nav-link" to={PATH_PAGE.about}>
                 About
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/faqs">
+              <Link className="nav-link" to={PATH_PAGE.faqs}>
                 Faqs
               </Link>
             </li>
@@ -52,8 +58,13 @@ export default function Navbar() {
 
           <ul className="navbar-nav justify-content-start w-100">
             <li className="nav-item ">
-              <Link className="nav-link" to="/marketplace">
+              <Link className="nav-link" to={PATH_PAGE.marketplace}>
                 Marketplace
+              </Link>
+            </li>
+            <li className="nav-item ">
+              <Link className="nav-link" to={PATH_PAGE.contact}>
+                Contact us
               </Link>
             </li>
             {auth ? (

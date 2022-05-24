@@ -129,20 +129,12 @@ export default function Users() {
   const isInvestmentNotFound = filteredInvestment.length === 0;
 
   return (
-    <Page title="users">
+    <Page title="All users">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            users
+            All users
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/marketplace"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            Marketplace
-          </Button>
         </Stack>
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />

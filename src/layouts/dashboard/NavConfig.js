@@ -14,17 +14,17 @@ const navConfig = [
   {
     title: 'investment',
     path: '/dashboard/investment',
-    icon: getIcon('fa6-solid:money-bill-trend-up'),
+    icon: getIcon('fluent:person-money-20-filled'),
   },
   {
     title: 'withdrawal',
     path: '/dashboard/withdrawal',
-    icon: getIcon('uil:money-withdraw'),
+    icon: getIcon('fa6-solid:money-check-dollar'),
   },
   {
     title: 'Account details',
     path: '/dashboard/account-details',
-    icon: getIcon('healthicons:ui-user-profile-outline'),
+    icon: getIcon('fluent:person-16-filled'),
   },
 ];
 

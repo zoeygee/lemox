@@ -22,8 +22,9 @@ export const PATH_AUTH = {
 
 export const PATH_PAGE = {
   about: '/about',
-  contact: '/contact-us',
   marketplace: '/marketplace',
+  termsOfService: '/terms-of-service',
+  contact: '/contact',
   faqs: '/faqs',
   page404: '/404',
   page500: '/500',

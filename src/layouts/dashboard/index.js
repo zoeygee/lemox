@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import jwt from 'jwt-decode';
 // material
 import { styled } from '@mui/material/styles';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
+import { PATH_AUTH } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +36,22 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
   const auth = JSON.parse(localStorage.getItem('profile'));
+
+  useEffect(() => {
+    const { token } = auth;
+    // JWT check if token expired
+    if (token) {
+      const decodedToken = jwt(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        localStorage.clear();
+        navigate(PATH_AUTH.login);
+      }
+    }
+  }, [navigate]);
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} auth={auth} />

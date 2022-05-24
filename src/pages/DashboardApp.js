@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import _ from 'lodash';
+import jwt from 'jwt-decode';
 // @mui
 import { Grid, Container, Typography, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
@@ -26,16 +28,10 @@ export default function DashboardApp() {
   useEffect(() => {
     dispatch(getInvestments());
   }, [dispatch]);
-  const { investments, isLoading, investment } = useSelector((state) => state.data);
-  console.log(investment);
-  const totalInvestment = 0;
 
-  // const sumAllInvestment = investments
-  //   .map((i) => i?.charge?.pricing?.local?.amount)
-  //   .reduce((investment, amount) => investment + amount, 0);
-  // const sumAllInvestment = investments.reduce((e, i) => e + i?.charge?.pricing?.local?.amount, 0);
-  // console.log(sumAllInvestment);
-  // console.log(sumAllInvestment);
+  const { investments, isLoading, investment } = useSelector((state) => state.data);
+  const totalInvestment = investments.reduce((e, i) => e + i?.amount, 0);
+
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
@@ -53,13 +49,13 @@ export default function DashboardApp() {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppMiniCard title="Total investment" total={0.0} icon={'bxl:bitcoin'} />
+            <AppMiniCard title="Total investment" total={totalInvestment} icon={'bxs:badge-dollar'} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppMiniCard title="Earnings" total={0.0} icon={'bxl:bitcoin'} />
+            <AppMiniCard title="Earnings" total={0.0} icon={'bxs:badge-dollar'} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppMiniCard title="Available balance" total={0.0} icon={'bxl:bitcoin'} />
+            <AppMiniCard title="Available balance" total={0.0} icon={'bxs:badge-dollar'} />
           </Grid>
           <Grid item xs={12} md={6} lg={8}>
             {!investments.length || isLoading ? (

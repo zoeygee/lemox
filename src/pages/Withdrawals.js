@@ -27,7 +27,7 @@ import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserMoreMenu } from '../sections/@dashboard/user';
 
-import { getProperties ,getAllWithdrwals} from '../redux/actions/data';
+import { getProperties, getAllWithdrwals } from '../redux/actions/data';
 import { fCurrency, fPercent } from '../utils/formatNumber';
 import WithdrawalForm from '../components/WithdrawalForm';
 
@@ -73,17 +73,17 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Withdrawal() {
+export default function Withdrawals() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProperties());
   }, [dispatch]);
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(getAllWithdrwals());
-  },[dispatch])
+  }, [dispatch]);
 
   const { properties, withdrawals } = useSelector((state) => state.data);
-  console.log(withdrawals)
+  console.log(withdrawals);
 
   const [page, setPage] = useState(0);
 
