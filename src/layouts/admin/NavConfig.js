@@ -12,13 +12,13 @@ const navConfig = [
     icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
-    title: 'investment',
-    path: '/dashboard/investment',
+    title: 'all investment',
+    path: '/admin/investments',
     icon: getIcon('fluent:person-money-20-filled'),
   },
   {
-    title: 'withdrawal',
-    path: '/dashboard/withdrawal',
+    title: 'withdrawals',
+    path: '/admin/withdrawals',
     icon: getIcon('fa6-solid:money-check-dollar'),
   },
   {

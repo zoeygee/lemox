@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import _ from 'lodash';
 import jwt from 'jwt-decode';
 // @mui
-import { Grid, Container, Typography, Link } from '@mui/material';
+import { Grid, Container, Typography, Link, Stack, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // components
@@ -11,12 +11,12 @@ import Iconify from '../components/Iconify';
 // sections
 import { AppRecent, AppMiniCard } from '../sections/@dashboard/app';
 import { getInvestments, getUpdatedInvestment, getSingleInvestment } from '../redux/actions/data';
-import { PATH_DASHBOARD } from '../routes/paths';
+import { PATH_DASHBOARD, PATH_PAGE } from '../routes/paths';
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   const dispatch = useDispatch();
-  const investmentId = '6296548a7871019c092d0825';
+  const investmentId = '628d19ff2d27cee3aea0a4aa';
   useEffect(() => {
     dispatch(getUpdatedInvestment(investmentId));
   }, [dispatch]);
@@ -59,7 +59,14 @@ export default function DashboardApp() {
           </Grid>
           <Grid item xs={12} md={6} lg={8}>
             {!investments.length || isLoading ? (
-              <h4>Loading...</h4>
+              <Stack sx={{ mt: 5 }}>
+                <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                  You currently do not have an investment on this platform
+                </Typography>
+                <Button component={RouterLink} to={PATH_PAGE.marketplace}>
+                  visit the marketplace
+                </Button>
+              </Stack>
             ) : (
               <AppRecent
                 title="Recent investments"

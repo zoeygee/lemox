@@ -26,6 +26,11 @@ const navConfig = [
     path: '/dashboard/account-details',
     icon: getIcon('fluent:person-16-filled'),
   },
+  {
+    title: 'ID Verification',
+    path: '/dashboard/id-verification',
+    icon: getIcon('fluent:person-16-filled'),
+  },
 ];
 
 export default navConfig;

@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import * as api from '../api';
 import * as actions from './actionTypes';
 
@@ -108,10 +109,10 @@ export const getAllWithdrwals = () => async (dispatch) => {
   }
 };
 
-export const getSingleWithdrawal = () => async (dispatch) => {
+export const getSingleWithdrawal = (id) => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });
-    const { data } = await api.getSingleWithdrawal();
+    const { data } = await api.getSingleWithdrawal(id);
     dispatch({ type: actions.GET_WITHDRAWAL, payload: data });
     dispatch({ type: actions.END_LOADING });
   } catch (error) {
@@ -132,6 +133,19 @@ export const getUsers = () => async (dispatch) => {
   }
 };
 
+export const editUser = (id, values) => async (dispatch) => {
+  try {
+    const { data } = await api.updateProfile(id, values);
+    dispatch({ type: actions.UPDATE_USER, payload: data });
+
+    toast.success('Success', { duration: 5000 });
+  } catch (error) {
+    console.log(error);
+
+    toast.success('Error', { duration: 5000 });
+  }
+};
+
 export const getUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });
@@ -149,6 +163,42 @@ export const getStaticInvestments = () => async (dispatch) => {
     dispatch({ type: actions.START_LOADING });
     const { data } = await api.fetchStaticInvestments();
     dispatch({ type: actions.STATIC_INVESTMENTS, payload: data });
+    console.log(data);
+    dispatch({ type: actions.END_LOADING });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: actions.END_LOADING });
+  }
+};
+export const verifyUser = (values) => async (dispatch) => {
+  try {
+    dispatch({ type: actions.START_LOADING });
+    const { data } = await api.fetchStaticInvestments(values);
+    dispatch({ type: actions.STATIC_INVESTMENTS, payload: data });
+    console.log(data);
+    dispatch({ type: actions.END_LOADING });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: actions.END_LOADING });
+  }
+};
+export const getIdentity = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: actions.START_LOADING });
+    const { data } = await api.fetchIdentity(id);
+    dispatch({ type: actions.GET_IDENTITY, payload: data });
+    console.log(data);
+    dispatch({ type: actions.END_LOADING });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: actions.END_LOADING });
+  }
+};
+export const getIdentites = () => async (dispatch) => {
+  try {
+    dispatch({ type: actions.START_LOADING });
+    const { data } = await api.fetchIdentities();
+    dispatch({ type: actions.GET_IDENTITIES, payload: data });
     console.log(data);
     dispatch({ type: actions.END_LOADING });
   } catch (error) {

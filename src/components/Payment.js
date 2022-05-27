@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import {
   Button,
   Stack,
@@ -12,6 +13,7 @@ import {
   Typography,
   InputAdornment,
 } from '@mui/material';
+import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
@@ -19,6 +21,7 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import * as Yup from 'yup';
 import { createInvestment } from '../redux/actions/data';
 import { fCurrency } from '../utils/formatNumber';
+import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 
 Payment.propType = {
   property: PropTypes.object,
@@ -48,10 +51,9 @@ export default function Payment({ property, user }) {
     validationSchema: paymentSchema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
       dispatch(createInvestment({ ...values, property, title: property?.title }, setSubmitting, setCharge));
-      if (charge && charge.hosted_url) {
-        console.log(charge);
-        return window.open(charge.hosted_url);
-      }
+
+      // return window.open(charge.hosted_url, '_blank', 'noopener,noreferrer');
+
       console.log(values);
       resetForm();
     },
@@ -104,9 +106,42 @@ export default function Payment({ property, user }) {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <LoadingButton loading={isSubmitting} type="submit" onClick={handleSubmit}>
+              <Button type="submit" onClick={handleSubmit}>
                 Invest
-              </LoadingButton>
+              </Button>
+              <CoinbaseCommerceButton
+                chargeId={charge.code}
+                onChargeSuccess={() =>
+                  toast.success('Payment was successful.', {
+                    style: {
+                      border: '1px solid #1B1642',
+                      padding: '16px',
+                      color: '#1B1642',
+                    },
+                    iconTheme: {
+                      primary: '#1B1642',
+                      secondary: '#FFFAEE',
+                    },
+                    duration: 6000,
+                  })
+                }
+                onModalClosed={() =>
+                  toast.success('You closed payment.', {
+                    style: {
+                      border: '1px solid #1B1642',
+                      padding: '16px',
+                      color: '#1B1642',
+                    },
+                    iconTheme: {
+                      primary: '#1B1642',
+                      secondary: '#FFFAEE',
+                    },
+                    duration: 6000,
+                  })
+                }
+              >
+                Buy now
+              </CoinbaseCommerceButton>
             </DialogActions>
           </Dialog>
         </Form>

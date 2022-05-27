@@ -14,9 +14,9 @@ import { PATH_AUTH, PATH_DASHBOARD, PATH_PAGE } from '../../routes/paths';
 
 const MENU_OPTIONS = [
   {
-    label: 'Marketplace',
+    label: 'Dashboard',
     icon: 'eva:person-fill',
-    linkTo: PATH_PAGE.marketplace,
+    linkTo: PATH_DASHBOARD.root,
   },
   {
     label: 'My investment',

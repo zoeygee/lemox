@@ -1,5 +1,5 @@
 import React, { useEffect, memo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
@@ -18,10 +18,11 @@ import {
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { getProperty } from '../redux/actions/data';
+import { getProperty, getUser } from '../redux/actions/data';
 import { fCurrency, fPercent, fNumber } from '../utils/formatNumber';
 import Payment from '../components/Payment';
 import Page from '../components/Page';
+import { PATH_AUTH } from '../routes/paths';
 
 function PropertyDetail() {
   const auth = JSON.parse(localStorage.getItem('profile'));
@@ -30,9 +31,12 @@ function PropertyDetail() {
 
   useEffect(() => {
     dispatch(getProperty(id));
-  }, []);
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(getUser(auth.result._id));
+  }, [dispatch]);
 
-  const { property, isLoading } = useSelector((state) => state.data);
+  const { property, isLoading, user } = useSelector((state) => state.data);
 
   const [value, setValue] = React.useState('1');
 
@@ -85,7 +89,9 @@ function PropertyDetail() {
                 </Typography>
                 {!auth ? (
                   <Box sx={{ p: 4 }}>
-                    <Button variant="outlined">REGISTER/SIGNIN</Button>
+                    <Button variant="outlined" component={RouterLink} to={PATH_AUTH.login}>
+                      REGISTER/SIGNIN
+                    </Button>
                     <Typography variant="subtitle2" py={2}>
                       REGISTER AND SIGN IN TO START BUILDING YOUR PORTFOLIO!
                     </Typography>

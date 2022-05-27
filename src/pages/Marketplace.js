@@ -53,11 +53,23 @@ export default function Marketplace() {
                   <Grid item md={12} key={property._id}>
                     <div className="card card-lg rounded-top-start rounded-bottom-end lift lift-lg">
                       <div className="row gx-0">
+                        {property.status === 'sold' && (
+                          <div className="sold-out-wrapper bg-cover rounded-top-start ">
+                            <img
+                              className="sold-out-img"
+                              src="https://res.cloudinary.com/codack/image/upload/v1651967319/lemox/Sold-Out_hhcssc.png"
+                              alt="..."
+                            />
+                          </div>
+                        )}
+
                         <div
                           className="col-md-6 bg-cover rounded-top-start my-n2"
                           style={{
                             backgroundImage: `url(${property.images[0]})`,
                             backgroundPosition: 'center right',
+                            opacity: property.status === 'sold' && 0.5,
+                            // height: property.status === 'sold' && '100%',
                           }}
                         >
                           <img className="img-fluid invisible" src={property.images[0]} alt="..." />
@@ -67,23 +79,36 @@ export default function Marketplace() {
                             <h6 className="font-sans-serif text-muted mb-2">{property?.title}</h6>
                             <div className="d-flex mb-4 justify-content-between">
                               <h2>Total investment</h2>
-                              <h2>{fCurrency(property?.financials?.totalInvestment)}</h2>
+                              <h2>
+                                {property.status === 'available'
+                                  ? fCurrency(property?.financials?.totalInvestment)
+                                  : 'Not available'}
+                              </h2>
                             </div>
                             <div className="d-flex mb-4 justify-content-between">
                               <h2>Token price</h2>
-                              <h2>{fCurrency(property.tokenPrice)}/token</h2>
+                              {property.status === 'available' ? (
+                                <h2>{fCurrency(property.tokenPrice)}/token</h2>
+                              ) : (
+                                <h3>Not available</h3>
+                              )}
                             </div>
-
                             <div className="d-flex align-items-center justify-content-between">
                               <div>
                                 <h4 className="text-primary">Expected Income</h4>
                                 <p className="text-muted small">Not including capital appreciation</p>
                               </div>
                               <div className="ms-4 text-start">
-                                <h4 className="text-primary">{fPercent(property?.financials?.expectedIncome)}</h4>
+                                <h4 className="text-primary">
+                                  {property.status === 'available'
+                                    ? fPercent(property?.financials?.expectedIncome)
+                                    : 'Not available'}
+                                </h4>
                               </div>
                             </div>
-                            <Link className="stretched-link" to={`/marketplace/${property._id}`} />
+                            {property.status === 'available' && (
+                              <Link className="stretched-link" to={`/marketplace/${property._id}`} />
+                            )}
                           </div>
                         </div>
                       </div>

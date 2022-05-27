@@ -4,11 +4,12 @@ import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment, MenuItem, Select, InputLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { signup } from '../../../redux/actions/auth';
+import countries from '../../@dashboard/user/countries';
 
 // ----------------------------------------------------------------------
 
@@ -51,13 +52,12 @@ export default function RegisterForm() {
     onSubmit: (values) => {
       const { setSubmitting } = formik;
       dispatch(signup(values, navigate, setSubmitting, setToastMsg));
-
       console.log(values);
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-
+  const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } = formik;
+  const selectedCountryCode = countries.find((c) => c.label === values.country);
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -81,45 +81,56 @@ export default function RegisterForm() {
           </Stack>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
+              id="date"
+              label="Date of birth"
+              type="date"
               fullWidth
+              defaultValue="2017-05-24"
+              sx={{ width: 220 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...getFieldProps('dateOfBirth')}
+              error={Boolean(touched.dateOfBirth && errors.dateOfBirth)}
+              helperText={touched.dateOfBirth && errors.dateOfBirth}
+            />
+            <TextField
+              fullWidth
+              autoComplete="email"
+              type="email"
+              label="Email address"
+              {...getFieldProps('email')}
+              error={Boolean(touched.email && errors.email)}
+              helperText={touched.email && errors.email}
+            />
+          </Stack>
+
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
               label="Country"
               {...getFieldProps('country')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
-            />
-
+              error={Boolean(touched.country && errors.country)}
+              helperText={touched.country && errors.country}
+              fullWidth
+              leblId="country"
+              id="select"
+              select
+            >
+              {countries.map((country) => (
+                <MenuItem key={country.code} value={country.label}>
+                  {country.label}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               fullWidth
               label="State"
               {...getFieldProps('state')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
+              error={Boolean(touched.state && errors.state)}
+              helperText={touched.state && errors.state}
             />
           </Stack>
-          <TextField
-            id="date"
-            label="Date of birth"
-            type="date"
-            fullWidth
-            defaultValue="2017-05-24"
-            sx={{ width: 220 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            {...getFieldProps('dateOfBirth')}
-            error={Boolean(touched.dateOfBirth && errors.dateOfBirth)}
-            helperText={touched.dateOfBirth && errors.dateOfBirth}
-          />
 
-          <TextField
-            fullWidth
-            autoComplete="email"
-            type="email"
-            label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
-          />
           <TextField
             fullWidth
             autoComplete="tel"
@@ -128,6 +139,13 @@ export default function RegisterForm() {
             {...getFieldProps('tel')}
             error={Boolean(touched.tel && errors.tel)}
             helperText={touched.tel && errors.tel}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  {selectedCountryCode === undefined ? null : `+${selectedCountryCode?.phone}`}
+                </InputAdornment>
+              ),
+            }}
           />
 
           <TextField

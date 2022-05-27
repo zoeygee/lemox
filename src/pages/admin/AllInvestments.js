@@ -25,17 +25,16 @@ import Scrollbar from '../../components/Scrollbar';
 import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../sections/@dashboard/user';
-import { getInvestments, getUsers } from '../../redux/actions/data';
+import { getInvestments, getStaticInvestments } from '../../redux/actions/data';
 import { fCurrency, fPercent } from '../../utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'fullName', label: 'Full name', alignRight: false },
-  { id: 'dateOfBirth', label: 'Date of birth', alignRight: false },
-  { id: 'country', label: 'Country', alignRight: false },
-  { id: 'tel', label: 'Phone number', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'title', label: 'Title', alignRight: false },
+  { id: 'investment', label: 'Investment', alignRight: false },
+  { id: 'income', label: 'Income', alignRight: false },
+  { id: 'status', label: 'Status', alignRight: false },
   // { id: '' },
 ];
 
@@ -73,14 +72,14 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Users() {
+export default function AllInvestments() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getStaticInvestments());
   }, [dispatch]);
-  const { users } = useSelector((state) => state.data);
-  console.log(users);
+  const { investments, staticInvestments } = useSelector((state) => state.data);
+  console.log(staticInvestments);
 
   const [page, setPage] = useState(0);
 
@@ -102,7 +101,7 @@ export default function Users() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = investments.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -122,28 +121,30 @@ export default function Users() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - investments.length) : 0;
 
-  const filteredInvestment = applySortFilter(users, getComparator(order, orderBy), filterName);
+  const filteredInvestment = applySortFilter(investments, getComparator(order, orderBy), filterName);
 
   const isInvestmentNotFound = filteredInvestment.length === 0;
-  const pendingUsers = users.filter((user) => user.verified === 'pending');
-  const verifiedUsers = users.filter((user) => user.verified === 'true');
 
   return (
-    <Page title="All users">
+    <Page title="Investments">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1.5}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            All users
+            Investments
           </Typography>
-        </Stack>
-        <Stack spacing={3} direction="row" mb={4}>
-          <Typography variant="subtitle1">Total users: {users.length}</Typography>
-          <Typography variant="subtitle1">Verified users: {verifiedUsers.length}</Typography>
-          <Typography variant="subtitle1">Pending users: {pendingUsers.length}</Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/marketplace"
+            startIcon={<Iconify icon="eva:plus-fill" />}
+          >
+            Marketplace
+          </Button>
         </Stack>
         <Card>
+          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -151,15 +152,16 @@ export default function Users() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={users.length}
+                  rowCount={investments.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredInvestment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { _id, dateOfBirth, tel, email, country, profilePic, firstName, lastName } = row;
-                    const isItemSelected = selected.indexOf(firstName) !== -1;
+                    const { _id, charge, property } = row;
+                    const isItemSelected = selected.indexOf(property.title) !== -1;
+
                     return (
                       <TableRow
                         hover
@@ -168,21 +170,25 @@ export default function Users() {
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
-                        component={RouterLink}
-                        to={`/admin/users/${_id}`}
                       >
-                        <TableCell component="th" scope="row" padding="checkbox">
+                        <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={firstName} src={profilePic} />
+                            <Avatar alt={property.title} src={property.images[0]} />
                             <Typography variant="subtitle2" noWrap>
-                              {firstName} {lastName}
+                              {property?.title}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{dateOfBirth}</TableCell>
-                        <TableCell align="left">{country}</TableCell>
-                        <TableCell align="left">{tel}</TableCell>
-                        <TableCell align="left">{email}</TableCell>
+                        <TableCell align="left">{fCurrency(charge?.pricing?.local?.amount)}</TableCell>
+                        <TableCell align="left">{fPercent(property?.financials?.expectedIncome)}</TableCell>
+                        <TableCell align="left">
+                          <Label
+                            variant="ghost"
+                            color={(charge?.timeline[0]?.status === 'NEW' && 'error') || 'success'}
+                          >
+                            {sentenceCase(charge?.timeline[0]?.status)}
+                          </Label>
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -209,7 +215,7 @@ export default function Users() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={users.length}
+            count={investments.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

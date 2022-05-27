@@ -13,6 +13,8 @@ export default (
     users: [],
     user: {},
     staticInvestments: [],
+    identities: [],
+    identity: {},
   },
   action
 ) => {
@@ -50,8 +52,16 @@ export default (
       return { ...state, users: action.payload };
     case actions.GET_USER:
       return { ...state, user: action.payload };
+    case actions.UPDATE_USER:
+      return { ...state, users: state.users.map((user) => (user._id === action.payload._id ? action.payload : user)) };
     case actions.STATIC_INVESTMENTS:
       return { ...state, staticInvestments: action.payload };
+    case actions.GET_IDENTITIES:
+      return { ...state, identities: action.payload };
+    case actions.GET_IDENTITY:
+      return { ...state, identity: action.payload };
+    case actions.VERIFY_USER:
+      return { ...state, identities: [...state.identities, action.payload] };
     default:
       return state;
   }

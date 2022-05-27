@@ -3966,7 +3966,7 @@ fieldset:disabled .btn {
 .collapse:not(.show) {
   display: none;
 }
-.show-navbar:not(.show){
+.show-navbar:not(.show) {
   display: block;
 }
 .collapsing {
@@ -20047,7 +20047,7 @@ a.text-white-60:hover {
 }
 .avatar:after {
   /* background-image: url(../img/masks/avatar-status.svg), url(../img/masks/avatar-group.svg), */
-    /* url(../img/masks/avatar-group-hover.svg), url(../img/masks/avatar-group-hover-last.svg); */
+  /* url(../img/masks/avatar-group-hover.svg), url(../img/masks/avatar-group-hover-last.svg); */
   content: '';
   height: 0;
   position: absolute;
@@ -21785,4 +21785,19 @@ https://flickity.metafizzy.co
   .carousel-cell img {
     height: 300px;
   }
+}
+.sold-out-wrapper {
+  position: absolute !important;
+  left: 25%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px;
+  width: 40%;
+  opacity: 1;
+}
+
+.sold-out-img {
+  box-shadow: none !important;
+  margin: 0 0 9px !important;
+  opacity: 1;
 }

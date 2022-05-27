@@ -23,7 +23,6 @@ import {
   Faqs,
   ForgotPassword,
   Investment,
-  Investments,
   LandingPage,
   Login,
   Marketplace,
@@ -32,6 +31,12 @@ import {
   Register,
   ResetPassword,
   Withdrawals,
+  PendingVerification,
+  UserDetail,
+  AllWithdrawals,
+  WithdrawalDetail,
+  AllInvestments,
+  IdVerification,
 } from '../pages';
 // ----------------------------------------------------------------------
 
@@ -50,6 +55,7 @@ export default function Router() {
         { path: '/contact', element: <Contact /> },
         { path: '/faqs', element: <Faqs /> },
         { path: '/terms-of-service', element: <TermsOfService /> },
+        { path: '/pending-verification', element: <PendingVerification /> },
       ],
     },
     {
@@ -67,6 +73,7 @@ export default function Router() {
         { path: 'investment', element: <Investment /> },
         { path: 'withdrawal', element: <Withdrawals /> },
         { path: 'account-details', element: <AccountDetails /> },
+        { path: 'id-verification', element: <IdVerification /> },
       ],
     },
     {
@@ -82,6 +89,10 @@ export default function Router() {
         { element: <Navigate to="/admin/dashboard" replace /> },
         { path: 'dashboard', element: <AdminDashboardApp /> },
         { path: 'users', element: <Users /> },
+        { path: 'users/:id', element: <UserDetail /> },
+        { path: 'withdrawals', element: <AllWithdrawals /> },
+        { path: 'withdrawals/:id', element: <WithdrawalDetail /> },
+        { path: 'investments/', element: <AllInvestments /> },
       ],
     },
     {
