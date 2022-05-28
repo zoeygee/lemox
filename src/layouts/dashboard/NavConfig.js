@@ -17,10 +17,17 @@ const navConfig = [
     icon: getIcon('fluent:person-money-20-filled'),
   },
   {
+    title: 'Sell token',
+    path: '/dashboard/sell-token',
+    icon: getIcon('ic:round-token'),
+  },
+
+  {
     title: 'withdrawal',
     path: '/dashboard/withdrawal',
     icon: getIcon('fa6-solid:money-check-dollar'),
   },
+  { title: 'referral', path: '/dashboard/referral', icon: getIcon('nimbus:marketing') },
   {
     title: 'Account details',
     path: '/dashboard/account-details',
@@ -29,7 +36,7 @@ const navConfig = [
   {
     title: 'ID Verification',
     path: '/dashboard/id-verification',
-    icon: getIcon('fluent:person-16-filled'),
+    icon: getIcon('bxs:id-card'),
   },
 ];
 

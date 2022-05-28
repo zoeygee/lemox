@@ -21,3 +21,7 @@ export { default as AllWithdrawals } from './admin/AllWithdrawals';
 export { default as WithdrawalDetail } from './admin/WithdrawalDetail';
 export { default as AllInvestments } from './admin/AllInvestments';
 export { default as IdVerification } from './IdVerification';
+export { default as SellToken } from './SellToken';
+export { default as Referral } from './Referral';
+export { default as ReferPage } from './ReferPage';
+export { default as Checkout } from './Checkout';

@@ -33,7 +33,9 @@ function PropertyDetail() {
     dispatch(getProperty(id));
   }, [dispatch]);
   useEffect(() => {
-    dispatch(getUser(auth.result._id));
+    if (auth) {
+      dispatch(getUser(auth.result._id));
+    }
   }, [dispatch]);
 
   const { property, isLoading, user } = useSelector((state) => state.data);
@@ -76,14 +78,14 @@ function PropertyDetail() {
               spacing={4}
               sx={{ alignContent: 'baseline', justifyContent: 'space-between', alignItems: 'center' }}
             >
-              <Grid item sm="12" md="8">
+              <Grid item sm="12" md="7">
                 <Carousel>
                   {property?.images?.map((image, index) => (
                     <img src={image} alt="..." key={index} width="100%" />
                   ))}
                 </Carousel>
               </Grid>
-              <Grid item sm="12" md="4">
+              <Grid item sm="12" md="5">
                 <Typography variant="h3">
                   Total Investment: {fCurrency(property?.financials?.totalInvestment)}
                 </Typography>
@@ -97,7 +99,7 @@ function PropertyDetail() {
                     </Typography>
                   </Box>
                 ) : (
-                  <Payment property={property} user={auth.result} />
+                  <Payment property={property} user={user} />
                 )}
               </Grid>
             </Grid>

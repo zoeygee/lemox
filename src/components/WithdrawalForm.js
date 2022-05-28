@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
 import {
   Button,
+  Stack,
   TextField,
   Dialog,
   DialogActions,
@@ -25,11 +26,13 @@ export default function WithdrawalForm() {
   };
 
   const withdrawalSchema = Yup.object().shape({
-    amount: Yup.number().required('amount to withdraw is required'),
+    amount: Yup.number().required('Ener amount to withdraw'),
+    btcWalletAddress: Yup.string().required('Enter your BTC wallet address'),
   });
   const formik = useFormik({
     initialValues: {
       amount: '',
+      btcWalletAddress: '',
     },
     validationSchema: withdrawalSchema,
     onSubmit: (values) => {
@@ -46,26 +49,43 @@ export default function WithdrawalForm() {
       </Button>
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          <Dialog open={open} onClose={handleClose}>
+          <Dialog open={open} onClose={handleClose} maxWidth="sm">
             <DialogTitle>Withdraw funds</DialogTitle>
             <DialogContent>
               <DialogContentText>Enter amount to withdraw</DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                label="Amount"
-                type="number"
-                fullWidth
-                variant="outlined"
-                value={values.amount}
-                onChange={(e) => setFieldValue('amount', e.target.value)}
-                {...getFieldProps('amount')}
-                error={Boolean(touched.amount && errors.amount)}
-                helperText={touched.amount && errors.amount}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-              />
+              <Stack spacing={3}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  label="Amount"
+                  type="number"
+                  fullWidth
+                  variant="outlined"
+                  value={values.amount}
+                  onChange={(e) => setFieldValue('amount', e.target.value)}
+                  {...getFieldProps('amount')}
+                  error={Boolean(touched.amount && errors.amount)}
+                  helperText={touched.amount && errors.amount}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  }}
+                />
+                <TextField
+                  margin="dense"
+                  label="BTC Wallet Address"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  value={values.btcWalletAddress}
+                  onChange={(e) => setFieldValue('btcWalletAddress', e.target.value)}
+                  {...getFieldProps('btcWalletAddress')}
+                  error={Boolean(touched.btcWalletAddress && errors.btcWalletAddress)}
+                  helperText={touched.btcWalletAddress && errors.btcWalletAddress}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  }}
+                />
+              </Stack>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>

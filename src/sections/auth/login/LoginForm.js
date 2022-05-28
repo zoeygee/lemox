@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Toaster } from 'react-hot-toast';
 
@@ -15,6 +15,8 @@ import { PATH_AUTH, PATH_ADMIN, PATH_DASHBOARD } from '../../../routes/paths';
 
 function LoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.state);
   const [errorHandler, setErrorHandler] = useState({ hasError: false, message: '' });
   // eslint-disable-next-line
   const [toastMsg, setToastMsg] = useState('');

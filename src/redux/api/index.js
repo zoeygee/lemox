@@ -32,6 +32,6 @@ export const fetchUser = (id) => API.get(`/users/${id}`);
 export const fetchStaticInvestments = () => API.get('/static/investments');
 
 // API TO VERIFY INVESTORS
-export const verifyUser = (values) => API.get('/identity', values);
+export const verifyUser = (values) => API.post('/identity', values);
 export const fetchIdentity = (id) => API.get(`/identity${id}`);
 export const fetchIdentities = () => API.get('/identity');

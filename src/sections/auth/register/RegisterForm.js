@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { Stack, TextField, IconButton, InputAdornment, MenuItem, Select, InputLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
-import { Toaster } from 'react-hot-toast';
 import { signup } from '../../../redux/actions/auth';
 import countries from '../../@dashboard/user/countries';
 
@@ -19,7 +18,7 @@ export default function RegisterForm() {
   // eslint-disable-next-line
   const [toastMsg, setToastMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
+  const refId = JSON.parse(localStorage.getItem('referrerId'));
   const phoneRegEx =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const RegisterSchema = Yup.object().shape({
@@ -47,6 +46,7 @@ export default function RegisterForm() {
       tel: '',
       password: '',
       role: 'investor',
+      referredBy: refId,
     },
     validationSchema: RegisterSchema,
     onSubmit: (values) => {
@@ -160,7 +160,6 @@ export default function RegisterForm() {
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
             Register
           </LoadingButton>
-          <Toaster />
         </Stack>
       </Form>
     </FormikProvider>

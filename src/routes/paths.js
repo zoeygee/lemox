@@ -38,6 +38,8 @@ export const PATH_DASHBOARD = {
   investment: path(ROOTS_DASHBOARD, '/investment'),
   withdrawal: path(ROOTS_DASHBOARD, '/withdrawal'),
   accountDetails: path(ROOTS_DASHBOARD, '/account-details'),
+  myTokens: path(ROOTS_DASHBOARD, '/my-tokens'),
+  idVerification: path(ROOTS_DASHBOARD, '/id-verification'),
 };
 
 export const PATH_ADMIN = {

@@ -4,19 +4,37 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Stack, Typography, TextField, InputAdornment, MenuItem, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import axios from 'axios';
 import { useFormik, FormikProvider, Form } from 'formik';
 import Page from '../components/Page';
 import countries from '../sections/@dashboard/user/countries';
-import { verifyUser } from '../redux/actions/data';
+import { verifyUser, getIdentities } from '../redux/actions/data';
 
 export default function IdVerification() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // eslint-disable-next-line
   const [toastMsg, setToastMsg] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
+  React.useEffect(() => {
+    dispatch(getIdentities());
+  }, [dispatch]);
+
+  const identities = useSelector((state) => state.data);
+  console.log(identities);
+  const [image, setImage] = useState([]);
+  const [previewSource, setPreviewSource] = useState('');
+  const imageTypeRegex = /image\/(png|jpg|jpeg)/gm;
+  const changeHandler = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+  };
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
   const phoneRegEx =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const RegisterSchema = Yup.object().shape({
@@ -33,16 +51,15 @@ export default function IdVerification() {
   });
   const auth = JSON.parse(localStorage.getItem('profile'));
   const { user } = useSelector((state) => state.data);
-  const [image, setImage] = useState('');
   const formik = useFormik({
     initialValues: {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      country: user.country,
-      state: user.state,
-      dateOfBirth: user.dateOfBirth,
-      email: user.email,
-      tel: user.tel,
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      country: user?.country,
+      state: user?.state,
+      dateOfBirth: user?.dateOfBirth,
+      identityEmail: user?.email,
+      tel: user?.tel,
       street: '',
       city: '',
       zipCode: '',
@@ -55,20 +72,12 @@ export default function IdVerification() {
     validationSchema: RegisterSchema,
     onSubmit: async (values) => {
       const { setSubmitting } = formik;
-      //   dispatch(signup(values, navigate, setSubmitting, setToastMsg));
-      const data = new FormData();
-      data.append('file', values.passport);
-      data.append('file', values.driverLicense);
-      data.append('file', values.otherId);
-      data.append('upload_preset', 'lemox-verification');
-      data.append('cloud_name', 'codack');
-      await axios
-        .post('https://api.cloudinary.com/v1_1/codack/image/upload', data)
-        .then((res) =>
-          dispatch(verifyUser({ ...values, passport: res.data.secure_url }, navigate, setSubmitting, setToastMsg))
-        )
-        .catch((error) => console.log(error));
-      console.log(values);
+
+      const uploadImage = (base64EncodedImage) => {
+        dispatch(verifyUser({ ...values, passport: base64EncodedImage }, navigate, setSubmitting, setToastMsg));
+      };
+      if (!previewSource) return;
+      uploadImage(previewSource);
     },
   });
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values, setFieldValue } = formik;
@@ -138,14 +147,13 @@ export default function IdVerification() {
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                   <TextField
                     fullWidth
-                    autoComplete="email"
+                    autoComplete="mail"
                     type="email"
                     label="Email address"
-                    {...getFieldProps('email')}
-                    error={Boolean(touched.email && errors.email)}
-                    helperText={touched.email && errors.email}
+                    {...getFieldProps('identityEmail')}
+                    error={Boolean(touched.identityEmail && errors.identityEmail)}
+                    helperText={touched.identityEmail && errors.identityEmail}
                   />
-
                   <TextField
                     fullWidth
                     autoComplete="tel"
@@ -230,14 +238,19 @@ export default function IdVerification() {
                     </MenuItem>
                   ))}
                 </TextField>
-                <input
-                  type="file"
-                  name="passport"
-                  id="passport"
-                  onChange={(event) => {
-                    setImage(event.currentTarget.files[0]);
-                  }}
-                />
+                <Stack spacing={1.5}>
+                  <Typography variant="body2">SELFIE - NOT FROM YOUR ID</Typography>
+                  <input type="file" name="passport" id="passport" onChange={changeHandler} value={image} />
+                  {previewSource && <img src={previewSource} alt="..." />}
+                </Stack>
+                <Stack spacing={1.5}>
+                  <TextField fullWidth label="Select a form of ID" select>
+                    <MenuItem value="Passport">Passport</MenuItem>
+                    <MenuItem value="Driver's License">Driver's License</MenuItem>
+                    <MenuItem value="Other ID">Other ID</MenuItem>
+                  </TextField>
+                  <input type="file" name="passport" id="passport" onChange={changeHandler} value={image} />
+                </Stack>
                 {/* <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 </Stack> */}
                 <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>

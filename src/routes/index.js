@@ -6,7 +6,6 @@ import AdminLayout from '../layouts/admin';
 import NotFound from '../pages/Page404';
 import ExternalLayout from '../layouts/external';
 import Deposit from '../pages/Deposit';
-
 import { Users } from '../pages/admin';
 // Guards
 import RoleBasedGuard from '../guards/RoleBasedGuard';
@@ -37,6 +36,10 @@ import {
   WithdrawalDetail,
   AllInvestments,
   IdVerification,
+  SellToken,
+  Referral,
+  ReferPage,
+  Checkout,
 } from '../pages';
 // ----------------------------------------------------------------------
 
@@ -55,7 +58,9 @@ export default function Router() {
         { path: '/contact', element: <Contact /> },
         { path: '/faqs', element: <Faqs /> },
         { path: '/terms-of-service', element: <TermsOfService /> },
+        { path: '/referral', element: <ReferPage /> },
         { path: '/pending-verification', element: <PendingVerification /> },
+        { path: '/marketplace/:id/checkout/:charge', element: <Checkout /> },
       ],
     },
     {
@@ -74,6 +79,8 @@ export default function Router() {
         { path: 'withdrawal', element: <Withdrawals /> },
         { path: 'account-details', element: <AccountDetails /> },
         { path: 'id-verification', element: <IdVerification /> },
+        { path: 'sell-token', element: <SellToken /> },
+        { path: 'referral', element: <Referral /> },
       ],
     },
     {

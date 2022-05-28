@@ -48,11 +48,6 @@ export default function DashboardLayout() {
   console.log(user.verified);
 
   useEffect(() => {
-    if (user.verified === 'pending') {
-      navigate(PATH_PAGE.pendingVerification);
-    }
-  }, [navigate]);
-  useEffect(() => {
     const { token } = auth;
     // JWT check if token expired
     if (token) {

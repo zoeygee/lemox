@@ -34,8 +34,8 @@ import WithdrawalForm from '../components/WithdrawalForm';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'title', label: 'Title', alignRight: false },
-  { id: 'totalInvestment', label: 'Total Investment', alignRight: false },
+  { id: 'amount', label: 'Amount', alignRight: false },
+  { id: 'totalInvestment', label: 'status', alignRight: false },
   { id: 'totalTokens', label: 'Total Tokens', alignRight: false },
   { id: 'expectedIncome', label: 'Expected Income', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
@@ -105,7 +105,7 @@ export default function Withdrawals() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = properties.map((n) => n.name);
+      const newSelecteds = withdrawals.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -140,8 +140,8 @@ export default function Withdrawals() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - properties.length) : 0;
-  const filteredInvestment = applySortFilter(properties, getComparator(order, orderBy), filterName);
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - withdrawals.length) : 0;
+  const filteredInvestment = applySortFilter(withdrawals, getComparator(order, orderBy), filterName);
   const isInvestmentNotFound = filteredInvestment.length === 0;
   return (
     <Page title="Withdrawal">
@@ -160,7 +160,7 @@ export default function Withdrawals() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={properties.length}
+                  rowCount={withdrawals.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -221,7 +221,7 @@ export default function Withdrawals() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={properties.length}
+            count={withdrawals.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

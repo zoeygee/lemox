@@ -153,7 +153,7 @@ export const getUser = (id) => async (dispatch) => {
     dispatch({ type: actions.GET_USER, payload: data });
     dispatch({ type: actions.END_LOADING });
   } catch (error) {
-    console.logI(error);
+    console.log(error);
     dispatch({ type: actions.END_LOADING });
   }
 };
@@ -173,8 +173,8 @@ export const getStaticInvestments = () => async (dispatch) => {
 export const verifyUser = (values) => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });
-    const { data } = await api.fetchStaticInvestments(values);
-    dispatch({ type: actions.STATIC_INVESTMENTS, payload: data });
+    const { data } = await api.verifyUser(values);
+    dispatch({ type: actions.VERIFY_USER, payload: data });
     console.log(data);
     dispatch({ type: actions.END_LOADING });
   } catch (error) {
@@ -194,7 +194,7 @@ export const getIdentity = (id) => async (dispatch) => {
     dispatch({ type: actions.END_LOADING });
   }
 };
-export const getIdentites = () => async (dispatch) => {
+export const getIdentities = () => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });
     const { data } = await api.fetchIdentities();

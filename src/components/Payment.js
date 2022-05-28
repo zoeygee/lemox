@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Button,
   Stack,
@@ -21,6 +22,7 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import * as Yup from 'yup';
 import { createInvestment } from '../redux/actions/data';
 import { fCurrency } from '../utils/formatNumber';
+import { PATH_DASHBOARD } from '../routes/paths';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 
 Payment.propType = {
@@ -32,6 +34,7 @@ export default function Payment({ property, user }) {
   const [charge, setCharge] = useState([]);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -50,102 +53,125 @@ export default function Payment({ property, user }) {
     },
     validationSchema: paymentSchema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      dispatch(createInvestment({ ...values, property, title: property?.title }, setSubmitting, setCharge));
-
+      dispatch(createInvestment({ ...values, property, title: property?.title }, setSubmitting, setCharge, navigate));
       // return window.open(charge.hosted_url, '_blank', 'noopener,noreferrer');
-
       console.log(values);
       resetForm();
     },
   });
   const { handleSubmit, getFieldProps, setFieldValue, touched, errors, isSubmitting, values } = formik;
+  console.log(user);
+
   return (
     <Box py={4}>
-      <Button variant="outlined" size="large" onClick={handleClickOpen}>
-        Invest now
-      </Button>
-      <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Enter amount to invest</DialogTitle>
-            <DialogContent>
-              <DialogContentText sx={{ mb: 2 }}>Enter amount you want to invest with</DialogContentText>
-              <Stack spacing={3}>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  label="Amount"
-                  type="number"
-                  fullWidth
-                  variant="outlined"
-                  value={values.amount}
-                  onChange={(e) => setFieldValue('amount', e.target.value)}
-                  {...getFieldProps('amount')}
-                  error={Boolean(touched.amount && errors.amount)}
-                  helperText={touched.amount && errors.amount}
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                  }}
-                />
-                <TextField
-                  margin="dense"
-                  label="Input your ETH wallet"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  value={values.amount}
-                  onChange={(e) => setFieldValue('ethToken', e.target.value)}
-                  {...getFieldProps('ethToken')}
-                  error={Boolean(touched.ethToken && errors.ethToken)}
-                  helperText={touched.ethToken && errors.ethToken}
-                />
-              </Stack>
-              <Typography variant="subtitle1" color="text.secondary">
-                your expected income = {fCurrency((values.amount * property?.financials?.expectedIncome) / 100)}
-              </Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit" onClick={handleSubmit}>
-                Invest
-              </Button>
-              <CoinbaseCommerceButton
-                chargeId={charge.code}
-                onChargeSuccess={() =>
-                  toast.success('Payment was successful.', {
-                    style: {
-                      border: '1px solid #1B1642',
-                      padding: '16px',
-                      color: '#1B1642',
-                    },
-                    iconTheme: {
-                      primary: '#1B1642',
-                      secondary: '#FFFAEE',
-                    },
-                    duration: 6000,
-                  })
-                }
-                onModalClosed={() =>
-                  toast.success('You closed payment.', {
-                    style: {
-                      border: '1px solid #1B1642',
-                      padding: '16px',
-                      color: '#1B1642',
-                    },
-                    iconTheme: {
-                      primary: '#1B1642',
-                      secondary: '#FFFAEE',
-                    },
-                    duration: 6000,
-                  })
-                }
-              >
-                Buy now
-              </CoinbaseCommerceButton>
-            </DialogActions>
-          </Dialog>
-        </Form>
-      </FormikProvider>
+      {user.verified === 'false' || user.verified === 'pending' ? (
+        <Stack spacing={2}>
+          <Typography variant="body1">
+            Before you can invest with us, you'll have to complete our ID verification process.
+          </Typography>
+          <Typography variant="body1">Would you like to do that now?</Typography>
+          <Box maxWidth="290px">
+            <Button
+              contained
+              color="inherit"
+              variant="outlined"
+              component={RouterLink}
+              to={PATH_DASHBOARD.idVerification}
+              size="large"
+            >
+              ID Verification
+            </Button>
+          </Box>
+        </Stack>
+      ) : (
+        <>
+          <Button variant="outlined" size="large" onClick={handleClickOpen}>
+            Invest now
+          </Button>
+          <FormikProvider value={formik}>
+            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Enter amount to invest</DialogTitle>
+                <DialogContent>
+                  <DialogContentText sx={{ mb: 2 }}>Enter amount you want to invest with</DialogContentText>
+                  <Stack spacing={3}>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      label="Amount"
+                      type="number"
+                      fullWidth
+                      variant="outlined"
+                      value={values.amount}
+                      onChange={(e) => setFieldValue('amount', e.target.value)}
+                      {...getFieldProps('amount')}
+                      error={Boolean(touched.amount && errors.amount)}
+                      helperText={touched.amount && errors.amount}
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                      }}
+                    />
+                    <TextField
+                      margin="dense"
+                      label="Input your ETH wallet"
+                      type="text"
+                      fullWidth
+                      variant="outlined"
+                      value={values.amount}
+                      onChange={(e) => setFieldValue('ethToken', e.target.value)}
+                      {...getFieldProps('ethToken')}
+                      error={Boolean(touched.ethToken && errors.ethToken)}
+                      helperText={touched.ethToken && errors.ethToken}
+                    />
+                  </Stack>
+                  <Typography variant="subtitle1" color="text.secondary">
+                    your expected income = {fCurrency((values.amount * property?.financials?.expectedIncome) / 100)}
+                  </Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Cancel</Button>
+                  <Button type="submit" onClick={handleSubmit}>
+                    Invest
+                  </Button>
+                  <CoinbaseCommerceButton
+                    chargeId={charge.code}
+                    onChargeSuccess={() =>
+                      toast.success('Payment was successful.', {
+                        style: {
+                          border: '1px solid #1B1642',
+                          padding: '16px',
+                          color: '#1B1642',
+                        },
+                        iconTheme: {
+                          primary: '#1B1642',
+                          secondary: '#FFFAEE',
+                        },
+                        duration: 6000,
+                      })
+                    }
+                    onModalClosed={() =>
+                      toast.success('You closed payment.', {
+                        style: {
+                          border: '1px solid #1B1642',
+                          padding: '16px',
+                          color: '#1B1642',
+                        },
+                        iconTheme: {
+                          primary: '#1B1642',
+                          secondary: '#FFFAEE',
+                        },
+                        duration: 6000,
+                      })
+                    }
+                  >
+                    Buy now
+                  </CoinbaseCommerceButton>
+                </DialogActions>
+              </Dialog>
+            </Form>
+          </FormikProvider>
+        </>
+      )}
     </Box>
   );
 }
