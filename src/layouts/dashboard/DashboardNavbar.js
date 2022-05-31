@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { useSelector } from 'react-redux';
 // components
 import Iconify from '../../components/Iconify';
 //
@@ -40,6 +41,7 @@ DashboardNavbar.propTypes = {
 };
 
 export default function DashboardNavbar({ onOpenSidebar, auth }) {
+  const { user } = useSelector((state) => state.data);
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -50,7 +52,7 @@ export default function DashboardNavbar({ onOpenSidebar, auth }) {
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <AccountPopover auth={auth} />
+          <AccountPopover auth={user} />
         </Stack>
       </ToolbarStyle>
     </RootStyle>

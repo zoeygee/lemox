@@ -16,7 +16,7 @@ import { PATH_AUTH, PATH_ADMIN, PATH_DASHBOARD } from '../../../routes/paths';
 function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
+  console.log(location);
   const [errorHandler, setErrorHandler] = useState({ hasError: false, message: '' });
   // eslint-disable-next-line
   const [toastMsg, setToastMsg] = useState('');
@@ -37,11 +37,7 @@ function LoginForm() {
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       const { setSubmitting } = formik;
-      dispatch(signin(values, setErrorHandler, setSubmitting, setToastMsg));
-      if (auth.result.role === 'admin') {
-        return navigate(PATH_ADMIN.dashboard);
-      }
-      return navigate(PATH_DASHBOARD.user);
+      dispatch(signin(values, setErrorHandler, setSubmitting, setToastMsg, navigate));
     },
   });
 

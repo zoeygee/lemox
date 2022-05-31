@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useDispatch} from "react-redux";
 // material
 import { styled } from '@mui/material/styles';
 //
 // import DashboardNavbar from './DashboardNavbar';
 import Sidebar from './Sidebar';
-
+import { getUser} from "../../redux/actions/data"
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -35,6 +36,11 @@ const MainStyle = styled('div')(({ theme }) => ({
 export default function AdminLayout() {
   const [open, setOpen] = useState(false);
   const auth = JSON.parse(localStorage.getItem('profile'));
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(getUser(auth.result._id))
+  },[dispatch])
+
   return (
     <RootStyle>
       {/* <DashboardNavbar onOpenSidebar={() => setOpen(true)} auth={auth} /> */}

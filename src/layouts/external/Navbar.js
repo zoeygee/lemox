@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useImperativeHandle, useState } from 'react';
 import AccountPopover from '../dashboard/AccountPopover';
 import { PATH_DASHBOARD, PATH_PAGE, PATH_AUTH } from '../../routes/paths';
 
@@ -8,7 +9,7 @@ export default function Navbar() {
   const [authOpen, setAuthOpen] = useState(false);
   const auth = JSON.parse(localStorage.getItem('profile'));
   const navigate = useNavigate();
-  console.log(auth);
+  const { user } = useSelector((state) => state.data);
   const handleToggle = () => {
     if (open === false) setOpen(true);
     else {
@@ -81,7 +82,7 @@ export default function Navbar() {
                   aria-label="Toggle navigation"
                 >
                   <i className="fa fa-caret-down" />
-                  <AccountPopover auth={auth} />
+                  <AccountPopover auth={user} />
                 </div>
               </li>
             ) : (

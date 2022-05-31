@@ -53,7 +53,16 @@ export default function Payment({ property, user }) {
     },
     validationSchema: paymentSchema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      dispatch(createInvestment({ ...values, property, title: property?.title }, setSubmitting, setCharge, navigate));
+      const propertyId = property._id;
+      dispatch(
+        createInvestment(
+          { ...values, property, title: property?.title },
+          setSubmitting,
+          setCharge,
+          navigate,
+          propertyId
+        )
+      );
       // return window.open(charge.hosted_url, '_blank', 'noopener,noreferrer');
       console.log(values);
       resetForm();
@@ -133,39 +142,6 @@ export default function Payment({ property, user }) {
                   <Button type="submit" onClick={handleSubmit}>
                     Invest
                   </Button>
-                  <CoinbaseCommerceButton
-                    chargeId={charge.code}
-                    onChargeSuccess={() =>
-                      toast.success('Payment was successful.', {
-                        style: {
-                          border: '1px solid #1B1642',
-                          padding: '16px',
-                          color: '#1B1642',
-                        },
-                        iconTheme: {
-                          primary: '#1B1642',
-                          secondary: '#FFFAEE',
-                        },
-                        duration: 6000,
-                      })
-                    }
-                    onModalClosed={() =>
-                      toast.success('You closed payment.', {
-                        style: {
-                          border: '1px solid #1B1642',
-                          padding: '16px',
-                          color: '#1B1642',
-                        },
-                        iconTheme: {
-                          primary: '#1B1642',
-                          secondary: '#FFFAEE',
-                        },
-                        duration: 6000,
-                      })
-                    }
-                  >
-                    Buy now
-                  </CoinbaseCommerceButton>
                 </DialogActions>
               </Dialog>
             </Form>

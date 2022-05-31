@@ -1,11 +1,14 @@
 import * as Yup from 'yup';
-import { useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
 import { Box, Grid, Card, Stack, Switch, TextField, FormControlLabel, Typography, FormHelperText } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { fData } from '../utils/formatNumber';
 import { countries } from '../sections/@dashboard/user';
+import { getUser } from '../redux/actions/data';
 //
 
 // ----------------------------------------------------------------------
@@ -14,19 +17,24 @@ export default function AccountGeneral() {
   const UpdateUserSchema = Yup.object().shape({
     displayName: Yup.string().required('Name is required'),
   });
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const { _id } = JSON.parse(localStorage.getItem('profile')).result;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser(_id));
+  }, [dispatch]);
+  const { user } = useSelector((state) => state.data);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstName: user.result.firstName || '',
-      lastName: user.result.lastName || '',
-      country: user.result.country || '',
-      state: user.result.state || '',
-      email: user.result.email,
-      profilePic: user.result.profilePic,
-      tel: user.result.tel,
-      dateOfBirth: user.result.dateOfBirth || '',
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      country: user.country || '',
+      state: user.state || '',
+      email: user.email,
+      profilePic: user.profilePic,
+      tel: user.tel,
+      dateOfBirth: user.dateOfBirth || '',
     },
 
     validationSchema: UpdateUserSchema,

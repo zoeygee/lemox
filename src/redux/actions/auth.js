@@ -4,15 +4,19 @@ import * as api from '../api';
 import { PATH_DASHBOARD, PATH_ADMIN, PATH_PAGE } from '../../routes/paths';
 
 const auth = JSON.parse(localStorage.getItem('profile'));
-export const signin = (values, setErrorHandler, setSubmitting, setToastMsg) => async (dispatch) => {
+export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navigate) => async (dispatch) => {
   try {
     // sign the user in
     setSubmitting(true);
     const { data } = await api.signin(values);
     dispatch({ type: AUTH, data });
     setSubmitting(false);
+    if (auth.result.role === 'admin') {
+      return navigate(PATH_ADMIN.dashboard);
+    }
+    return navigate(PATH_DASHBOARD.user);
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     setErrorHandler({ hasError: true, message: error?.response?.data?.msg });
     setSubmitting(false);
     setToastMsg(toast.error('Oops! something went wrong'));

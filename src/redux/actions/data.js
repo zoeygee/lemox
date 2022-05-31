@@ -26,12 +26,13 @@ export const getProperty = (id) => async (dispatch) => {
   }
 };
 
-export const createInvestment = (values, setSubmitting, setCharge) => async (dispatch) => {
+export const createInvestment = (values, setSubmitting, setCharge, navigate, propertyId) => async (dispatch) => {
   try {
     setSubmitting(true);
     const { data } = await api.createInvestment(values);
     dispatch({ type: actions.CREATE_INVESTMENT, payload: data });
     console.log(data);
+    navigate(`/marketplace/${propertyId}/checkout/${data.code}`);
     setSubmitting(false);
     setCharge(data);
   } catch (error) {
