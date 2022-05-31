@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { AUTH, EDIT_PROFILE, FORGOT_PASSWORD } from './actionTypes';
 import * as api from '../api';
-import { PATH_DASHBOARD, PATH_ADMIN, PATH_PAGE } from '../../routes/paths';
+import { PATH_DASHBOARD, PATH_ADMIN } from '../../routes/paths';
 
 const auth = JSON.parse(localStorage.getItem('profile'));
 export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navigate) => async (dispatch) => {
@@ -28,7 +28,7 @@ export const signup = (values, navigate, setSubmitting, setToastMsg) => async (d
     const { data } = await api.register(values);
     dispatch({ type: AUTH, data });
     setSubmitting(false);
-    navigate(PATH_PAGE.pendingVerification);
+    navigate(PATH_DASHBOARD.user);
   } catch (error) {
     console.log(error);
     setSubmitting(false);

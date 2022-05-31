@@ -16,6 +16,7 @@ import {
   Tab,
 } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
+import styled from 'styled-components';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { getProperty, getUser } from '../redux/actions/data';
@@ -23,6 +24,7 @@ import { fCurrency, fPercent, fNumber } from '../utils/formatNumber';
 import Payment from '../components/Payment';
 import Page from '../components/Page';
 import { PATH_AUTH } from '../routes/paths';
+import PropertyCarousel from '../components/Carousel';
 
 function PropertyDetail() {
   const auth = JSON.parse(localStorage.getItem('profile'));
@@ -73,36 +75,34 @@ function PropertyDetail() {
             <Typography variant="h4" sx={{ py: 2 }}>
               {property?.title}
             </Typography>
-            <Grid
-              container
-              spacing={4}
-              sx={{ alignContent: 'baseline', justifyContent: 'space-between', alignItems: 'center' }}
-            >
-              <Grid item sm="12" md="7">
-                <Carousel>
-                  {property?.images?.map((image, index) => (
-                    <img src={image} alt="..." key={index} width="100%" />
-                  ))}
-                </Carousel>
+            <HeroWrapper>
+              <Grid
+                container
+                spacing={4}
+                sx={{ alignContent: 'baseline', justifyContent: 'space-between', alignItems: 'center' }}
+              >
+                <Grid item sm="12" md="7">
+                  <PropertyCarousel images={property?.images} />
+                </Grid>
+                <Grid item sm="12" md="5">
+                  <Typography variant="h3">
+                    Total Investment: {fCurrency(property?.financials?.totalInvestment)}
+                  </Typography>
+                  {!auth ? (
+                    <Box sx={{ p: 4 }}>
+                      <Button variant="outlined" component={RouterLink} to={PATH_AUTH.login}>
+                        REGISTER/SIGNIN
+                      </Button>
+                      <Typography variant="subtitle2" py={2}>
+                        REGISTER AND SIGN IN TO START BUILDING YOUR PORTFOLIO!
+                      </Typography>
+                    </Box>
+                  ) : (
+                    <Payment property={property} user={user} />
+                  )}
+                </Grid>
               </Grid>
-              <Grid item sm="12" md="5">
-                <Typography variant="h3">
-                  Total Investment: {fCurrency(property?.financials?.totalInvestment)}
-                </Typography>
-                {!auth ? (
-                  <Box sx={{ p: 4 }}>
-                    <Button variant="outlined" component={RouterLink} to={PATH_AUTH.login}>
-                      REGISTER/SIGNIN
-                    </Button>
-                    <Typography variant="subtitle2" py={2}>
-                      REGISTER AND SIGN IN TO START BUILDING YOUR PORTFOLIO!
-                    </Typography>
-                  </Box>
-                ) : (
-                  <Payment property={property} user={user} />
-                )}
-              </Grid>
-            </Grid>
+            </HeroWrapper>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="property">
@@ -247,3 +247,12 @@ function PropertyDetail() {
 }
 
 export default memo(PropertyDetail);
+
+const HeroWrapper = styled.div`
+  @media (max-width: 500) {
+    padding-bottom: 80px;
+  }
+  @media (min-width: 900px) {
+    padding-bottom: 130px;
+  }
+`;

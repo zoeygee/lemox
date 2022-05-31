@@ -1,0 +1,116 @@
+diff --git a/node_modules/react-carousel-minimal/dist/components/Carousel.js b/node_modules/react-carousel-minimal/dist/components/Carousel.js
+index 2833731..8598403 100644
+--- a/node_modules/react-carousel-minimal/dist/components/Carousel.js
++++ b/node_modules/react-carousel-minimal/dist/components/Carousel.js
+@@ -65,7 +65,7 @@ function Carousel(_ref) {
+           if (index >= data.length) index = 0;
+           if (index < 0) index = data.length - 1;
+         }
+-      }, time ? time : 2000);
++      }, time ? time : 22000);
+       return () => {
+         clearInterval(interval);
+       };
+@@ -171,8 +171,7 @@ function Carousel(_ref) {
+       className: "slide-number",
+       style: slideNumberStyle
+     }, index + 1, " / ", data.length), /*#__PURE__*/_react.default.createElement("img", {
+-      src: item.image,
+-      alt: item.caption,
++      src: item,
+       className: "carousel-image",
+       style: {
+         borderRadius: radius,
+@@ -187,9 +186,9 @@ function Carousel(_ref) {
+     }, "II"), /*#__PURE__*/_react.default.createElement("div", {
+       className: "carousel-caption-".concat(captionPosition ? captionPosition : "bottom"),
+       style: captionStyle,
+-      dangerouslySetInnerHTML: {
+-        __html: item.caption
+-      }
++      // dangerouslySetInnerHTML: {
++      //   __html: item.caption
++      // }
+     }));
+   }), showNavBtn && /*#__PURE__*/_react.default.createElement("a", {
+     className: "prev",
+@@ -223,8 +222,7 @@ function Carousel(_ref) {
+   }, data.map((item, index) => {
+     return /*#__PURE__*/_react.default.createElement("img", {
+       width: thumbnailWidth ? thumbnailWidth : "100px",
+-      src: item.image,
+-      alt: item.caption,
++      src: item,
+       className: "thumbnail",
+       id: "thumbnail-".concat(index),
+       key: index,
+diff --git a/node_modules/react-carousel-minimal/dist/components/styles/index.css b/node_modules/react-carousel-minimal/dist/components/styles/index.css
+index f564223..52a4e6a 100644
+--- a/node_modules/react-carousel-minimal/dist/components/styles/index.css
++++ b/node_modules/react-carousel-minimal/dist/components/styles/index.css
+@@ -103,16 +103,7 @@
+   transition: background-color 0.6s ease;
+ }
+ 
+-.active, .dot:hover {
+-  background-color: #717171;
+-}
+ 
+-.fade {
+-  -webkit-animation-name: fade;
+-  -webkit-animation-duration: 1.5s;
+-  animation-name: fade;
+-  animation-duration: 1.5s;
+-}
+ .pause-icon {
+   position: absolute;
+   /* top: 38%; */
+@@ -122,12 +113,7 @@
+   opacity: 1;
+ }
+ 
+-.pause {
+-  -webkit-animation-name: pause;
+-  -webkit-animation-duration: 0.5s;
+-  animation-name: pause;
+-  animation-duration: 0.5s;
+-}
++
+ 
+ .bar {
+   width: 100%;
+@@ -158,27 +144,14 @@
+ .active-thumbnail {
+   border: #476ff1 solid 3px;
+ }
+-@keyframes pause {
+-  0% {opacity: .2; }
+-  90% {opacity: 1; }
+-  
+-}
+-@-webkit-keyframes pause {
+-  0% {opacity: .2; }
+-  90% {opacity: 1;}
+ 
+-}
+-@-webkit-keyframes fade {
+-  from {opacity: .4} 
+-  to {opacity: 1}
+-}
+ 
+ @keyframes fade {
+   from {opacity: .4} 
+   to {opacity: 1}
+ }
+ 
+-@media only screen and (max-width: 500px) {
++
+   .prev,
+   .next,
+   .carousel-caption-bottom, 
+@@ -201,4 +174,3 @@
+   .carousel-caption-bottom{
+     bottom: 25px;
+   }
+-}
+\ No newline at end of file

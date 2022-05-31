@@ -9,7 +9,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx ./src",
-    "lint:fix": "eslint --fix --ext .js,.jsx ./src"
+    "lint:fix": "eslint --fix --ext .js,.jsx ./src",
+    "postinstall": "patch-package"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +58,7 @@
     "react": "^17.0.2",
     "react-alice-carousel": "^2.6.1",
     "react-apexcharts": "^1.4.0",
+    "react-carousel-minimal": "^1.4.1",
     "react-coinbase-commerce": "^1.6.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^17.0.2",
@@ -71,6 +73,7 @@
     "redux-thunk": "^2.4.1",
     "simplebar": "^5.3.6",
     "simplebar-react": "^2.3.6",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
@@ -87,6 +90,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "patch-package": "^6.4.7",
     "prettier": "^2.5.1"
   }
 }

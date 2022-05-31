@@ -1,12 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Box } from '@mui/material';
 import { useImperativeHandle, useState } from 'react';
 import AccountPopover from '../dashboard/AccountPopover';
 import { PATH_DASHBOARD, PATH_PAGE, PATH_AUTH } from '../../routes/paths';
+import Iconify from '../../components/Iconify';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const auth = JSON.parse(localStorage.getItem('profile'));
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.data);
@@ -86,17 +89,10 @@ export default function Navbar() {
                 </div>
               </li>
             ) : (
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  id="accountDropdown"
-                  href="#"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Account <i className="fa fa-caret-down" />
-                </a>
+              <Box className="nav-item dropdown" onClick={() => setAccountOpen(true)}>
+                <span className="nav-link dropdown-toggle">
+                  Account <Iconify icon="ic:baseline-arrow-drop-down" />
+                </span>
                 <div
                   className="dropdown-positioner"
                   style={{
@@ -107,32 +103,22 @@ export default function Navbar() {
                   }}
                   data-popper-placement="bottom"
                 >
-                  <ul className="dropdown-menu show" aria-labelledby="accountDropdown">
-                    <li className="dropdown-item dropend">
-                      <a
-                        id="signInDropright"
-                        href="{{ route('login') }}"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Login
-                      </a>
-                    </li>
-                    <li className="dropdown-item dropend">
-                      <a
-                        id="signUpDropright"
-                        href="{{ route('register') }}"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Register
-                      </a>
-                    </li>
-                  </ul>
+                  {accountOpen === true ? (
+                    <ul className="dropdown-menu show" aria-labelledby="accountDropdown">
+                      <li className="dropdown-item dropend">
+                        <Link id="signInDropright" to={PATH_AUTH.login}>
+                          Login
+                        </Link>
+                      </li>
+                      <li className="dropdown-item dropend">
+                        <Link id="signUpDropright" to={PATH_AUTH.register}>
+                          Register
+                        </Link>
+                      </li>
+                    </ul>
+                  ) : null}
                 </div>
-              </li>
+              </Box>
             )}
           </ul>
         </div>

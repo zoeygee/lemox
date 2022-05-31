@@ -27,25 +27,22 @@ export default function Checkout() {
     dispatch(getUser(auth.result._id));
   }, [dispatch, auth.result._id]);
   const { property, user, isLoading } = useSelector((state) => state.data);
-  const [chargeLoading, setChargeLoading] = useState(true);
   console.log(property);
   console.log(user);
 
   // fetch charge with charge code
   useEffect(() => {
     const fetchCharge = async (currentCharge) => {
-      setChargeLoading(true);
       axios
         .get(`https://api.commerce.coinbase.com/charges/${currentCharge}`)
         .then((res) => {
-          setChargeLoading(false);
           const { data } = res;
           setChargeData(data.data);
         })
         .catch((error) => console.log(error));
     };
     fetchCharge(charge);
-  }, []);
+  }, [charge]);
 
   return (
     <>
