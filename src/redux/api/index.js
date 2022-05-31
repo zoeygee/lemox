@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API = axios.create({ baseURL: 'https://lemox-api.herokuapp.com/api/v1' });
+export const API = axios.create({ baseURL: process.env.REACT_APP_API_KEY });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
