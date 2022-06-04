@@ -17,7 +17,8 @@ const allFaqs = [
     id: 1,
     value: `panel1`,
     heading: 'How does the Lemox Marketplace work?',
-    detail: `Instead, we are a marketplace like Airbnb, eBay, or Amazon.
+    detail: `Lemox is not a fund. We do not purchase properties, flip them, and then sell them on our website.
+    Instead, we are a marketplace like Airbnb, eBay, or Amazon.
     The Lemox marketplace consists of buyers (token holders) and sellers (people who want to sell their properties). These sellers have years of experience rehabbing and selling turnkey properties with a great track record.`,
   },
   {
@@ -50,18 +51,7 @@ const allFaqs = [
     renovations as well, the costs are the responsibility of the SAS carrying the property and
     managed by the Property Manager.`,
   },
-  {
-    id: 6,
-    value: `panel6`,
-    heading: 'In the event of a resale of its tokens, what is the resale price based on?',
-    detail: `In the event of a resale of its tokens, what is the resale price based on?`,
-  },
-  {
-    id: 7,
-    value: `panel7`,
-    heading: 'What exactly do I own if I buy a fraction of real estate on Lemox?',
-    detail: `By buying BlocHome tokens, you become a co-owner of the company that owns the real estate buildings. The token represents a share in the vehicle that owns the building.`,
-  },
+
   {
     id: 7,
     value: `panel7`,
@@ -79,12 +69,6 @@ const allFaqs = [
     value: `panel9`,
     heading: 'How do I earn? what will be the yield of my investment?',
     detail: `There are 2 ways your Lemox investment will increase and both are happening at the same time: 1. You get revenue from the cash flow (rent) the property is generating, which is being paid directly to your portfolio. 2. You benefit from the increase in the value of the property.`,
-  },
-  {
-    id: 10,
-    value: `panel10`,
-    heading: 'In the event of a resale of its tokens, what is the resale price based on?',
-    detail: `In the event of a resale of its tokens, what is the resale price based on?`,
   },
 ];
 // ----------------------------------------------------------------------
@@ -107,7 +91,7 @@ export default function FaqsList() {
             {allFaqs.map((accordion) => (
               <Accordion key={accordion.value}>
                 <AccordionSummary expandIcon={<Icon width={20} height={20} />}>
-                  <Typography variant="subtitle1">{accordion.heading}</Typography>
+                  <Typography>{accordion.heading}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography variant="body1" color="text.primary">

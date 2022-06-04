@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from "react-router-dom"
+import { Link } from 'react-router-dom';
+import Team from '../sections/@external/about/Team';
 
 export default function About() {
   return (
@@ -18,7 +19,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="position-relative pt-10 pt-md-12" style={{ zIndex: '1' }}>
+      <section className="position-relative pt-5" style={{ zIndex: '1' }}>
         <div className="container-lg">
           <div className="row">
             <div className="col-12">
@@ -126,8 +127,8 @@ export default function About() {
                   <circle cx="182" cy="182" r="2" fill="currentColor" />
                 </svg>
               </div>
-              <div className="flickity-buttons-overlap border border-7 border-white shadow-md">
-                <div className="w-75 text-center">
+              <div className="border border-7 border-white shadow-md">
+                <div className="text-center">
                   <img
                     className="img-fluid"
                     src="https://res.cloudinary.com/codack/image/upload/v1651332645/lemox/asset/depositphotos_60063963-stock-photo-people-discussing-about-us_grppqp.webp"
@@ -154,6 +155,9 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      <Team />
+
       <section className="py-10 py-md-12 bg-dark">
         <div className="container-lg">
           <div className="row justify-content-center">

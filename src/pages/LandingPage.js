@@ -221,7 +221,7 @@ export default function LandingPage() {
                   <p className="text-muted mb-4">
                     Each Lemox property has a property management company managing the property on investors behalf. The
                     property management company sources tenants, collects rent, and manages repairs, so the diverse
-                    group of RealToken owners don’t have to.
+                    group of Lemox token owners don’t have to.
                   </p>
                 </li>
               </ul>
