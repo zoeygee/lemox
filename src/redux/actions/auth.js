@@ -12,11 +12,8 @@ export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navi
     const { data } = await api.signin(values);
     dispatch({ type: AUTH, data });
     setSubmitting(false);
-
-    if (auth.result.role === 'admin') {
-      return navigate(PATH_ADMIN.dashboard);
-    }
-    return navigate(PATH_DASHBOARD.user);
+    navigate(PATH_DASHBOARD.user);
+    console.log(data);
   } catch (error) {
     console.log(error);
     setErrorHandler({ hasError: true, message: error?.response?.data?.msg });

@@ -273,7 +273,7 @@ export default function IdVerification() {
                     ))}
                   </TextField>
                 </Stack>
-
+                <Typography variant="body1">Selfie</Typography>
                 <FileBase64
                   multiple={false}
                   onDone={({ base64 }) => setFieldValue('selfie', base64)}

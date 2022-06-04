@@ -34,10 +34,8 @@ import WithdrawalForm from '../components/WithdrawalForm';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
+  { id: 'date', label: 'Date', alignRight: false },
   { id: 'amount', label: 'Amount', alignRight: false },
-  { id: 'totalInvestment', label: 'status', alignRight: false },
-  { id: 'totalTokens', label: 'Total Tokens', alignRight: false },
-  { id: 'expectedIncome', label: 'Expected Income', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   // { id: '' },
 ];

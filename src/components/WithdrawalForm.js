@@ -13,6 +13,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import Iconify from './Iconify';
 
 export default function WithdrawalForm() {
   const [open, setOpen] = React.useState(false);
@@ -82,7 +83,11 @@ export default function WithdrawalForm() {
                   error={Boolean(touched.btcWalletAddress && errors.btcWalletAddress)}
                   helperText={touched.btcWalletAddress && errors.btcWalletAddress}
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Iconify icon="icons8:bitcoin" />
+                      </InputAdornment>
+                    ),
                   }}
                 />
               </Stack>

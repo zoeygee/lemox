@@ -173,7 +173,7 @@ export default function Users() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                         component={RouterLink}
-                        to={!userIdentity ? `/admin/users/${_id}` : `/admin/users/${_id}?identity=${userIdentity._id}`}
+                        to={!userIdentity ? `/admin/users/${_id}` : `/admin/users/${_id}/identity/${userIdentity._id}`}
                       >
                         <TableCell component="th" scope="row" padding="checkbox">
                           <Stack direction="row" alignItems="center" spacing={2}>

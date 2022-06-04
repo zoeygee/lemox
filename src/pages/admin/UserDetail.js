@@ -12,7 +12,7 @@ import {
   Chip,
   Avatar,
 } from '@mui/material';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import Page from '../../components/Page';
@@ -21,18 +21,16 @@ import { fToNow } from '../../utils/formatTime';
 import Iconify from '../../components/Iconify';
 
 export default function UserDetail() {
-  const { id } = useParams();
+  const { id, identityId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [identityParams] = useSearchParams();
-  const identityId = identityParams.get('identity');
   useEffect(() => {
     dispatch(getUserDetail(id));
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getIdentity(identityId));
-  }, [dispatch]);
+  }, [dispatch, identityId]);
 
   const { userDetail, isLoading, identity } = useSelector((state) => state.data);
   const { _id, createdAt, firstName, lastName, profilePic, verified, tel, dateOfBirth, country, state, email } =
@@ -87,7 +85,7 @@ export default function UserDetail() {
               </CardContent>
             </Card>
             <Card sx={{ marginTop: 6 }}>
-              {!identity || identity === undefined ? (
+              {!identityId ? (
                 <p>There's no identity verification from this user</p>
               ) : (
                 <CardContent>
@@ -120,7 +118,7 @@ export default function UserDetail() {
                       <img src={identity.idImage} alt={identity.firstName} height="60%" width="100%" />
                       <Typography variant="body1">Coutry that issued ID: {identity.idCountry}</Typography>
                     </Stack>
-                    {customer === 'true' ? (
+                    {identity.verified === 'true' ? (
                       <Typography variant="h6" color="text.success">
                         Verified
                       </Typography>

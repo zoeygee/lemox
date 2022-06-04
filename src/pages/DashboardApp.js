@@ -28,23 +28,23 @@ export default function DashboardApp() {
   }, [dispatch]);
 
   const { investments, isLoading, investment } = useSelector((state) => state.data);
-  const { incrementedAt } = investment;
   const totalInvestment = 20;
   const amountInvested = 20;
-  const incrementDate = new Date(investment.incrementedAt);
+  const incrementDate = new Date(investment?.incrementedAt);
   const roi = (10 / 100) * amountInvested;
   const sevenDaysAfter = addDays(incrementDate, 7);
   const daysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
   const updatedAmount = amountInvested + roi;
 
   // increment config
+  const dateToString = new Date().toString();
   const config = {
     incrementAmount: updatedAmount,
-    incrementedAt: new Date(),
+    incrementedAt: dateToString,
   };
-  useEffect(() => {
-    dispatch(getUpdatedInvestment(investmentId, config));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getUpdatedInvestment(investmentId, config));
+  // }, [dispatch]);
 
   setInterval(() => {
     if (sevenDaysAfter - incrementDate === daysInMilliseconds) {

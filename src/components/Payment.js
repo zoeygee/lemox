@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   Button,
   Stack,
@@ -35,6 +35,7 @@ export default function Payment({ property, user }) {
     dispatch(getIdentities());
   }, []);
   const [charge, setCharge] = useState([]);
+  const location = useLocation();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -93,6 +94,7 @@ export default function Payment({ property, user }) {
               component={RouterLink}
               to={PATH_DASHBOARD.idVerification}
               size="large"
+              state={{ from: location }}
             >
               ID Verification
             </Button>

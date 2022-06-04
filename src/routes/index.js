@@ -98,6 +98,7 @@ export default function Router() {
         { path: 'dashboard', element: <AdminDashboardApp /> },
         { path: 'users', element: <Users /> },
         { path: 'users/:id', element: <UserDetail /> },
+        { path: 'users/:id/identity/:identityId', element: <UserDetail /> },
         { path: 'withdrawals', element: <AllWithdrawals /> },
         { path: 'withdrawals/:id', element: <WithdrawalDetail /> },
         { path: 'investments/', element: <AllInvestments /> },
