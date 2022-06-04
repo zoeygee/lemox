@@ -25,7 +25,7 @@ import Scrollbar from '../../components/Scrollbar';
 import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../sections/@dashboard/user';
-import { getInvestments, getUsers } from '../../redux/actions/data';
+import { getInvestments, getUsers, getIdentities } from '../../redux/actions/data';
 import { fCurrency, fPercent } from '../../utils/formatNumber';
 
 // ----------------------------------------------------------------------
@@ -79,7 +79,10 @@ export default function Users() {
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
-  const { users } = useSelector((state) => state.data);
+  useEffect(() => {
+    dispatch(getIdentities());
+  }, [dispatch]);
+  const { users, identities } = useSelector((state) => state.data);
   console.log(users);
 
   const [page, setPage] = useState(0);
@@ -127,8 +130,8 @@ export default function Users() {
   const filteredInvestment = applySortFilter(users, getComparator(order, orderBy), filterName);
 
   const isInvestmentNotFound = filteredInvestment.length === 0;
-  const pendingUsers = users.filter((user) => user.verified === 'pending');
-  const verifiedUsers = users.filter((user) => user.verified === 'true');
+  const verifiedIdentity = identities?.filter((identity) => identity.verified === 'true');
+  const unverifiedIdentity = identities?.filter((identity) => identity.verified === 'false');
 
   return (
     <Page title="All users">
@@ -140,8 +143,8 @@ export default function Users() {
         </Stack>
         <Stack spacing={3} direction="row" mb={4}>
           <Typography variant="subtitle1">Total users: {users.length}</Typography>
-          <Typography variant="subtitle1">Verified users: {verifiedUsers.length}</Typography>
-          <Typography variant="subtitle1">Pending users: {pendingUsers.length}</Typography>
+          <Typography variant="subtitle1">Verified identity: {verifiedIdentity.length}</Typography>
+          <Typography variant="subtitle1">Pending identity verification: {unverifiedIdentity.length}</Typography>
         </Stack>
         <Card>
           <Scrollbar>
@@ -160,6 +163,7 @@ export default function Users() {
                   {filteredInvestment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { _id, dateOfBirth, tel, email, country, profilePic, firstName, lastName } = row;
                     const isItemSelected = selected.indexOf(firstName) !== -1;
+                    const userIdentity = identities?.find((uid) => uid.user === _id);
                     return (
                       <TableRow
                         hover
@@ -169,7 +173,7 @@ export default function Users() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                         component={RouterLink}
-                        to={`/admin/users/${_id}`}
+                        to={!userIdentity ? `/admin/users/${_id}` : `/admin/users/${_id}?identity=${userIdentity._id}`}
                       >
                         <TableCell component="th" scope="row" padding="checkbox">
                           <Stack direction="row" alignItems="center" spacing={2}>

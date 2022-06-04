@@ -1,46 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Stack, Typography, TextField, InputAdornment, MenuItem, Box } from '@mui/material';
+import {
+  Container,
+  Stack,
+  Typography,
+  TextField,
+  InputAdornment,
+  MenuItem,
+  Box,
+  InputLabel,
+  Select,
+  IconButton,
+} from '@mui/material';
+import FileBase64 from 'react-file-base64';
 import { LoadingButton } from '@mui/lab';
 import { useFormik, FormikProvider, Form } from 'formik';
 import Page from '../components/Page';
 import countries from '../sections/@dashboard/user/countries';
-import { verifyUser, getIdentities } from '../redux/actions/data';
+import { verifyUser, getIdentities, editUser } from '../redux/actions/data';
+import { PATH_DASHBOARD } from '../routes/paths';
+
+// ----------------------------------------------------------------------
 
 export default function IdVerification() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // eslint-disable-next-line
   const [toastMsg, setToastMsg] = useState('');
-
   React.useEffect(() => {
     dispatch(getIdentities());
   }, [dispatch]);
 
-  const identities = useSelector((state) => state.data);
-  console.log(identities);
-  const [image, setImage] = useState([]);
-  const [previewSource, setPreviewSource] = useState('');
-  const imageTypeRegex = /image\/(png|jpg|jpeg)/gm;
-  const changeHandler = (e) => {
-    const file = e.target.files[0];
-    previewFile(file);
-  };
-  const previewFile = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setPreviewSource(reader.result);
-    };
-  };
+  const { identities, user } = useSelector((state) => state.data);
+
   const phoneRegEx =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     dateOfBirth: Yup.string().required('Your date of birth is required'),
     country: Yup.string().required('Please select a country'),
     tel: Yup.string()
@@ -49,8 +48,7 @@ export default function IdVerification() {
       .min(10, 'Phone number is invalid')
       .max(11, 'Phone number is invalid'),
   });
-  const auth = JSON.parse(localStorage.getItem('profile'));
-  const { user } = useSelector((state) => state.data);
+
   const formik = useFormik({
     initialValues: {
       firstName: user?.firstName,
@@ -64,28 +62,32 @@ export default function IdVerification() {
       city: '',
       zipCode: '',
       idCountry: '',
+      idType: '',
       selfie: '',
-      passport: '',
-      driverLicense: '',
-      otherId: '',
+      idImage: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       const { setSubmitting } = formik;
-
-      const uploadImage = (base64EncodedImage) => {
-        dispatch(verifyUser({ ...values, passport: base64EncodedImage }, navigate, setSubmitting, setToastMsg));
-      };
-      if (!previewSource) return;
-      uploadImage(previewSource);
+      dispatch(verifyUser(values, setSubmitting, navigate, setToastMsg));
     },
   });
+  const thisUserIdentity = identities.find((i) => i.user === user._id);
+  console.log(thisUserIdentity);
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values, setFieldValue } = formik;
   const selectedCountryCode = countries.find((c) => c.label === values.country);
 
+  // navigate to a pending route if user has already submitted identity details and it has not been set to true
+  useEffect(() => {
+    if (thisUserIdentity?.verified === 'false') {
+      navigate(PATH_DASHBOARD.pendingVerification, { replace: true });
+    } else if (thisUserIdentity?.verified === 'true') {
+      navigate(PATH_DASHBOARD.successVerification, { replace: true });
+    }
+  }, []);
   return (
-    <Page title="Identity verification">
-      <Container>
+    <Container>
+      <Page title="Identity verification">
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h4" gutterBottom>
             Identity verification
@@ -104,13 +106,12 @@ export default function IdVerification() {
           </Typography>
           <Typography variant="body1">Thank you!</Typography>
         </Stack>
-        <Box maxWidth="500px">
+        <Box maxWidth="sm">
+          <Typography variant="h5" mb={4}>
+            Personal Details
+          </Typography>
           <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-              <Typography variant="h5" mb={4}>
-                Personal Details
-              </Typography>
-
               <Stack spacing={3}>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                   <TextField
@@ -129,22 +130,21 @@ export default function IdVerification() {
                     helperText={touched.lastName && errors.lastName}
                   />
                 </Stack>
-
-                <TextField
-                  id="date"
-                  label="Date of birth"
-                  type="date"
-                  fullWidth
-                  defaultValue="2017-05-24"
-                  sx={{ width: 220 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  {...getFieldProps('dateOfBirth')}
-                  error={Boolean(touched.dateOfBirth && errors.dateOfBirth)}
-                  helperText={touched.dateOfBirth && errors.dateOfBirth}
-                />
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                  <TextField
+                    id="date"
+                    label="Date of birth"
+                    type="date"
+                    fullWidth
+                    defaultValue="2017-05-24"
+                    sx={{ width: 220 }}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    {...getFieldProps('dateOfBirth')}
+                    error={Boolean(touched.dateOfBirth && errors.dateOfBirth)}
+                    helperText={touched.dateOfBirth && errors.dateOfBirth}
+                  />
                   <TextField
                     fullWidth
                     autoComplete="mail"
@@ -154,105 +154,150 @@ export default function IdVerification() {
                     error={Boolean(touched.identityEmail && errors.identityEmail)}
                     helperText={touched.identityEmail && errors.identityEmail}
                   />
-                  <TextField
-                    fullWidth
-                    autoComplete="tel"
-                    type="tel"
-                    label="Phone number"
-                    {...getFieldProps('tel')}
-                    error={Boolean(touched.tel && errors.tel)}
-                    helperText={touched.tel && errors.tel}
-                  />
                 </Stack>
-              </Stack>
-              <Typography variant="h5" my={4}>
-                Billing Address
-              </Typography>
-              <Stack spacing={3}>
-                <TextField
-                  label="COUNTRY"
-                  {...getFieldProps('country')}
-                  error={Boolean(touched.country && errors.country)}
-                  helperText={touched.country && errors.country}
-                  fullWidth
-                  leblId="country"
-                  id="select"
-                  select
-                >
-                  {countries.map((country) => (
-                    <MenuItem key={country.code} value={country.label}>
-                      {country.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                   <TextField
+                    label="Country"
+                    {...getFieldProps('country')}
+                    error={Boolean(touched.country && errors.country)}
+                    helperText={touched.country && errors.country}
                     fullWidth
-                    label="STREET"
-                    {...getFieldProps('Street')}
-                    error={Boolean(touched.street && errors.street)}
-                    helperText={touched.street && errors.street}
-                  />
+                    leblId="country"
+                    id="select"
+                    select
+                  >
+                    {countries.map((country) => (
+                      <MenuItem key={country.code} value={country.label}>
+                        {country.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                   <TextField
                     fullWidth
-                    label="CITY"
-                    {...getFieldProps('city')}
-                    error={Boolean(touched.city && errors.city)}
-                    helperText={touched.city && errors.city}
-                  />
-                </Stack>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                  <TextField
-                    fullWidth
-                    label="STATE"
+                    label="State"
                     {...getFieldProps('state')}
                     error={Boolean(touched.state && errors.state)}
                     helperText={touched.state && errors.state}
                   />
+                </Stack>
+
+                <TextField
+                  fullWidth
+                  autoComplete="tel"
+                  type="tel"
+                  label="Phone number"
+                  {...getFieldProps('tel')}
+                  error={Boolean(touched.tel && errors.tel)}
+                  helperText={touched.tel && errors.tel}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        {selectedCountryCode === undefined ? null : `+${selectedCountryCode?.phone}`}
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                <Typography variant="h5" my={4}>
+                  Billing Address
+                </Typography>
+                <Stack spacing={3}>
+                  <TextField
+                    label="COUNTRY"
+                    {...getFieldProps('country')}
+                    error={Boolean(touched.country && errors.country)}
+                    helperText={touched.country && errors.country}
+                    fullWidth
+                    leblId="country"
+                    id="select"
+                    select
+                  >
+                    {countries.map((country) => (
+                      <MenuItem key={country.code} value={country.label}>
+                        {country.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                    <TextField
+                      fullWidth
+                      label="STREET"
+                      {...getFieldProps('street')}
+                      error={Boolean(touched.street && errors.street)}
+                      helperText={touched.street && errors.street}
+                    />
+                    <TextField
+                      fullWidth
+                      label="CITY"
+                      {...getFieldProps('city')}
+                      error={Boolean(touched.city && errors.city)}
+                      helperText={touched.city && errors.city}
+                    />
+                  </Stack>
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                    <TextField
+                      fullWidth
+                      label="STATE"
+                      {...getFieldProps('state')}
+                      error={Boolean(touched.state && errors.state)}
+                      helperText={touched.state && errors.state}
+                    />
+                    <TextField
+                      fullWidth
+                      label="ZIP CODE/POSTAL CODE"
+                      {...getFieldProps('zipCode')}
+                      error={Boolean(touched.zipCode && errors.zipCode)}
+                      helperText={touched.zipCode && errors.zipCode}
+                    />
+                  </Stack>
+                </Stack>
+                <Typography variant="h5" my={4}>
+                  Identification
+                </Typography>
+                <Stack spacing={3}>
+                  <TextField
+                    label="WHAT COUNTRY ISSUED YOUR ID?"
+                    {...getFieldProps('idCountry')}
+                    error={Boolean(touched.idCountry && errors.idCountry)}
+                    helperText={touched.idCountry && errors.idCountry}
+                    fullWidth
+                    leblId="country"
+                    id="select"
+                    select
+                  >
+                    {countries.map((country) => (
+                      <MenuItem key={country.code} value={country.label}>
+                        {country.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Stack>
+
+                <FileBase64
+                  multiple={false}
+                  onDone={({ base64 }) => setFieldValue('selfie', base64)}
+                  accept="image/png, image/gif, image/jpeg, image/webp, image/tiff"
+                />
+                <Stack spacing={1.5}>
                   <TextField
                     fullWidth
-                    label="ZIP CODE/POSTAL CODE"
-                    {...getFieldProps('zipCode')}
-                    error={Boolean(touched.zipCode && errors.zipCode)}
-                    helperText={touched.zipCode && errors.zipCode}
-                  />
-                </Stack>
-              </Stack>
-              <Typography variant="h5" my={4}>
-                Identification
-              </Typography>
-              <Stack spacing={3}>
-                <TextField
-                  label="WHAT COUNTRY ISSUED YOUR ID?"
-                  {...getFieldProps('idCountry')}
-                  error={Boolean(touched.idCountry && errors.idCountry)}
-                  helperText={touched.idCountry && errors.idCountry}
-                  fullWidth
-                  leblId="country"
-                  id="select"
-                  select
-                >
-                  {countries.map((country) => (
-                    <MenuItem key={country.code} value={country.label}>
-                      {country.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <Stack spacing={1.5}>
-                  <Typography variant="body2">SELFIE - NOT FROM YOUR ID</Typography>
-                  <input type="file" name="passport" id="passport" onChange={changeHandler} value={image} />
-                  {previewSource && <img src={previewSource} alt="..." />}
-                </Stack>
-                <Stack spacing={1.5}>
-                  <TextField fullWidth label="Select a form of ID" select>
+                    label="Select a form of ID"
+                    {...getFieldProps('idType')}
+                    error={Boolean(touched.idType && errors.idType)}
+                    helperText={touched.idType && errors.idType}
+                    select
+                  >
                     <MenuItem value="Passport">Passport</MenuItem>
                     <MenuItem value="Driver's License">Driver's License</MenuItem>
                     <MenuItem value="Other ID">Other ID</MenuItem>
                   </TextField>
-                  <input type="file" name="passport" id="passport" onChange={changeHandler} value={image} />
+                  <FileBase64
+                    multiple={false}
+                    onDone={({ base64 }) => setFieldValue('idImage', base64)}
+                    accept="image/png, image/gif, image/jpeg, image/webp, image/tiff"
+                  />
                 </Stack>
-                {/* <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                </Stack> */}
                 <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
                   Submit for review
                 </LoadingButton>
@@ -260,7 +305,7 @@ export default function IdVerification() {
             </Form>
           </FormikProvider>
         </Box>
-      </Container>
-    </Page>
+      </Page>
+    </Container>
   );
 }

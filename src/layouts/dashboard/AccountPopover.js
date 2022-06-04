@@ -6,9 +6,7 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@
 import PropTypes from 'prop-types';
 // components
 import MenuPopover from '../../components/MenuPopover';
-// mocks_
-import account from '../../_mock/account';
-import { PATH_AUTH, PATH_DASHBOARD, PATH_PAGE } from '../../routes/paths';
+import { PATH_AUTH, PATH_DASHBOARD } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +14,7 @@ const MENU_OPTIONS = [
   {
     label: 'Dashboard',
     icon: 'eva:person-fill',
-    linkTo: PATH_DASHBOARD.root,
+    linkTo: PATH_DASHBOARD.user,
   },
   {
     label: 'My investment',
@@ -72,7 +70,7 @@ export default function AccountPopover({ auth }) {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={auth.profilePic} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -99,14 +97,17 @@ export default function AccountPopover({ auth }) {
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Stack>
+        {auth.role === 'admin' ? (
+          ''
+        ) : (
+          <Stack sx={{ p: 1 }}>
+            {MENU_OPTIONS.map((option) => (
+              <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Stack>
+        )}
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 

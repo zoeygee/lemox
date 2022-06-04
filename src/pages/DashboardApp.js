@@ -5,6 +5,7 @@ import jwt from 'jwt-decode';
 import { Grid, Container, Typography, Link, Stack, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { addDays } from 'date-fns';
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -17,9 +18,6 @@ import { PATH_DASHBOARD, PATH_PAGE } from '../routes/paths';
 export default function DashboardApp() {
   const dispatch = useDispatch();
   const investmentId = '628d19ff2d27cee3aea0a4aa';
-  useEffect(() => {
-    dispatch(getUpdatedInvestment(investmentId));
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getSingleInvestment(investmentId));
@@ -30,7 +28,32 @@ export default function DashboardApp() {
   }, [dispatch]);
 
   const { investments, isLoading, investment } = useSelector((state) => state.data);
-  const totalInvestment = investments.reduce((e, i) => e + i?.amount, 0);
+  const { incrementedAt } = investment;
+  const totalInvestment = 20;
+  const amountInvested = 20;
+  const incrementDate = new Date(investment.incrementedAt);
+  const roi = (10 / 100) * amountInvested;
+  const sevenDaysAfter = addDays(incrementDate, 7);
+  const daysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+  const updatedAmount = amountInvested + roi;
+
+  // increment config
+  const config = {
+    incrementAmount: updatedAmount,
+    incrementedAt: new Date(),
+  };
+  useEffect(() => {
+    dispatch(getUpdatedInvestment(investmentId, config));
+  }, [dispatch]);
+
+  setInterval(() => {
+    if (sevenDaysAfter - incrementDate === daysInMilliseconds) {
+      dispatch(getUpdatedInvestment(investmentId, config));
+    }
+  }, daysInMilliseconds);
+
+  // actual investment is below
+  // const totalInvestment = investments.reduce((e, i) => e + i?.amount, 0);
 
   return (
     <Page title="Dashboard">

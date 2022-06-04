@@ -28,7 +28,6 @@ export const PATH_PAGE = {
   faqs: '/faqs',
   page404: '/404',
   page500: '/500',
-  pendingVerification: '/pending-verification',
 };
 
 export const PATH_DASHBOARD = {
@@ -40,6 +39,8 @@ export const PATH_DASHBOARD = {
   accountDetails: path(ROOTS_DASHBOARD, '/account-details'),
   myTokens: path(ROOTS_DASHBOARD, '/my-tokens'),
   idVerification: path(ROOTS_DASHBOARD, '/id-verification'),
+  pendingVerification: path(ROOTS_DASHBOARD, '/id-verification/pending'),
+  successVerification: path(ROOTS_DASHBOARD, '/id-verification/success'),
 };
 
 export const PATH_ADMIN = {

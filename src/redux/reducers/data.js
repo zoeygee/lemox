@@ -12,6 +12,7 @@ export default (
     withdrawals: [],
     users: [],
     user: {},
+    userDetail: {},
     staticInvestments: [],
     identities: [],
     identity: {},
@@ -52,6 +53,8 @@ export default (
       return { ...state, users: action.payload };
     case actions.GET_USER:
       return { ...state, user: action.payload };
+    case actions.USER_DETAIL:
+      return { ...state, userDetail: action.payload };
     case actions.UPDATE_USER:
       return { ...state, users: state.users.map((user) => (user._id === action.payload._id ? action.payload : user)) };
     case actions.STATIC_INVESTMENTS:
@@ -62,6 +65,8 @@ export default (
       return { ...state, identity: action.payload };
     case actions.VERIFY_USER:
       return { ...state, identities: [...state.identities, action.payload] };
+    case actions.UPDATE_VERIFICATION:
+      return { ...state, identities: state.identities.map((i) => (i._id === action.payload._id ? action.payload : i)) };
     default:
       return state;
   }

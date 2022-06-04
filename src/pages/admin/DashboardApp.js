@@ -10,6 +10,7 @@ import Iconify from '../../components/Iconify';
 import { AppRecent, AppMiniCard } from '../../sections/@dashboard/app';
 import { getStaticInvestments, getUsers } from '../../redux/actions/data';
 import { PATH_DASHBOARD } from '../../routes/paths';
+
 // ----------------------------------------------------------------------
 
 export default function AdminDashboardApp() {
@@ -21,7 +22,7 @@ export default function AdminDashboardApp() {
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
-  const {users, staticInvestments, isLoading} = useSelector((state) => state.data);
+  const { users, staticInvestments, isLoading } = useSelector((state) => state.data);
   const totalInvestment = 0;
   console.log(users);
 
@@ -32,7 +33,7 @@ export default function AdminDashboardApp() {
       <Container maxWidth="xl">
         <Typography variant="h4">Hi Admin, Welcome back</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 5 }}>
-          Thi is an Admin dashboard .
+          This an Admin dashboard .
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>

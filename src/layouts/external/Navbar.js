@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/material';
-import { useImperativeHandle, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AccountPopover from '../dashboard/AccountPopover';
 import { PATH_DASHBOARD, PATH_PAGE, PATH_AUTH } from '../../routes/paths';
 import Iconify from '../../components/Iconify';
@@ -9,6 +9,7 @@ import Iconify from '../../components/Iconify';
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const { pathname } = useLocation();
   const [accountOpen, setAccountOpen] = useState(false);
   const auth = JSON.parse(localStorage.getItem('profile'));
   const navigate = useNavigate();
@@ -20,6 +21,9 @@ export default function Navbar() {
     }
   };
 
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-lg">

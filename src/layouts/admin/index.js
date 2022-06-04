@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-import { useDispatch} from "react-redux";
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import jwt from 'jwt-decode';
 // material
 import { styled } from '@mui/material/styles';
 //
 // import DashboardNavbar from './DashboardNavbar';
 import Sidebar from './Sidebar';
-import { getUser} from "../../redux/actions/data"
+import { getUser } from '../../redux/actions/data';
+import { PATH_AUTH } from '../../routes/paths';
+import DashboardNavbar from '../dashboard/DashboardNavbar';
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -35,15 +38,29 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function AdminLayout() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const auth = JSON.parse(localStorage.getItem('profile'));
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(getUser(auth.result._id))
-  },[dispatch])
+  useEffect(() => {
+    dispatch(getUser(auth.result._id));
+  }, [dispatch]);
+  const { user } = useSelector((state) => state.data);
+  console.log(user.verified);
 
+  useEffect(() => {
+    const { token } = auth;
+    // JWT check if token expired
+    if (token) {
+      const decodedToken = jwt(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        localStorage.clear();
+        navigate(PATH_AUTH.login);
+      }
+    }
+  }, [navigate]);
   return (
     <RootStyle>
-      {/* <DashboardNavbar onOpenSidebar={() => setOpen(true)} auth={auth} /> */}
+      <DashboardNavbar onOpenSidebar={() => setOpen(true)} auth={auth} />
       <Sidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} auth={auth} />
       <MainStyle>
         <Outlet />

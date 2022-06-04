@@ -23,8 +23,11 @@ export const GET_WITHDRAWAL = 'GET_WITHDRAWAL';
 export const GET_USERS = 'GET_USERS';
 export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const USER_DETAIL = 'USER_DETAIL';
 export const STATIC_INVESTMENTS = 'STATIC_INVESTMENTS';
 
 export const VERIFY_USER = 'VERIFY_USER';
 export const GET_IDENTITIES = 'GET_IDENTITIES';
 export const GET_IDENTITY = 'GET_IDENTITY';
+
+export const UPDATE_VERIFICATION = 'UPDATE_VERIFICATION';

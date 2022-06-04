@@ -20,7 +20,7 @@ import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
 import { useFormik, Form, FormikProvider } from 'formik';
 import * as Yup from 'yup';
-import { createInvestment } from '../redux/actions/data';
+import { createInvestment, getIdentities } from '../redux/actions/data';
 import { fCurrency } from '../utils/formatNumber';
 import { PATH_DASHBOARD } from '../routes/paths';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
@@ -31,10 +31,14 @@ Payment.propType = {
 };
 export default function Payment({ property, user }) {
   // const { firstName, lastName, email, _id } = user;
+  useEffect(() => {
+    dispatch(getIdentities());
+  }, []);
   const [charge, setCharge] = useState([]);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { identities } = useSelector((state) => state.data);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -45,6 +49,7 @@ export default function Payment({ property, user }) {
     amount: Yup.number().min(100, 'must be above 100').required('amount to invest is required'),
     ethToken: Yup.string().required('Input your wallet to receive token'),
   });
+  const thisUserIdentity = identities.find((i) => i.user === user._id);
 
   const formik = useFormik({
     initialValues: {
@@ -68,12 +73,13 @@ export default function Payment({ property, user }) {
       resetForm();
     },
   });
+
   const { handleSubmit, getFieldProps, setFieldValue, touched, errors, isSubmitting, values } = formik;
   console.log(user);
-
+  console.log(identities);
   return (
     <Box py={4}>
-      {user.verified === 'false' || user.verified === 'pending' ? (
+      {thisUserIdentity?.verified === 'false' || thisUserIdentity?.verified === undefined ? (
         <Stack spacing={2}>
           <Typography variant="body1">
             Before you can invest with us, you'll have to complete our ID verification process.
@@ -139,9 +145,9 @@ export default function Payment({ property, user }) {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>
-                  <Button type="submit" onClick={handleSubmit}>
+                  <LoadingButton loading={isSubmitting} type="submit" onClick={handleSubmit}>
                     Invest
-                  </Button>
+                  </LoadingButton>
                 </DialogActions>
               </Dialog>
             </Form>

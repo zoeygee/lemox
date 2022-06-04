@@ -37,7 +37,7 @@ function LoginForm() {
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       const { setSubmitting } = formik;
-      dispatch(signin(values, setErrorHandler, setSubmitting, setToastMsg, navigate));
+      dispatch(signin(values, setErrorHandler, setSubmitting, setToastMsg, navigate, location));
     },
   });
 

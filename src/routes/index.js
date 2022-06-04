@@ -5,7 +5,6 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 import AdminLayout from '../layouts/admin';
 import NotFound from '../pages/Page404';
 import ExternalLayout from '../layouts/external';
-import Deposit from '../pages/Deposit';
 import { Users } from '../pages/admin';
 // Guards
 import RoleBasedGuard from '../guards/RoleBasedGuard';
@@ -31,6 +30,7 @@ import {
   ResetPassword,
   Withdrawals,
   PendingVerification,
+  SuccessVerification,
   UserDetail,
   AllWithdrawals,
   WithdrawalDetail,
@@ -59,7 +59,6 @@ export default function Router() {
         { path: '/faqs', element: <Faqs /> },
         { path: '/terms-of-service', element: <TermsOfService /> },
         { path: '/referral', element: <ReferPage /> },
-        { path: '/pending-verification', element: <PendingVerification /> },
         { path: '/marketplace/:id/checkout/:charge', element: <Checkout /> },
       ],
     },
@@ -81,6 +80,8 @@ export default function Router() {
         { path: 'id-verification', element: <IdVerification /> },
         { path: 'sell-token', element: <SellToken /> },
         { path: 'referral', element: <Referral /> },
+        { path: 'id-verification/pending', element: <PendingVerification /> },
+        { path: 'id-verification/success', element: <SuccessVerification /> },
       ],
     },
     {

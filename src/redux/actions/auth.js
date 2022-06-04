@@ -1,16 +1,18 @@
 import toast from 'react-hot-toast';
+import { Navigate } from 'react-router-dom';
 import { AUTH, EDIT_PROFILE, FORGOT_PASSWORD } from './actionTypes';
 import * as api from '../api';
 import { PATH_DASHBOARD, PATH_ADMIN } from '../../routes/paths';
 
 const auth = JSON.parse(localStorage.getItem('profile'));
-export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navigate) => async (dispatch) => {
+export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navigate, location) => async (dispatch) => {
   try {
     // sign the user in
     setSubmitting(true);
     const { data } = await api.signin(values);
     dispatch({ type: AUTH, data });
     setSubmitting(false);
+
     if (auth.result.role === 'admin') {
       return navigate(PATH_ADMIN.dashboard);
     }
@@ -36,21 +38,20 @@ export const signup = (values, navigate, setSubmitting, setToastMsg) => async (d
   }
 };
 
-// export const editProfile = (userId, profile, setSubmitting, setToastMsg) => async (dispatch) => {
-//   try {
-//     setSubmitting(true);
-//     const { data } = await api.editProfile(userId, profile);
-//     dispatch({ type: EDIT_PROFILE, data });
-//     console.log(data);
-
-//     setSubmitting(false);
-//     setToastMsg(toast.success('Profile updated successfully'));
-//   } catch (error) {
-//     setSubmitting(false);
-//     setToastMsg(toast.error(error?.response?.data?.msg));
-//     console.log(error);
-//   }
-// };
+export const editProfile = (userId, profile, setSubmitting, setToastMsg) => async (dispatch) => {
+  try {
+    setSubmitting(true);
+    const { data } = await api.updateProfile(userId, profile);
+    dispatch({ type: EDIT_PROFILE, data });
+    console.log(data);
+    setSubmitting(false);
+    setToastMsg(toast.success('Profile updated successfully'));
+  } catch (error) {
+    setSubmitting(false);
+    setToastMsg(toast.error(error?.response?.data?.msg));
+    console.log(error);
+  }
+};
 
 // export const forgotPassword = (email, navigate, setSubmitting) => async (dispatch) => {
 //   try {

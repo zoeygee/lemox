@@ -1,4 +1,5 @@
 import toast from 'react-hot-toast';
+import { PATH_DASHBOARD } from '../../routes/paths';
 import * as api from '../api';
 import * as actions from './actionTypes';
 
@@ -65,9 +66,9 @@ export const getSingleInvestment = (id) => async (dispatch) => {
   }
 };
 
-export const getUpdatedInvestment = (id) => async (dispatch) => {
+export const getUpdatedInvestment = (id, values) => async (dispatch) => {
   try {
-    const { data } = await api.fetchUpdatedInvestment(id);
+    const { data } = await api.fetchUpdatedInvestment(id, values);
     dispatch({ type: actions.INCREMENT_INVESTMENT, payload: data });
     console.log(data);
   } catch (error) {
@@ -158,6 +159,17 @@ export const getUser = (id) => async (dispatch) => {
     dispatch({ type: actions.END_LOADING });
   }
 };
+export const getUserDetail = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: actions.START_LOADING });
+    const { data } = await api.fetchUser(id);
+    dispatch({ type: actions.USER_DETAIL, payload: data });
+    dispatch({ type: actions.END_LOADING });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: actions.END_LOADING });
+  }
+};
 
 export const getStaticInvestments = () => async (dispatch) => {
   try {
@@ -171,16 +183,20 @@ export const getStaticInvestments = () => async (dispatch) => {
     dispatch({ type: actions.END_LOADING });
   }
 };
-export const verifyUser = (values) => async (dispatch) => {
+export const verifyUser = (values, setSubmitting, navigate, setToastMsg) => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });
     const { data } = await api.verifyUser(values);
     dispatch({ type: actions.VERIFY_USER, payload: data });
     console.log(data);
     dispatch({ type: actions.END_LOADING });
+    setSubmitting(false);
+    navigate(PATH_DASHBOARD.pendingVerification);
   } catch (error) {
     console.log(error);
     dispatch({ type: actions.END_LOADING });
+    setToastMsg(toast.error(error?.response?.data?.msg));
+    setSubmitting(false);
   }
 };
 export const getIdentity = (id) => async (dispatch) => {
@@ -201,6 +217,19 @@ export const getIdentities = () => async (dispatch) => {
     const { data } = await api.fetchIdentities();
     dispatch({ type: actions.GET_IDENTITIES, payload: data });
     console.log(data);
+    dispatch({ type: actions.END_LOADING });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: actions.END_LOADING });
+  }
+};
+export const updateIdentities = (id, values, setCustomer) => async (dispatch) => {
+  try {
+    dispatch({ type: actions.START_LOADING });
+    const { data } = await api.updateIdentities(id, values);
+    dispatch({ type: actions.GET_IDENTITIES, payload: data });
+    console.log(data);
+    setCustomer('true');
     dispatch({ type: actions.END_LOADING });
   } catch (error) {
     console.log(error);

@@ -25,3 +25,4 @@ export { default as SellToken } from './SellToken';
 export { default as Referral } from './Referral';
 export { default as ReferPage } from './ReferPage';
 export { default as Checkout } from './Checkout';
+export { default as SuccessVerification } from './SuccessVerification';

@@ -18,8 +18,8 @@ export const updateProfile = (id, values) => API.patch(`/auth/profile/${id}`, va
 
 export const createInvestment = (values) => API.post('/investment', values);
 export const fetchInvestment = () => API.get('/investment');
-export const fetchSingleInvestment = (id) => API.get(`/investment/${id}`);
-export const fetchUpdatedInvestment = (id) => API.patch(`/investment/update-investment/${id}`);
+export const fetchSingleInvestment = (id) => API.get(`/investment/data/${id}`);
+export const fetchUpdatedInvestment = (id, values) => API.patch(`/investment/update-investment/${id}`, values);
 export const retrievePaymentStatus = (id) => API.post('/investment/status', id);
 
 export const withdrawFunds = (values) => API.post('/withdrawal', values);
@@ -33,5 +33,6 @@ export const fetchStaticInvestments = () => API.get('/static/investments');
 
 // API TO VERIFY INVESTORS
 export const verifyUser = (values) => API.post('/identity', values);
-export const fetchIdentity = (id) => API.get(`/identity${id}`);
+export const fetchIdentity = (id) => API.get(`/identity/${id}`);
 export const fetchIdentities = () => API.get('/identity');
+export const updateIdentities = (id, values) => API.patch(`/identity/${id}`, values);

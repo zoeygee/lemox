@@ -1,38 +1,41 @@
-import { Carousel } from 'react-carousel-minimal';
+// src/reusable/image-gallery.component.js
+import React from 'react';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 
-export default function PropertyCarousel({ images }) {
-  console.log(images);
+function PropertyCarousel({ images }) {
+  const opt = {
+    rewind: true,
+    fixedWidth: '100%',
+    fixedHeight: '440px',
+    isNavigation: true,
+    focus: 'center',
+    pagination: true,
+    cover: true,
+    dragMinThreshold: {
+      mouse: 4,
+      touch: 10,
+    },
+  };
   return (
-    <>
-      {images ? (
-        <div
-          style={{
-            padding: '0 20px',
-          }}
-        >
-          <Carousel
-            data={images}
-            width="850px"
-            height="300px"
-            radius="10px"
-            slideNumber
-            captionPosition="bottom"
-            automatic
-            pauseIconColor="white"
-            pauseIconSize="40px"
-            slideBackgroundColor="darkgrey"
-            slideImageFit="cover"
-            thumbnails
-            thumbnailWidth="100px"
-            style={{
-              textAlign: 'center',
-              maxWidth: '850px',
-              maxHeight: '300px',
-              margin: '40px auto',
-            }}
-          />
-        </div>
-      ) : null}
-    </>
+    <div>
+      {!images ? (
+        'loading...'
+      ) : (
+        <>
+          <Splide aria-label="property-images" options={opt}>
+            {images.map((image, index) => (
+              <SplideSlide key={index}>
+                <img src={image} alt="... 1" />
+              </SplideSlide>
+            ))}
+            <div className="my-slider-progress">
+              <div className="my-slider-progress-bar" />
+            </div>
+          </Splide>
+        </>
+      )}
+    </div>
   );
 }
+
+export default PropertyCarousel;

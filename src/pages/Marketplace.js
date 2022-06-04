@@ -78,15 +78,15 @@ export default function Marketplace() {
                           <div className="card-body">
                             <h6 className="font-sans-serif text-muted mb-2">{property?.title}</h6>
                             <div className="d-flex mb-4 justify-content-between">
-                              <h2>Total investment</h2>
-                              <h2>
+                              <h3>Total investment</h3>
+                              <h3>
                                 {property.status === 'available'
                                   ? fCurrency(property?.financials?.totalInvestment)
                                   : 'Not available'}
-                              </h2>
+                              </h3>
                             </div>
                             <div className="d-flex mb-4 justify-content-between">
-                              <h2>Token price</h2>
+                              <h3>Token price</h3>
                               {property.status === 'available' ? (
                                 <h2>{fCurrency(property.tokenPrice)}/token</h2>
                               ) : (
