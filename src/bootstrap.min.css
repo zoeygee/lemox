@@ -21802,6 +21802,14 @@ https://flickity.metafizzy.co
   opacity: 1;
 }
 
+@media (max-width: 768px) {
+  .sold-out-img {
+    margin: 0 90px 350px !important;
+  }
+  .sold-out-wrapper {
+    width: 70%;
+  }
+}
 /* IMAGE CAROUSEL STYLE */
 .carousel-inner img {
   width: 100%;
@@ -21960,7 +21968,7 @@ https://flickity.metafizzy.co
 }
 .splide__track--ttb > .splide__list {
   display: block;
-  min-width: 320px
+  min-width: 320px;
 }
 .splide__arrow {
   -ms-flex-align: center;
@@ -22152,4 +22160,23 @@ https://flickity.metafizzy.co
   height: 2px;
   transition: width 400ms ease;
   width: 0;
+}
+
+.svgs-wrapper {
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 20px;
+}
+.list-item {
+  display: flex;
+  align-items: flex-start;
+}
+.list-item .svgs-wrapper span {
+  height: 31px;
+  display: flex;
+  align-items: center;
 }

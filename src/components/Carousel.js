@@ -1,6 +1,7 @@
 // src/reusable/image-gallery.component.js
 import React from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { RViewer, RViewerTrigger } from 'react-viewerjs';
 
 function PropertyCarousel({ images }) {
   const opt = {
@@ -21,18 +22,20 @@ function PropertyCarousel({ images }) {
       {!images ? (
         'loading...'
       ) : (
-        <>
+        <RViewer imageUrls={images}>
           <Splide aria-label="property-images" options={opt}>
             {images.map((image, index) => (
               <SplideSlide key={index}>
-                <img src={image} alt="... 1" />
+                <RViewerTrigger index={index}>
+                  <img src={image} alt="... 1" />
+                </RViewerTrigger> 
               </SplideSlide>
             ))}
             <div className="my-slider-progress">
               <div className="my-slider-progress-bar" />
             </div>
           </Splide>
-        </>
+        </RViewer>
       )}
     </div>
   );

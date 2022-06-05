@@ -3,6 +3,7 @@ import { useEffect, useCallback } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
+import FileBase64 from 'react-file-base64';
 // material
 import { Box, Grid, Card, Stack, Switch, TextField, FormControlLabel, Typography, FormHelperText } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -64,6 +65,12 @@ export default function AccountGeneral() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <Card sx={{ py: 10, px: 3, textAlign: 'center' }}>
+              <FileBase64
+                multiple={false}
+                onDone={({ base64 }) => setFieldValue('profilePic', base64)}
+                type="file"
+                accept="image/png, image/gif, image/jpeg, image/webp, image/tiff"
+              />
               {/* <UploadAvatar
                 accept="image/*"
                 file={values.photoURL}
@@ -101,7 +108,7 @@ export default function AccountGeneral() {
                 </Stack>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <TextField fullWidth label="Phone Number" {...getFieldProps('tel')} />
-                  <TextField fullWidth label="Email Address" {...getFieldProps('email')} />
+                  <TextField fullWidth label="Email Address" {...getFieldProps('email')} disabled />
                 </Stack>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <TextField

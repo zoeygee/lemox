@@ -40,6 +40,7 @@ import {
   Referral,
   ReferPage,
   Checkout,
+  PaymentCancelled,
 } from '../pages';
 // ----------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ export default function Router() {
         { path: '/terms-of-service', element: <TermsOfService /> },
         { path: '/referral', element: <ReferPage /> },
         { path: '/marketplace/:id/checkout/:charge', element: <Checkout /> },
+        { path: '/marketplace/:id/checkout/:charge/cancelled', element: <PaymentCancelled /> },
       ],
     },
     {

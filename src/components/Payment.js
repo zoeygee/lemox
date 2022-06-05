@@ -35,6 +35,7 @@ export default function Payment({ property, user }) {
     dispatch(getIdentities());
   }, []);
   const [charge, setCharge] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -58,7 +59,7 @@ export default function Payment({ property, user }) {
       ethToken: '',
     },
     validationSchema: paymentSchema,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
+    onSubmit: (values, { resetForm }) => {
       const propertyId = property._id;
       dispatch(
         createInvestment(
@@ -66,12 +67,11 @@ export default function Payment({ property, user }) {
           setSubmitting,
           setCharge,
           navigate,
-          propertyId
+          propertyId,
+          resetForm
         )
       );
-      // return window.open(charge.hosted_url, '_blank', 'noopener,noreferrer');
       console.log(values);
-      resetForm();
     },
   });
 
@@ -130,7 +130,7 @@ export default function Payment({ property, user }) {
                     />
                     <TextField
                       margin="dense"
-                      label="Input your ETH wallet"
+                      label="Input your ETH wallet address"
                       type="text"
                       fullWidth
                       variant="outlined"
@@ -147,7 +147,7 @@ export default function Payment({ property, user }) {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>
-                  <LoadingButton loading={isSubmitting} type="submit" onClick={handleSubmit}>
+                  <LoadingButton loading={submitting} type="submit" onClick={handleSubmit}>
                     Invest
                   </LoadingButton>
                 </DialogActions>

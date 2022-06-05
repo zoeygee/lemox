@@ -165,15 +165,97 @@ export default function LandingPage() {
             </div>
             <div className="col-md-6 col-lg-5 order-md-0">
               <h2 className="display-4 mb-4">How you get paid</h2>
+
               <p>
                 Our mission is to make it as easy as possible for anyone in the world to diversify into real estate
                 investing.
               </p>
-              <ul className="list-checked list-checked-primary">
-                <li>Tenant Pays rent to the management</li>
-                <li>Management sends token to Lemox</li>
-                <li>Lemox send payment directly to investors' dashboard</li>
-                <li>Investor withdraws to crypto wallet.</li>
+              <ul>
+                <li className="list-item active">
+                  <div className="svgs-wrapper">
+                    <span>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="9.5" stroke="#1b1642" />
+                        <circle cx="10" cy="10" r="5" fill="#1b1642" />
+                      </svg>
+                    </span>
+                    <svg width="1" height="35" viewBox="0 0 1 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect
+                        x="0.25"
+                        y="0.25"
+                        width="0.5"
+                        height="169.5"
+                        stroke="#1b1642"
+                        strokeWidth="0.5"
+                        strokeDasharray="4 4"
+                      />
+                    </svg>
+                  </div>
+                  <div className="text-content">
+                    <p>Tenant Pays rent to the management</p>
+                  </div>
+                </li>
+                <li className="list-item inactive">
+                  <div className="svgs-wrapper">
+                    <span>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="9.5" stroke="#1b1642" />
+                        <circle cx="10" cy="10" r="5" fill="#1b1642" />
+                      </svg>
+                    </span>
+                    <svg width="1" height="35" viewBox="0 0 1 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect
+                        x="0.25"
+                        y="0.25"
+                        width="0.5"
+                        height="169.5"
+                        stroke="#1b1642"
+                        strokeWidth="0.5"
+                        strokeDasharray="4 4"
+                      />
+                    </svg>
+                  </div>
+                  <div className="text-content">
+                    <p>Management sends token to Lemox.</p>
+                  </div>
+                </li>
+                <li className="list-item inactive">
+                  <div className="svgs-wrapper">
+                    <span>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="9.5" stroke="#1b1642" />
+                        <circle cx="10" cy="10" r="5" fill="#1b1642" />
+                      </svg>
+                    </span>
+                    <svg width="1" height="35" viewBox="0 0 1 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect
+                        x="0.25"
+                        y="0.25"
+                        width="0.5"
+                        height="169.5"
+                        stroke="#1b1642"
+                        strokeWidth="0.5"
+                        strokeDasharray="4 4"
+                      />
+                    </svg>
+                  </div>
+                  <div className="text-content">
+                    <p>Lemox send payment directly to investors' dashboard.</p>
+                  </div>
+                </li>
+                <li className="list-item inactive">
+                  <div className="svgs-wrapper">
+                    <span>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="9.5" stroke="#1b1642" />
+                        <circle cx="10" cy="10" r="5" fill="#1b1642" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="text-content">
+                    <p>Investor withdraws to crypto wallet.</p>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>

@@ -17,6 +17,7 @@ import { fDate } from '../utils/formatTime';
 
 export default function Checkout() {
   const { id, charge } = useParams();
+  const navigate = useNavigate();
   const [chargeData, setChargeData] = useState({});
   const auth = JSON.parse(localStorage.getItem('profile'));
   const dispatch = useDispatch();
@@ -51,13 +52,17 @@ export default function Checkout() {
           <CircularProgress />
         </Box>
       ) : (
-        <CheckoutComponent chargeData={chargeData} property={property} user={user} charge={charge} />
+        <CheckoutComponent chargeData={chargeData} property={property} user={user} charge={charge} id={id} />
       )}
     </>
   );
 }
 
-function CheckoutComponent({ chargeData, property, user, charge }) {
+function CheckoutComponent({ chargeData, property, user, charge, id }) {
+  const navigate = useNavigate();
+  const onClosed = () => {
+    navigate(`/marketplace/${id}/checkout/${charge}/cancelled`, { replace: true });
+  };
   return (
     <>
       <Page title="Checkout">
@@ -204,20 +209,7 @@ function CheckoutComponent({ chargeData, property, user, charge }) {
                                           duration: 6000,
                                         })
                                       }
-                                      onModalClosed={() =>
-                                        toast.success('You closed payment.', {
-                                          style: {
-                                            border: '1px solid #1B1642',
-                                            padding: '16px',
-                                            color: '#1B1642',
-                                          },
-                                          iconTheme: {
-                                            primary: '#1B1642',
-                                            secondary: '#FFFAEE',
-                                          },
-                                          duration: 6000,
-                                        })
-                                      }
+                                      onModalClosed={onClosed}
                                     >
                                       Pay now
                                     </CoinbaseCommerceButton>

@@ -88,7 +88,7 @@ export default function Marketplace() {
                             <div className="d-flex mb-4 justify-content-between">
                               <h3>Token price</h3>
                               {property.status === 'available' ? (
-                                <h2>{fCurrency(property.tokenPrice)}/token</h2>
+                                <h3>{fCurrency(property.tokenPrice)}/token</h3>
                               ) : (
                                 <h3>Not available</h3>
                               )}
