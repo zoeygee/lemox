@@ -19,7 +19,7 @@ export default function WatchInvestmentGrow() {
               Watch the value of your investment grow and receive rents weekly in our ever growing real estate markets.
               Our portfolio gets valued by an independent 3rd party every 6 months.
             </p>
-            <ul className="list-checked list-checked-warning mb-0">
+            <ul className="mb-0">
               <li className="mb-3">Browse our marketplace and select the best investment for you. </li>
               <li className="mb-3">
                 Input amount and your ETH wallet address, Token will be sent to that address immediately payment has

@@ -191,12 +191,36 @@ function PropertyDetail() {
                         <TableCell>{fCurrency(property?.financials?.monthlyGrossRent)}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Net Rent / month</TableCell>
+                        <TableCell>Yearly Rent / month</TableCell>
                         <TableCell>{fCurrency(property?.financials?.yearlyNetRent)}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Net Rent / month</TableCell>
                         <TableCell>{fCurrency(property?.financials?.monthlyNetRent)}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>
+                          <h3 style={{ fontFamily: 'DM Sans' }}>Net Rent / year</h3>
+                        </TableCell>
+                        <TableCell>
+                          <h3 style={{ fontFamily: 'DM Sans' }}>{fCurrency(property?.financials?.yearlyNetRent)}</h3>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>
+                          <h3 style={{ fontFamily: 'DM Sans' }}>Total investment</h3>
+                        </TableCell>
+                        <TableCell>
+                          <h3 style={{ fontFamily: 'DM Sans' }}>{fCurrency(property?.financials?.totalInvestment)}</h3>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>
+                          <h3 style={{ fontFamily: 'DM Sans' }}>Expected income</h3>
+                        </TableCell>
+                        <TableCell>
+                          <h3 style={{ fontFamily: 'DM Sans' }}>{fPercent(property?.financials?.expectedIncome)}</h3>
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>

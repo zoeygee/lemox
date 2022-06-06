@@ -4470,7 +4470,8 @@ fieldset:disabled .btn {
   padding-top: 0.5rem;
 }
 .navbar-collapse {
-  align-items: center;
+  align-items: baseline;
+  justify-content: center;
   flex-basis: 100%;
   flex-grow: 1;
 }
