@@ -16,84 +16,112 @@ export default function Footer() {
     },
   ];
   return (
-    <footer className="footer py-8 pt-md-11 bg-dark border-multicolor">
-      <div className="container-lg">
-        <div className="row">
-          <div className="col-6 col-md">
-            <h4 className="navbar-brand text-white mb-3 mb-md-5">Lemox</h4>
-          </div>
-          <div className="col-6 col-md">
-            <ul className="list-unstyled">
-              <li className="mb-3">
-                <Link className="text-white-60" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="mb-3">
-                <Link className="text-white-60" to={PATH_PAGE.marketplace}>
-                  Marketplace
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="col-6 col-md">
-            <ul className="list-unstyled">
-              <li className="mb-3">
-                <Link className="text-white-60" to={PATH_PAGE.faqs}>
-                  FAQs
-                </Link>
-              </li>
-              <li className="mb-3">
-                <Link className="text-white-60" to={PATH_PAGE.about}>
-                  About us
-                </Link>
-              </li>
-              <li>
-                <Link className="text-white-60" to={PATH_PAGE.contact}>
-                  Contact us
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="col-6 col-md">
-            <ul className="list-unstyled">
-              <li className="mb-3">
-                <Link className="text-white-60" to={PATH_PAGE.termsOfService}>
-                  Terms of service
-                </Link>
-              </li>
-            </ul>
+    <>
+      <section className="bg-dark border-multicolor">
+        <div className="container-lg">
+          <div className="row align-items-center">
+            <div className="col-12">
+              <hr className="bg-gray-900 mt-0 mb-8" />
+            </div>
+            <div className="col-md">
+              <h1 className="text-white mb-0">
+                Ready to start your investment <span className="text-primary-light">journey?</span>
+              </h1>
+
+              <p className="text-white-60 mb-4 mb-md-0">
+                Sign up now for the most accessible, flexible and safe way to invest in real estate.
+              </p>
+            </div>
+            <div className="col-md-auto">
+              <Link className="btn btn-primary lift" to={PATH_DASHBOARD.user}>
+                Start investing with Lemox.
+              </Link>
+            </div>
+            <div className="col-12">
+              <hr className="bg-gray-900 mb-0 mt-8" />
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12">
-            <hr className="bg-white-10 my-7" />
-          </div>
-        </div>
-        <div className="row align-items-center">
-          <div className="col mx-auto text-center">
-            <ul className="list-inline list-unstyled text-gray-600 mb-0">
-              {socials.map((social, index) => (
-                <li className="list-inline-item ms-1" key={index}>
-                  <a className="icon icon-sm text-reset" href={social.link} target="_blank" rel="noreferrer">
-                    <Iconify icon={social.icon} sx={{ fontSize: '50px' }} />
-                  </a>
+      </section>
+      <footer className="footer py-8 pt-md-11 bg-dark">
+        <div className="container-lg">
+          <div className="row">
+            <div className="col-6 col-md">
+              <h4 className="navbar-brand text-white mb-3 mb-md-5">Lemox</h4>
+            </div>
+            <div className="col-6 col-md">
+              <ul className="list-unstyled">
+                <li className="mb-3">
+                  <Link className="text-white-60" to="/">
+                    Home
+                  </Link>
                 </li>
-              ))}
-            </ul>
+                <li className="mb-3">
+                  <Link className="text-white-60" to={PATH_PAGE.marketplace}>
+                    Marketplace
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="col-6 col-md">
+              <ul className="list-unstyled">
+                <li className="mb-3">
+                  <Link className="text-white-60" to={PATH_PAGE.faqs}>
+                    FAQs
+                  </Link>
+                </li>
+                <li className="mb-3">
+                  <Link className="text-white-60" to={PATH_PAGE.about}>
+                    About us
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-white-60" to={PATH_PAGE.contact}>
+                    Contact us
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="col-6 col-md">
+              <ul className="list-unstyled">
+                <li className="mb-3">
+                  <Link className="text-white-60" to={PATH_PAGE.termsOfService}>
+                    Terms of service
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <hr className="bg-white-10 my-7" />
+            </div>
+          </div>
+          <div className="row align-items-center">
+            <div className="col mx-auto text-center">
+              <ul className="list-inline list-unstyled text-gray-600 mb-0">
+                {socials.map((social, index) => (
+                  <li className="list-inline-item ms-1" key={index}>
+                    <a className="icon icon-sm text-reset" href={social.link} target="_blank" rel="noreferrer">
+                      <Iconify icon={social.icon} sx={{ fontSize: '50px' }} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <hr className="bg-white-10 my-7" />
+            </div>
+          </div>
+          <div className="row text-center">
+            <div className="col-auto">
+              <small className="text-gray-600">&copy; Lemox 2022</small>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12">
-            <hr className="bg-white-10 my-7" />
-          </div>
-        </div>
-        <div className="row text-center">
-          <div className="col-auto">
-            <small className="text-gray-600">&copy; Lemox 2022</small>
-          </div>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

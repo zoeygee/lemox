@@ -1,6 +1,5 @@
+import { useState, useEffect, useCallback } from 'react';
 import * as Yup from 'yup';
-import { useEffect, useCallback } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
 import FileBase64 from 'react-file-base64';
@@ -10,13 +9,19 @@ import { LoadingButton } from '@mui/lab';
 import { fData } from '../utils/formatNumber';
 import { countries } from '../sections/@dashboard/user';
 import { getUser } from '../redux/actions/data';
+import { editProfile } from '../redux/actions/auth';
 //
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    firstName: Yup.string().required('required'),
+    lastName: Yup.string().required('required'),
+    email: Yup.string().required('required'),
+    country: Yup.string().required('required'),
+    state: Yup.string().required('required'),
+    dateOfBirth: Yup.string().required('required'),
   });
   const { _id } = JSON.parse(localStorage.getItem('profile')).result;
   const dispatch = useDispatch();
@@ -24,6 +29,7 @@ export default function AccountGeneral() {
     dispatch(getUser(_id));
   }, [dispatch]);
   const { user } = useSelector((state) => state.data);
+  const [toastMsg, setToastMsg] = useState('');
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -32,32 +38,19 @@ export default function AccountGeneral() {
       lastName: user.lastName || '',
       country: user.country || '',
       state: user.state || '',
-      email: user.email,
+      email: user.email || '',
       profilePic: user.profilePic,
-      tel: user.tel,
+      tel: user.tel || '',
       dateOfBirth: user.dateOfBirth || '',
     },
 
     validationSchema: UpdateUserSchema,
     onSubmit: (values, { setErrors, setSubmitting }) => {
-      console.log(values);
+      dispatch(editProfile(user?._id, values, setSubmitting, setToastMsg));
     },
   });
 
   const { values, errors, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } = formik;
-
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        setFieldValue('photoURL', {
-          ...file,
-          preview: URL.createObjectURL(file),
-        });
-      }
-    },
-    [setFieldValue]
-  );
 
   return (
     <FormikProvider value={formik}>

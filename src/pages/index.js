@@ -27,3 +27,4 @@ export { default as ReferPage } from './ReferPage';
 export { default as Checkout } from './Checkout';
 export { default as SuccessVerification } from './SuccessVerification';
 export { default as PaymentCancelled } from './PaymentCancelled';
+export { default as PaymentSuccess } from './PaymentSuccess';

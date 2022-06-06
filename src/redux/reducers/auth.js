@@ -12,8 +12,8 @@ export default (state = { error: null, authData: [], propertiesById: [] }, actio
       // localStorage.setItem('profile', JSON.stringify({ result: { ...action?.data } }));
       return {
         ...state,
-        authData: state.authData.map((auth) => (auth._id === action?.data?._id ? action?.data : auth)),
-        error: null,
+        authData: state.authData.map((auth) => (auth._id === action?.payload?.data?._id ? action?.data : auth)),
+        error: null,   
       };
     // return { ...state,  };
     case AUTH_ERROR:

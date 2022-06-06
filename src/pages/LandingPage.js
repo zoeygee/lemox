@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import { PATH_PAGE } from '../routes/paths';
 import Page from '../components/Page';
+import { Benefits, WatchInvestmentGrow, StepsToStart } from '../sections/@external/LandingPage';
 
 export default function LandingPage() {
   return (
@@ -275,42 +277,41 @@ export default function LandingPage() {
           <div className="row justify-content-center">
             <div className="col-md-10 col-lg-8 text-center">
               <h2 className="display-4 mb-9">
-                The Lemox way to invest in <span className="text-underline-warning">real estate</span>.
+                Investing in <span className="text-underline-warning">real estate</span> has never been easier .
               </h2>
             </div>
           </div>
           <div className="row justify-content-center">
             <div className="col-12 col-md-8 col-lg-12">
               -
-              <ul className="timeline timeline-expand-lg timeline-warning mb-0">
+              <ul className="timeline timeline-expand-xs timeline-warning mb-0">
                 <li className="timeline-item active">
-                  <h2>Unique tokens</h2>
-                  <p className="text-muted mb-4">
-                    Ownership of each property is distributed across a finite number of representative tokens. Based on
-                    token share, owners can collect revenue from rent, and vote on property decisions.
-                  </p>
+                  <h5>Create an account and complete our KYC</h5>
+                  <Typography variant="body2" className="text-muted mb-4">
+                    Create your account in just a few clicks. Submit the required information and documents to pass our
+                    KYC screening. Our team will let you know once your profile is checked – this may take up to 2
+                    working days. Update your profile with wallet details
+                  </Typography>
                 </li>
                 <li className="timeline-item active">
-                  <h2>Decentralized ownership</h2>
-                  <p className="text-muted mb-4">
-                    Token holders vote on all property decisions through our governance system. These decisions range
-                    from rent increases to handling repair requests and more. The winning decisions are determined by a
-                    Supermajority (60%+) and are automatically relayed to the Property Manager to fulfill
-                  </p>
+                  <h5>Browse properties</h5>
+                  <Typography variant="body2" className="text-muted mb-4">
+                    View detailed financial data, inspection reports, and more. All property documents are publicly
+                    available.
+                  </Typography>
                 </li>
                 <li className="timeline-item active">
-                  <h2>Property Managed</h2>
-                  <p className="text-muted mb-4">
-                    Each Lemox property has a property management company managing the property on investors behalf. The
-                    property management company sources tenants, collects rent, and manages repairs, so the diverse
-                    group of Lemox token owners don’t have to.
-                  </p>
+                  <h5>Select property</h5>
+                  <Typography variant="body2" className="text-muted mb-4">
+                    Purchase tokens from as low as $1000 and become a direct owner. Get your rental payment weekly.
+                  </Typography>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </section>
+      <StepsToStart />
       <section
         className="pt-10 pt-md-12 pb-11 pb-md-13"
         style={{
@@ -333,69 +334,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      <section className="position-relative py-10 py-md-12 bg-light">
-        <div className="container-lg">
-          <div className="row justify-content-center">
-            <div className="col-md-10 col-lg-8 text-center">
-              <h2 className="display-3 mb-4">
-                Benefits of real estate <span className="text-underline-primary">tokenization</span>.
-              </h2>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 text-center">
-              <h3 className="display-5 mb-4">Flexibility</h3>
-              <p>
-                Anyone can invest a certain amount and become a partial owner of a property and benefit from the
-                potential profits. Moreover, tokens can be purchased and sold on secondary markets. The property owner
-                can also sell some part of their assets by issuing tokens.
-              </p>
-            </div>
-            <div className="col-md-4 text-center">
-              <h3 className="display-5 mb-4">No geographic limit</h3>
-              <p>
-                Property tokenization, like any type of tokenization, eliminates barriers related to location. Nothing
-                prevents you from buying a property on the other side of the world in the middle of the night. You can
-                participate in and profit from the construction of resorts, housing estates, or rentals anytime and
-                anywhere.{' '}
-              </p>
-            </div>
-            <div className="col-md-4 text-center">
-              <h3 className="display-5 mb-4">Ease and speed of investment</h3>
-              <p>
-                The most effective optimization of any activity is to limit unnecessary expenditures by acting within
-                the legal framework. Blockchain technology enables this by removing barriers like notary fees and bank
-                fees (paying for your property with cryptocurrencies helps you get around them).{' '}
-              </p>
-            </div>
-            <div className="col-md-4 text-center">
-              <h3 className="display-5 mb-4">Low Entry Barriers</h3>
-              <p>
-                With each token representing a fraction of real estate, a larger pool of investors gets a chance to
-                participate since the minimum size of investment is significantly reduced.
-              </p>
-            </div>
-            <div className="col-md-4 text-center">
-              <h3 className="display-5 mb-4">Less paperwork</h3>
-              <p>
-                {' '}
-                Once a property is tokenized, all the information (its value, size, location, ownership, and loans
-                against it) is recorded on the blockchain. This means that transactions can run smoother with less
-                paperwork needed.{' '}
-              </p>
-            </div>
-            <div className="col-md-4 text-center">
-              <h3 className="display-5 mb-4">Liquidity of Real Estate</h3>
-              <p>
-                Tokenization solves the biggest issue of real estate which is the liquidity of the asset. In the
-                traditional way, various parties are involved in the legal transfer of assets, while tokenization
-                simplifies buying and selling properties. It omits the middle man and allows ownership to be transferred
-                directly from investor to investor and there is more room for fractional ownership.{' '}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Benefits />
     </Page>
   );
 }

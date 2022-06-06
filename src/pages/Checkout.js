@@ -63,6 +63,9 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
   const onClosed = () => {
     navigate(`/marketplace/${id}/checkout/${charge}/cancelled`, { replace: true });
   };
+  const onSuccess = () => {
+    navigate(`/marketplace/${id}/checkout/${charge}/success`, { replace: true });
+  };
   return (
     <>
       <Page title="Checkout">
@@ -195,20 +198,7 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                                     <CoinbaseCommerceButton
                                       className="btn btn-secondary"
                                       chargeId={charge}
-                                      onChargeSuccess={() =>
-                                        toast.success('Payment was successful.', {
-                                          style: {
-                                            border: '1px solid #1B1642',
-                                            padding: '16px',
-                                            color: '#1B1642',
-                                          },
-                                          iconTheme: {
-                                            primary: '#1B1642',
-                                            secondary: '#FFFAEE',
-                                          },
-                                          duration: 6000,
-                                        })
-                                      }
+                                      onChargeSuccess={onSuccess}
                                       onModalClosed={onClosed}
                                     >
                                       Pay now

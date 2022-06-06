@@ -21,7 +21,7 @@ import Iconify from '../components/Iconify';
 import { getProperty } from '../redux/actions/data';
 import { fPercent, fCurrency, fNumber } from '../utils/formatNumber';
 
-export default function PaymentCancelled() {
+export default function PaymentSuccess() {
   const dispatch = useDispatch();
   const [chargeData, setChargeData] = React.useState([]);
 
@@ -47,8 +47,8 @@ export default function PaymentCancelled() {
       <Grid container>
         <Grid item sm={12} md={6} justifyContent="center" alignItems="baseline">
           <Stack spacing={1} mb={5}>
-            <Iconify icon="iconoir:cancel" sx={{ fontSize: 50, color: 'error.main' }} />
-            <Typography variant="h3">Failure</Typography>
+            <Iconify icon="clarity:success-line" sx={{ fontSize: 50, color: 'error.main' }} />
+            <Typography variant="h3">Success</Typography>
             <Typography variant="body1">
               Your investment for <strong>{property?.title}</strong> is Unsuccessful
             </Typography>
@@ -74,7 +74,7 @@ export default function PaymentCancelled() {
                     </TableRow>
                     <TableRow>
                       <TableCell>Transaction status</TableCell>
-                      <TableCell>Cancelled</TableCell>
+                      <TableCell sx={{ color: 'success.main' }}>Success</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Amount</TableCell>
@@ -88,8 +88,8 @@ export default function PaymentCancelled() {
                     </TableRow>
                     <TableRow>
                       <TableCell>
-                        <Typography variant="caption" color="error.main">
-                          *Transaction cancelled
+                        <Typography variant="caption" color="success.main">
+                          *Transaction successful
                         </Typography>
                       </TableCell>
                     </TableRow>

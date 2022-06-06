@@ -13,8 +13,9 @@ import {
   DialogTitle,
   Typography,
   InputAdornment,
+  CircularProgress,
+  FormHelperText,
 } from '@mui/material';
-import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
@@ -48,8 +49,8 @@ export default function Payment({ property, user }) {
     setOpen(false);
   };
   const paymentSchema = Yup.object().shape({
-    amount: Yup.number().min(100, 'must be above 100').required('amount to invest is required'),
-    ethToken: Yup.string().required('Input your wallet to receive token'),
+    amount: Yup.number().min(100, 'must be above 100').required('This enter this field'),
+    ethToken: Yup.string().required('Please enter your ETH wallet address'),
   });
   const thisUserIdentity = identities.find((i) => i.user === user._id);
 
@@ -110,8 +111,7 @@ export default function Payment({ property, user }) {
               <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Enter amount to invest</DialogTitle>
                 <DialogContent>
-                  <DialogContentText sx={{ mb: 2 }}>Enter amount you want to invest with</DialogContentText>
-                  <Stack spacing={3}>
+                  <Stack spacing={1.7}>
                     <TextField
                       autoFocus
                       margin="dense"
@@ -128,6 +128,7 @@ export default function Payment({ property, user }) {
                         startAdornment: <InputAdornment position="start">$</InputAdornment>,
                       }}
                     />
+                    <FormHelperText>Min 10Tokens/investor - max 200 Token/investor</FormHelperText>
                     <TextField
                       margin="dense"
                       label="Input your ETH wallet address"
@@ -144,6 +145,10 @@ export default function Payment({ property, user }) {
                   <Typography variant="subtitle1" color="text.secondary">
                     your expected income = {fCurrency((values.amount * property?.financials?.expectedIncome) / 100)}
                   </Typography>
+
+                  <DialogContentText sx={{ mt: 2 }}>
+                    Don’t have an ETH wallet? Use *Metamask* or *Trustwallet*
+                  </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>

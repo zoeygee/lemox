@@ -39,7 +39,7 @@ export const editProfile = (userId, profile, setSubmitting, setToastMsg) => asyn
   try {
     setSubmitting(true);
     const { data } = await api.updateProfile(userId, profile);
-    dispatch({ type: EDIT_PROFILE, data });
+    dispatch({ type: EDIT_PROFILE, payload: data });
     console.log(data);
     setSubmitting(false);
     setToastMsg(toast.success('Profile updated successfully'));

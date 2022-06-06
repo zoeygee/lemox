@@ -42,9 +42,9 @@ export default function DashboardApp() {
     incrementAmount: updatedAmount,
     incrementedAt: dateToString,
   };
-  // useEffect(() => {
-  //   dispatch(getUpdatedInvestment(investmentId, config));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getUpdatedInvestment(investmentId, config));
+  }, [dispatch]);
 
   setInterval(() => {
     if (sevenDaysAfter - incrementDate === daysInMilliseconds) {
