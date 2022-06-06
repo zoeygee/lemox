@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { PATH_PAGE } from '../routes/paths';
+import { PATH_PAGE, PATH_DASHBOARD } from '../routes/paths';
 import Page from '../components/Page';
 import { Benefits, WatchInvestmentGrow, StepsToStart } from '../sections/@external/LandingPage';
 
@@ -12,7 +12,6 @@ export default function LandingPage() {
           <div className="row justify-content-center" data-aos="fade-up">
             <div className="col-12 text-center text-white">
               <h6 className="text-uppercase text-warning mb-5">lemox.</h6>
-
               <h1 className="display-3 mb-4">Future of real estate investing</h1>
             </div>
           </div>
@@ -272,46 +271,9 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-      <section className="py-9 pt-md-11 bg-white">
-        <div className="container-lg">
-          <div className="row justify-content-center">
-            <div className="col-md-10 col-lg-8 text-center">
-              <h2 className="display-4 mb-9">
-                Investing in <span className="text-underline-warning">real estate</span> has never been easier .
-              </h2>
-            </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8 col-lg-12">
-              -
-              <ul className="timeline timeline-expand-xs timeline-warning mb-0">
-                <li className="timeline-item active">
-                  <h5>Create an account and complete our KYC</h5>
-                  <Typography variant="body2" className="text-muted mb-4">
-                    Create your account in just a few clicks. Submit the required information and documents to pass our
-                    KYC screening. Our team will let you know once your profile is checked – this may take up to 2
-                    working days. Update your profile with wallet details
-                  </Typography>
-                </li>
-                <li className="timeline-item active">
-                  <h5>Browse properties</h5>
-                  <Typography variant="body2" className="text-muted mb-4">
-                    View detailed financial data, inspection reports, and more. All property documents are publicly
-                    available.
-                  </Typography>
-                </li>
-                <li className="timeline-item active">
-                  <h5>Select property</h5>
-                  <Typography variant="body2" className="text-muted mb-4">
-                    Purchase tokens from as low as $1000 and become a direct owner. Get your rental payment weekly.
-                  </Typography>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
       <StepsToStart />
+      <WatchInvestmentGrow />
+
       <section
         className="pt-10 pt-md-12 pb-11 pb-md-13"
         style={{
@@ -330,10 +292,22 @@ export default function LandingPage() {
                 Lemox is fully reserved. Unlike banks, we don’t loan out your money. We publish our holdings and
                 obligations in real time.
               </p>
+              <Link className="btn btn-primary lift" to={PATH_DASHBOARD.user}>
+                Start investing with Lemox.
+              </Link>
             </div>
           </div>
         </div>
       </section>
+      <div className="position-relative">
+        <div className="shape shape-fluid-x shape-top text-light">
+          <div className="shape-img pb-8 pb-md-11">
+            <svg viewBox="0 0 100 50" preserveAspectRatio="none">
+              <path d="M0 25h25L75 0h25v50H0z" fill="currentColor" />
+            </svg>{' '}
+          </div>
+        </div>
+      </div>
       <Benefits />
     </Page>
   );
