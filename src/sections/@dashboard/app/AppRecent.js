@@ -1,6 +1,6 @@
 // @mui
 import PropTypes from 'prop-types';
-import { Box, Stack, Link, Card, Button, Divider, Typography, CardHeader } from '@mui/material';
+import { Box, Stack, Link, Card, Button, Divider, Typography, CardHeader, CircularProgress } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 // utils
 import { fToNow } from '../../../utils/formatTime';
@@ -22,11 +22,15 @@ export default function AppRecent({ title, subheader, list, ...other }) {
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
       <Scrollbar>
-        <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
-          {list.map((transaction) => (
-            <TransactionItem key={transaction.id} transaction={transaction} />
-          ))}
-        </Stack>
+        {!list ? (
+          <CircularProgress />
+        ) : (
+          <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
+            {list.map((transaction) => (
+              <TransactionItem key={transaction.id} transaction={transaction} />
+            ))}
+          </Stack>
+        )}
       </Scrollbar>
 
       <Divider />
@@ -75,7 +79,7 @@ function TransactionItem({ transaction }) {
       </Box>
 
       <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
-        {fToNow(postedAt)}
+        {postedAt && fToNow(postedAt)}
       </Typography>
     </Stack>
   );

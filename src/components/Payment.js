@@ -143,7 +143,7 @@ export default function Payment({ property, user }) {
                     />
                   </Stack>
                   <Typography variant="subtitle1" color="text.secondary">
-                    your expected income = {fCurrency((values.amount * property?.financials?.expectedIncome) / 100)}
+                    Number of token = {Math.round(values.amount / 100, -1)}
                   </Typography>
 
                   <DialogContentText sx={{ mt: 2 }}>
