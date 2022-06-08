@@ -5,11 +5,11 @@ import { useState, useEffect } from 'react';
 import { Container, Tab, Box, Tabs, Stack } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-
-// hooks
 // components
 import Page from '../components/Page';
+import Iconify from '../components/Iconify';
 import AccountGeneral from '../components/AccountGeneral';
+import ChangePassword from '../components/ChangePassword';
 
 // ----------------------------------------------------------------------
 
@@ -19,8 +19,13 @@ export default function AccountDetails() {
   const ACCOUNT_TABS = [
     {
       value: 'general',
-      //   icon: <Icon icon={roundAccountBox} width={20} height={20} />,
+      icon: <Iconify icon="ic:baseline-account-circle" width={20} height={20} />,
       component: <AccountGeneral />,
+    },
+    {
+      value: 'change_password',
+      icon: <Iconify icon="fluent:password-16-filled" width={20} height={20} />,
+      component: <ChangePassword />,
     },
   ];
 

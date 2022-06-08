@@ -1,6 +1,41 @@
+import React from 'react';
+import { useFormik, FormikProvider, Form } from 'formik';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
+import { TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import Page from '../components/Page';
 
 export default function Contact() {
+  const [msgSuccess, setMsgSuccess] = React.useState(false);
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Please provide full name'),
+    email: Yup.string().email('Please provide a valid email address').required('Please provide your email address'),
+    message: Yup.string().required('The message field is required'),
+  });
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      message: '',
+    },
+    validationSchema,
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      setSubmitting(true);
+      await axios
+        .post(`${process.env.REACT_APP_API_KEY}/contact`, values)
+        .then((res) => {
+          toast.success('Sent successfully', { duration: 7000 });
+          resetForm();
+        })
+        .catch((err) => {
+          console.log(err);
+          setSubmitting(false);
+        });
+    },
+  });
+  const { handleSubmit, isSubmitting, getFieldProps, errors, touched } = formik;
   return (
     <Page title="Contact">
       <section className="pt-6 pt-md-6 pb-10 pb-md-12">
@@ -8,13 +43,10 @@ export default function Contact() {
           <div className="row justify-content-center">
             <div className="col-md-10 col-lg-8 text-center">
               <h6 className="text-uppercase text-primary mb-5">Contact us</h6>
-
               <h1 className="display-3 mb-4">Contact us</h1>
-
               <p className="fs-lg text-muted mb-9">
                 Send us a message and we will get back to you as soon as possible.
               </p>
-
               <div className="row mb-9">
                 <div className="col-md py-md-4 mb-6 mb-md-0">
                   <a className="text-reset text-decoration-none" href="#!">
@@ -88,30 +120,52 @@ export default function Contact() {
                   </a>
                 </div>
               </div>
-
-              <form>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      Your name
-                      <input className="form-control" id="contactName" type="text" placeholder="Your name" />
+              <FormikProvider value={formik}>
+                <Form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <TextField
+                          type="text"
+                          fullWidth
+                          label="Full name"
+                          {...getFieldProps('name')}
+                          error={Boolean(touched.name && errors.name)}
+                          helperText={touched.name && errors.name}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <TextField
+                          type="email"
+                          fullWidth
+                          label="Your email"
+                          {...getFieldProps('email')}
+                          error={Boolean(touched.email && errors.email)}
+                          helperText={touched.email && touched.email}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          multiline
+                          rows={4}
+                          label="Message"
+                          {...getFieldProps('message')}
+                          error={Boolean(touched.message && errors.message)}
+                          helperText={touched.message && touched.message}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      Your email
-                      <input className="form-control" id="contactEmail" type="email" placeholder="Your email" />
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-group">
-                      Your message
-                      <textarea className="form-control" id="contactMessage" placeholder="Your message" rows="7" />
-                    </div>
-                  </div>
-                </div>
-                <button className="btn w-100 btn-primary">Send a Message</button>
-              </form>
+                  <LoadingButton type="submit" loading={isSubmitting} variant="contained" fullWidth size="large">
+                    Submit
+                  </LoadingButton>
+                </Form>
+              </FormikProvider>
             </div>
           </div>
         </div>

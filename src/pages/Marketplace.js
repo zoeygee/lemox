@@ -76,7 +76,9 @@ export default function Marketplace() {
                         </div>
                         <div className="col-md-6">
                           <div className="card-body">
-                            <h6 className="font-sans-serif text-muted mb-2">{property?.title}</h6>
+                            <h6 className="font-sans-serif text-muted mb-2">
+                              {property.status === 'available' ? property?.title : '------'}
+                            </h6>
                             <div className="d-flex mb-4 justify-content-between">
                               <h3>Total investment</h3>
                               <h3>

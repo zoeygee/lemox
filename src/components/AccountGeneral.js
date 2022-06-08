@@ -51,19 +51,39 @@ export default function AccountGeneral() {
   });
 
   const { values, errors, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } = formik;
+  console.log(values.profilePic);
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <Card sx={{ py: 10, px: 3, textAlign: 'center' }}>
+            <Card sx={{ py: 10, px: 3, textAlign: 'center', alignItems: 'center', justifyContent: 'center' }}>
               <FileBase64
                 multiple={false}
                 onDone={({ base64 }) => setFieldValue('profilePic', base64)}
-                type="file"
-                accept="image/png, image/gif, image/jpeg, image/webp, image/tiff"
+                type=""
+                accept="image/*"
               />
+              <Typography
+                variant="caption"
+                sx={{
+                  mt: 2,
+                  mx: 'auto',
+                  display: 'block',
+                  textAlign: 'center',
+                  color: 'text.secondary',
+                }}
+              >
+                <Box
+                  component="img"
+                  src={!values.profilePic ? user?.profilePic : values.profilePic}
+                  alt={user?.firstName}
+                  sx={{ borderRadius: '50%', height: 100, width: 100, objectFit: 'cover', margin: '0 auto' }}
+                />
+                Allowed *.jpeg, *.jpg, *.png, *.gif
+                <br /> max size of {fData(3145728)}
+              </Typography>
               {/* <UploadAvatar
                 accept="image/*"
                 file={values.photoURL}
@@ -71,19 +91,7 @@ export default function AccountGeneral() {
                 onDrop={handleDrop}
                 error={Boolean(touched.photoURL && errors.photoURL)}
                 caption={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 2,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
+                
                 }
               /> */}
               <FormHelperText error sx={{ px: 2, textAlign: 'center' }}>

@@ -5,7 +5,7 @@ import jwt from 'jwt-decode';
 import { Grid, Container, Typography, Link, Stack, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addDays } from 'date-fns';
+import { addDays, endOfDay } from 'date-fns';
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -35,9 +35,11 @@ export default function DashboardApp() {
   const sevenDaysAfter = addDays(incrementDate, 7);
   const daysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
   const updatedAmount = amountInvested + roi;
+  const currentDate = endOfDay(new Date());
+  console.log(currentDate);
 
   // increment config
-  const dateToString = new Date().toString();
+  const dateToString = new Date().toISOString();
   const config = {
     incrementAmount: updatedAmount,
     incrementedAt: dateToString,
