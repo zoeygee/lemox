@@ -89,6 +89,11 @@ export default function Footer() {
                     Terms of service
                   </Link>
                 </li>
+                <li className="mb-3">
+                  <Link className="text-white-60" to={PATH_PAGE.privatePlacementMemorandum}>
+                    Private Placement Memorandum
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

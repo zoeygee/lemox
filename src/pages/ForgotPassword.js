@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { useDispatch } from 'react-redux';
+import axios from 'axios';
 // material
 import { styled } from '@mui/material/styles';
 import { Link, Stack, TextField, Container, Typography } from '@mui/material';
@@ -52,24 +52,36 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const emailSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address!').required('Email is required'),
   });
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
-
+  const config = {
+    header: {
+      'Content-Type': 'application/json',
+    },
+  };
   const formik = useFormik({
     initialValues: {
       email: '',
     },
     validationSchema: emailSchema,
-    onSubmit: async (values) => {
-      const { setSubmitting } = formik;
-      const { email } = values;
-      // dispatch(forgotPassword(email, navigate, setSubmitting));
+    onSubmit: async (values, { setSubmitting }) => {
       console.log(values);
+      setSubmitting(true);
+      await axios
+        .post(`${process.env.REACT_APP_API_KEY}/auth/forgot-password`, { email: values.email }, config)
+        .then((res) => {
+          console.log(res);
+          setSubmitting(false);
+          navigate('/auth/reset-instruction');
+        })
+        .catch((err) => {
+          console.log(err);
+          setSubmitting(false);
+        });
     },
   });
 
@@ -95,7 +107,7 @@ export default function ForgotPassword() {
               Forgot password?
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Fear not. We'll email you instructions to reset your password.
+              We'll email you instructions to reset your password.
             </Typography>
           </Stack>
 

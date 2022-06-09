@@ -42,6 +42,7 @@ import {
   Checkout,
   PaymentCancelled,
   PaymentSuccess,
+  PrivatePlacement,
 } from '../pages';
 // ----------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ export default function Router() {
         { path: '/contact', element: <Contact /> },
         { path: '/faqs', element: <Faqs /> },
         { path: '/terms-of-service', element: <TermsOfService /> },
+        { path: '/private-placement-memorandum-lemoxtoken', element: <PrivatePlacement /> },
         { path: '/referral', element: <ReferPage /> },
         { path: '/marketplace/:id/checkout/:charge', element: <Checkout /> },
         { path: '/marketplace/:id/checkout/:charge/cancelled', element: <PaymentCancelled /> },

@@ -94,7 +94,7 @@ export default function Navbar() {
               </li>
             ) : (
               <Box className="nav-item dropdown" onClick={() => setAccountOpen(true)}>
-                <span className="nav-link dropdown-toggle">
+                <span className="nav-link dropdown-toggle" style={{ cursor: 'pointer' }}>
                   Account <Iconify icon="ic:baseline-arrow-drop-down" />
                 </span>
                 <div

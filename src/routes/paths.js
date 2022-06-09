@@ -24,6 +24,7 @@ export const PATH_PAGE = {
   about: '/about',
   marketplace: '/marketplace',
   termsOfService: '/terms-of-service',
+  privatePlacementMemorandum: '/private-placement-memorandum-lemoxtoken',
   contact: '/contact',
   faqs: '/faqs',
   page404: '/404',

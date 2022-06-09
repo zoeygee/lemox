@@ -117,15 +117,15 @@ export default function ResetPassword() {
                   type={showPassword ? 'text' : 'password'}
                   label="New password"
                   {...getFieldProps('password')}
-                  // InputProps={{
-                  //   endAdornment: (
-                  //     <InputAdornment position="end">
-                  //       <IconButton onClick={handleShowPassword} edge="end">
-                  //         <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  //       </IconButton>
-                  //     </InputAdornment>
-                  //   ),
-                  // }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleShowPassword} edge="end">
+                          <Icon icon={showPassword ? 'eyeFill' : 'eyeOffFill'} />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   error={Boolean(touched.password && errors.password)}
                   helperText={touched.password && errors.password}
                 />
