@@ -7,6 +7,7 @@ import { LoadingButton } from '@mui/lab';
 
 // components
 import Page from '../components/Page';
+import Iconify from '../components/Iconify';
 import useResponsive from '../hooks/useResponsive';
 import { MHidden } from '../components/@material-extend';
 // ----------------------------------------------------------------------
@@ -61,7 +62,9 @@ export default function PasswordInstruction() {
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 3 }}>
-            <Stack>Icon here</Stack>
+            <Stack>
+              <Iconify icon="fluent:mail-alert-24-regular" height={80} width={80} />
+            </Stack>
             <Typography variant="h3" gutterBottom>
               Done And Done!
             </Typography>

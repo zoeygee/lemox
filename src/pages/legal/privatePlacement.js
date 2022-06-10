@@ -9,7 +9,7 @@ export default function PrivatePlacement() {
           <div className="row justify-content-center">
             <div className="col-md-12 col-lg-8">
               <h6 className="text-uppercase text-primary text-center mb-5">Legal</h6>
-              <h1 className="display-4 text-center mb-4">PRIVATE PLACEMENT MEMORANDUM LEMOXTOKEN LLC</h1>
+              <h1 className="display-4 text-center mb-4">Private Placement Memorandum Lemoxtoken LLC</h1>
               <hr className="hr-sm bg-warning mx-auto my-10 my-md-12" />
               <p className="mb-6">TOKENS ARE DELIVERABLE IN THE FORM OF CRYPTOGRAPHIC DIGITAL TOKENS (LEMOXTOKENS)</p>
               <p className="mb-6">

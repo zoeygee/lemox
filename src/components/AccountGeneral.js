@@ -3,8 +3,20 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
 import FileBase64 from 'react-file-base64';
+import styled from 'styled-components';
 // material
-import { Box, Grid, Card, Stack, Switch, TextField, FormControlLabel, Typography, FormHelperText } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Card,
+  Stack,
+  Switch,
+  TextField,
+  FormControlLabel,
+  Typography,
+  FormHelperText,
+  Avatar,
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { fData } from '../utils/formatNumber';
 import { countries } from '../sections/@dashboard/user';
@@ -59,12 +71,18 @@ export default function AccountGeneral() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <Card sx={{ py: 10, px: 3, textAlign: 'center', alignItems: 'center', justifyContent: 'center' }}>
-              <FileBase64
-                multiple={false}
-                onDone={({ base64 }) => setFieldValue('profilePic', base64)}
-                type=""
-                accept="image/*"
-              />
+              <Box role="button" tabIndex="0" className="profilePic">
+                <Avatar className="avatar" alt="thumb" size={50} src={user.profilePic}>
+                  <Box
+                    component={FileBase64}
+                    multiple={false}
+                    onDone={({ base64 }) => setFieldValue('profilePic', base64)}
+                    type=""
+                    accept="image/*"
+                    className="upload"
+                  />
+                </Avatar>
+              </Box>
               <Typography
                 variant="caption"
                 sx={{
@@ -75,12 +93,6 @@ export default function AccountGeneral() {
                   color: 'text.secondary',
                 }}
               >
-                <Box
-                  component="img"
-                  src={!values.profilePic ? user?.profilePic : values.profilePic}
-                  alt={user?.firstName}
-                  sx={{ borderRadius: '50%', height: 100, width: 100, objectFit: 'cover', margin: '0 auto' }}
-                />
                 Allowed *.jpeg, *.jpg, *.png, *.gif
                 <br /> max size of {fData(3145728)}
               </Typography>
@@ -143,3 +155,24 @@ export default function AccountGeneral() {
     </FormikProvider>
   );
 }
+
+const Wrapper = styled.div`
+  .profilePic {
+    width: 144px;
+    height: 144px;
+    margin: auto;
+    border-radius: 50%;
+    padding: 8px;
+    border: 1px dashed rgb(7 90 255 / 32%);
+    .avatar {
+      width: 100%;
+      height: 100%;
+      .upload {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 99999;
+      }
+    }
+  }
+`;

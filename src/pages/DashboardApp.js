@@ -42,7 +42,6 @@ export default function DashboardApp() {
   const dateToString = new Date().toISOString();
   const config = {
     incrementAmount: updatedAmount,
-    incrementedAt: dateToString,
   };
   useEffect(() => {
     dispatch(getUpdatedInvestment(investmentId, config));

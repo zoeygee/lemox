@@ -10,15 +10,14 @@ export default function About() {
           <div className="row justify-content-center">
             <div className="col-12 col-lg-10 text-center">
               <h6 className="text-uppercase text-primary mb-5">Our Mission</h6>
-              <h2 className="display-3 mb-10">
+              <h3 className="display-4 mb-10">
                 Our mission is to make it as easy as possible for anyone in the world to diversify into real estate
                 investing.{' '}
-              </h2>
+              </h3>
             </div>
           </div>
         </div>
       </section>
-
       <section className="position-relative pt-5" style={{ zIndex: '1' }}>
         <div className="container-lg">
           <div className="row">
