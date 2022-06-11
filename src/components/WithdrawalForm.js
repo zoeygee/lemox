@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Button,
   Stack,
@@ -14,9 +15,12 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Iconify from './Iconify';
+import { fCurrency } from '../utils/formatNumber';
+import { withdrawFunds } from '../redux/actions/data';
 
 export default function WithdrawalForm() {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,9 +29,11 @@ export default function WithdrawalForm() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const earning = 1000;
   const withdrawalSchema = Yup.object().shape({
-    amount: Yup.number().required('Ener amount to withdraw'),
+    amount: Yup.number()
+      .max(earning, `Your earning is ${fCurrency(earning)}`)
+      .required('Please enter amount to withdraw'),
     btcWalletAddress: Yup.string().required('Enter your BTC wallet address'),
   });
   const formik = useFormik({
@@ -36,12 +42,13 @@ export default function WithdrawalForm() {
       btcWalletAddress: '',
     },
     validationSchema: withdrawalSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       console.log(values);
+      dispatch(withdrawFunds(values, setSubmitting));
     },
   });
 
-  const { handleSubmit, values, setFieldValue, getFieldProps, touched, errors } = formik;
+  const { handleSubmit, values, setFieldValue, getFieldProps, touched, errors, isSubmitting } = formik;
 
   return (
     <div>
@@ -94,7 +101,9 @@ export default function WithdrawalForm() {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <LoadingButton onClick={handleSubmit}>Submit</LoadingButton>
+              <LoadingButton onClick={handleSubmit} loading={isSubmitting}>
+                Submit
+              </LoadingButton>
             </DialogActions>
           </Dialog>
         </Form>

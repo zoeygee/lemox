@@ -27,21 +27,22 @@ export const getProperty = (id) => async (dispatch) => {
   }
 };
 
-export const createInvestment = (values, setSubmitting, setCharge, navigate, propertyId, resetForm) => async (dispatch) => {
-  try {
-    setSubmitting(true);
-    const { data } = await api.createInvestment(values);
-    dispatch({ type: actions.CREATE_INVESTMENT, payload: data });
-    console.log(data);
-    navigate(`/marketplace/${propertyId}/checkout/${data.code}`);
-    setCharge(data);
-    setSubmitting(false);
-    resetForm()
-  } catch (error) {
-    console.log(error);
-    setSubmitting(false);
-  }
-};
+export const createInvestment =
+  (values, setSubmitting, setCharge, navigate, propertyId, resetForm) => async (dispatch) => {
+    try {
+      setSubmitting(true);
+      const { data } = await api.createInvestment(values);
+      dispatch({ type: actions.CREATE_INVESTMENT, payload: data });
+      console.log(data);
+      navigate(`/marketplace/${propertyId}/checkout/${data.code}`);
+      setCharge(data);
+      setSubmitting(false);
+      resetForm();
+    } catch (error) {
+      console.log(error);
+      setSubmitting(false);
+    }
+  };
 
 export const getInvestments = () => async (dispatch) => {
   try {
@@ -89,15 +90,17 @@ export const getPaymentStatus = (id) => async (dispatch) => {
   }
 };
 
-export const withdrawFunds = (values) => async (dispatch) => {
+export const withdrawFunds = (values, setSubmitting) => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });
     const { data } = await api.withdrawFunds(values);
     dispatch({ type: actions.WITHDRAW_FUNDS, payload: data });
     dispatch({ type: actions.END_LOADING });
+    setSubmitting(false);
   } catch (error) {
     console.log(error);
     dispatch({ type: actions.END_LOADING });
+    setSubmitting(false);
   }
 };
 

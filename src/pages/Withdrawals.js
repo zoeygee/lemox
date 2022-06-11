@@ -28,7 +28,8 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserMoreMenu } from '../sections/@dashboard/user';
 
 import { getProperties, getAllWithdrwals } from '../redux/actions/data';
-import { fCurrency, fPercent } from '../utils/formatNumber';
+import { fCurrency } from '../utils/formatNumber';
+import { fDateTime } from '../utils/formatTime';
 import WithdrawalForm from '../components/WithdrawalForm';
 
 // ----------------------------------------------------------------------
@@ -36,6 +37,7 @@ import WithdrawalForm from '../components/WithdrawalForm';
 const TABLE_HEAD = [
   { id: 'date', label: 'Date', alignRight: false },
   { id: 'amount', label: 'Amount', alignRight: false },
+  { id: 'BTC Wallet', label: 'BTC Wallet Address', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   // { id: '' },
 ];
@@ -93,7 +95,7 @@ export default function Withdrawals() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -129,11 +131,6 @@ export default function Withdrawals() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
   };
@@ -165,8 +162,8 @@ export default function Withdrawals() {
                 />
                 <TableBody>
                   {filteredInvestment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { _id, title, financials, status, totalTokens, images } = row;
-                    const isItemSelected = selected.indexOf(title) !== -1;
+                    const { _id, amount, createdAt, status, btcWalletAddress } = row;
+                    const isItemSelected = selected.indexOf(amount) !== -1;
                     return (
                       <TableRow
                         hover
@@ -177,18 +174,23 @@ export default function Withdrawals() {
                         aria-checked={isItemSelected}
                       >
                         <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={title} src={images[0]} />
+                          <Stack direction="row" alignItems="center" spacing={2} sx={{ paddingLeft: 2 }}>
                             <Typography variant="subtitle2" noWrap>
-                              {title}
+                              {fDateTime(createdAt)}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{fCurrency(financials.totalInvestment)}</TableCell>
-                        <TableCell align="left">{totalTokens}</TableCell>
-                        <TableCell align="left">{fPercent(financials.expectedIncome)}</TableCell>
+                        <TableCell align="left">{fCurrency(amount)}</TableCell>
+                        <TableCell align="left">{btcWalletAddress}</TableCell>
                         <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
+                          <Label
+                            variant="ghost"
+                            color={
+                              (status === 'cancelled' && 'error') ||
+                              (status === 'pending' && 'warning') ||
+                              (status === 'complete' && 'success')
+                            }
+                          >
                             {sentenceCase(status)}
                           </Label>
                         </TableCell>
@@ -217,13 +219,12 @@ export default function Withdrawals() {
             </TableContainer>
           </Scrollbar>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={withdrawals.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPageOptions={[]}
           />
         </Card>
       </Container>
