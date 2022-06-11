@@ -15,6 +15,7 @@ import {
   InputAdornment,
   CircularProgress,
   FormHelperText,
+  Link,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
@@ -147,7 +148,23 @@ export default function Payment({ property, user }) {
                   </Typography>
 
                   <DialogContentText sx={{ mt: 2 }}>
-                    Don’t have an ETH wallet? Use *Metamask* or *Trustwallet*
+                    Don’t have an ETH wallet? Use *
+                    <Link
+                      component="a"
+                      href="https://medium.com/@lemox/metamask-testnet-wallet-setup-for-blockchain-development-1b44672576f2"
+                      target="_blank"
+                    >
+                      Metamask
+                    </Link>
+                    * or *
+                    <Link
+                      component="a"
+                      href="https://medium.com/@lemox/how-to-set-up-trust-wallet-what-is-trust-wallet-f50427bb81ed"
+                      target="_blank"
+                    >
+                      Trustwallet
+                    </Link>
+                    *
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

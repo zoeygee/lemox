@@ -6,7 +6,7 @@ import { Benefits, WatchInvestmentGrow, StepsToStart } from '../sections/@extern
 
 export default function LandingPage() {
   return (
-    <Page title="Future of real estte investing">
+    <Page title="Future of real estate investing">
       <section className="pt-6 pt-md-11 bg-dark">
         <div className="container-lg">
           <div className="row justify-content-center" data-aos="fade-up">

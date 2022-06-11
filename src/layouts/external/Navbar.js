@@ -27,9 +27,9 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-lg">
-        <a className="navbar-brand d-lg-none" href="#">
+        <Link className="navbar-brand d-lg-none" to="/">
           Lemox
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -43,7 +43,7 @@ export default function Navbar() {
           <span className="navbar-toggler-icon" />
         </button>
         <div className={open ? 'show-navbar navbar-collapse' : 'collapse navbar-collapse'} id="navbarSupportedContent">
-          <ul className="navbar-nav justify-content-end w-100">
+          <ul className="navbar-nav justify-content-center w-100">
             <li className="nav-item ">
               <Link className="nav-link" to="/">
                 Home
@@ -64,7 +64,7 @@ export default function Navbar() {
             Lemox
           </Link>
 
-          <ul className="navbar-nav justify-content-start w-100">
+          <ul className="navbar-nav justify-content-center w-100">
             <li className="nav-item ">
               <Link className="nav-link" to={PATH_PAGE.marketplace}>
                 Marketplace

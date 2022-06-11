@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import _ from 'lodash';
 import { sentenceCase } from 'change-case';
-import { Container, Typography, Grid, Stack, Card, CardContent, CircularProgress, Box } from '@mui/material';
-import toast from 'react-hot-toast';
+import { Container, Typography, Card, CardContent, CircularProgress, Box } from '@mui/material';
 import axios from 'axios';
-import { LoadingButton } from '@mui/lab';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import Page from '../components/Page';
@@ -13,11 +12,9 @@ import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 import { getProperty, getUser } from '../redux/actions/data';
 import { fCurrency } from '../utils/formatNumber';
 import Label from '../components/Label';
-import { fDate } from '../utils/formatTime';
 
 export default function Checkout() {
   const { id, charge } = useParams();
-  const navigate = useNavigate();
   const [chargeData, setChargeData] = useState({});
   const auth = JSON.parse(localStorage.getItem('profile'));
   const dispatch = useDispatch();
@@ -27,7 +24,7 @@ export default function Checkout() {
   useEffect(() => {
     dispatch(getUser(auth.result._id));
   }, [dispatch, auth.result._id]);
-  const { property, user, isLoading } = useSelector((state) => state.data);
+  const { property, user } = useSelector((state) => state.data);
   console.log(property);
   console.log(user);
 
@@ -58,6 +55,13 @@ export default function Checkout() {
   );
 }
 
+CheckoutComponent.propTypes = {
+  chargeData: PropTypes.object,
+  property: PropTypes.object,
+  user: PropTypes.object,
+  charge: PropTypes.string,
+  id: PropTypes.string,
+};
 function CheckoutComponent({ chargeData, property, user, charge, id }) {
   const navigate = useNavigate();
   const onClosed = () => {
@@ -115,7 +119,6 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                             {user.lastName && sentenceCase(user?.lastName)}
                           </Typography>
                         </div>
-                        <Typography variant="body2">43-190 Mikolow, Poland</Typography>
                         <Typography variant="body2">Email: {user && user?.email}</Typography>
                         <Typography variant="body2">Phone: {user && user?.tel}</Typography>
                       </div>

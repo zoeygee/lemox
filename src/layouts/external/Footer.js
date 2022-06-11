@@ -14,6 +14,21 @@ export default function Footer() {
       link: 'https://t.me/+2V-pZb0MjvkwZGZk',
       icon: 'akar-icons:telegram-fill',
     },
+    {
+      name: 'Twitter',
+      link: 'https://twitter.com/Lemox_co',
+      icon: 'entypo-social:twitter-with-circle',
+    },
+    {
+      name: 'Medium',
+      link: 'https://medium.com/@lemox',
+      icon: 'ant-design:medium-circle-filled',
+    },
+    {
+      name: 'Medium',
+      link: 'https://www.linkedin.com/company/lemox_co',
+      icon: 'entypo-social:linkedin-with-circle',
+    },
   ];
   return (
     <>
