@@ -15,7 +15,7 @@ export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navi
     console.log(data);
     if (location.state?.from) {
       navigate(location.state?.from);
-    }
+    } else navigate(data.result.role === 'investor' ? PATH_DASHBOARD.user : PATH_ADMIN.dashboard);
   } catch (error) {
     console.log(error);
     setErrorHandler({ hasError: true, message: error?.response?.data?.msg });
