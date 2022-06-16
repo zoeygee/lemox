@@ -47,4 +47,5 @@ export const PATH_DASHBOARD = {
 export const PATH_ADMIN = {
   dashboard: path(ROOTS_ADMIN, '/dashboard'),
   users: path(ROOTS_ADMIN, '/users'),
+  investments: path(ROOTS_ADMIN, '/investments'),
 };

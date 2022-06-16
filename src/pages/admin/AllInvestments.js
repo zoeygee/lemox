@@ -31,9 +31,11 @@ import { fCurrency, fPercent } from '../../utils/formatNumber';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'title', label: 'Title', alignRight: false },
-  { id: 'investment', label: 'Investment', alignRight: false },
-  { id: 'income', label: 'Income', alignRight: false },
+  { id: 'property', label: 'Property', alignRight: false },
+  { id: 'amount', label: 'Investment', alignRight: false },
+  { id: 'user_id', lable: 'User ID', alignRight: false },
+  { id: 'ethtoken', lable: 'ETH Token', alignRight: false },
+  { id: 'earning', label: 'Earning', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   // { id: '' },
 ];
@@ -64,10 +66,7 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(
-      array,
-      (_investment) => _investment?.property?.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
-    );
+    return filter(array, (_investment) => _investment?.title.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -78,7 +77,7 @@ export default function AllInvestments() {
   useEffect(() => {
     dispatch(getStaticInvestments());
   }, [dispatch]);
-  const { investments, staticInvestments } = useSelector((state) => state.data);
+  const { staticInvestments } = useSelector((state) => state.data);
   console.log(staticInvestments);
 
   const [page, setPage] = useState(0);
@@ -101,7 +100,7 @@ export default function AllInvestments() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = investments.map((n) => n.name);
+      const newSelecteds = staticInvestments.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -121,9 +120,9 @@ export default function AllInvestments() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - investments.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - staticInvestments.length) : 0;
 
-  const filteredInvestment = applySortFilter(investments, getComparator(order, orderBy), filterName);
+  const filteredInvestment = applySortFilter(staticInvestments, getComparator(order, orderBy), filterName);
 
   const isInvestmentNotFound = filteredInvestment.length === 0;
 
@@ -152,16 +151,15 @@ export default function AllInvestments() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={investments.length}
+                  rowCount={staticInvestments.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredInvestment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { _id, charge, property } = row;
-                    const isItemSelected = selected.indexOf(property.title) !== -1;
-
+                    const { _id, charge, amount, property, ethToken, user, incrementAmount } = row;
+                    const isItemSelected = selected.indexOf(property?.title) !== -1;
                     return (
                       <TableRow
                         hover
@@ -173,20 +171,22 @@ export default function AllInvestments() {
                       >
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={property.title} src={property.images[0]} />
+                            <Avatar alt={property?.title} src={property?.images[0]} />
                             <Typography variant="subtitle2" noWrap>
                               {property?.title}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{fCurrency(charge?.pricing?.local?.amount)}</TableCell>
-                        <TableCell align="left">{fPercent(property?.financials?.expectedIncome)}</TableCell>
+                        <TableCell align="left">{fCurrency(amount)}</TableCell>
+                        <TableCell align="left">{user}</TableCell>
+                        <TableCell align="left">{ethToken}</TableCell>
+                        <TableCell align="left">{fCurrency(incrementAmount)}</TableCell>
                         <TableCell align="left">
                           <Label
                             variant="ghost"
-                            color={(charge?.timeline[0]?.status === 'NEW' && 'error') || 'success'}
+                            color={(charge && charge?.timeline?.at(-1).status === 'NEW' && 'success') || 'error'}
                           >
-                            {sentenceCase(charge?.timeline[0]?.status)}
+                            {charge?.timeline?.at(-1).status && charge?.timeline?.at(-1).status}
                           </Label>
                         </TableCell>
                       </TableRow>
@@ -213,9 +213,9 @@ export default function AllInvestments() {
           </Scrollbar>
 
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[]}
             component="div"
-            count={investments.length}
+            count={staticInvestments.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

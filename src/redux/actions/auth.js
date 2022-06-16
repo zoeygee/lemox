@@ -12,8 +12,10 @@ export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navi
     const { data } = await api.signin(values);
     dispatch({ type: AUTH, data });
     setSubmitting(false);
-    navigate(PATH_DASHBOARD.user);
     console.log(data);
+    if (location.state?.from) {
+      navigate(location.state?.from);
+    }
   } catch (error) {
     console.log(error);
     setErrorHandler({ hasError: true, message: error?.response?.data?.msg });

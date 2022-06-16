@@ -8,4 +8,5 @@ export { default as AppWidgetSummary } from './AppWidgetSummary';
 export { default as AppCurrentSubject } from './AppCurrentSubject';
 export { default as AppConversionRates } from './AppConversionRates';
 export { default as AppMiniCard } from './AppMiniCard';
+export { default as AppMiniCardUsers } from './AppMiniCardUsers';
 export { default as AppReferral } from './AppReferral';

@@ -184,9 +184,9 @@ export default function Investment() {
                         <TableCell align="left">
                           <Label
                             variant="ghost"
-                            color={(charge?.timeline[0]?.status === 'NEW' && 'error') || 'success'}
+                            color={(charge && charge?.timeline?.at(-1).status === 'NEW' && 'success') || 'error'}
                           >
-                            {sentenceCase(charge?.timeline[0]?.status)}
+                            {charge?.timeline?.at(-1).status && charge?.timeline?.at(-1).status}
                           </Label>
                         </TableCell>
                       </TableRow>

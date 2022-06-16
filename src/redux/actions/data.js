@@ -90,13 +90,15 @@ export const getPaymentStatus = (id) => async (dispatch) => {
   }
 };
 
-export const withdrawFunds = (values, setSubmitting) => async (dispatch) => {
+export const withdrawFunds = (values, setSubmitting, resetForm, setToastMsg) => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });
     const { data } = await api.withdrawFunds(values);
     dispatch({ type: actions.WITHDRAW_FUNDS, payload: data });
     dispatch({ type: actions.END_LOADING });
     setSubmitting(false);
+    resetForm();
+    setToastMsg(toast.success('Withdrawal is pending', { duration: 7000 }));
   } catch (error) {
     console.log(error);
     dispatch({ type: actions.END_LOADING });
@@ -187,6 +189,20 @@ export const getStaticInvestments = () => async (dispatch) => {
     dispatch({ type: actions.END_LOADING });
   }
 };
+
+export const getStaticWithdrawal = () => async (dispatch) => {
+  try {
+    dispatch({ type: actions.START_LOADING });
+    const { data } = await api.fetchStaticWithdrawals();
+    dispatch({ type: actions.STATIC_WITHDRAWALS, payload: data });
+    console.log(data);
+    dispatch({ type: actions.END_LOADING });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: actions.END_LOADING });
+  }
+};
+
 export const verifyUser = (values, setSubmitting, navigate, setToastMsg) => async (dispatch) => {
   try {
     dispatch({ type: actions.START_LOADING });

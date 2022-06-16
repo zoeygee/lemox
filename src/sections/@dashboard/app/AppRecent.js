@@ -2,13 +2,14 @@
 import PropTypes from 'prop-types';
 import { Box, Stack, Link, Card, Button, Divider, Typography, CardHeader, CircularProgress } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // utils
 import { fToNow } from '../../../utils/formatTime';
 // components
 import Iconify from '../../../components/Iconify';
 import Scrollbar from '../../../components/Scrollbar';
 import { fCurrency } from '../../../utils/formatNumber';
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD, PATH_ADMIN } from '../../../routes/paths';
 // ----------------------------------------------------------------------
 
 AppRecent.propTypes = {
@@ -18,6 +19,7 @@ AppRecent.propTypes = {
 };
 
 export default function AppRecent({ title, subheader, list, ...other }) {
+  const { user } = useSelector((state) => state.data);
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -40,7 +42,7 @@ export default function AppRecent({ title, subheader, list, ...other }) {
           size="small"
           color="inherit"
           component={RouterLink}
-          to={PATH_DASHBOARD.investment}
+          to={user.role === 'admin' ? PATH_ADMIN.investments : PATH_DASHBOARD.investment}
           endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
         >
           View all

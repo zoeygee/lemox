@@ -30,6 +30,7 @@ export const getSingleWithdrawal = (id) => API.get(`/withdrawal/${id}`);
 export const fetchUsers = () => API.get('/users');
 export const fetchUser = (id) => API.get(`/users/${id}`);
 export const fetchStaticInvestments = () => API.get('/static/investments');
+export const fetchStaticWithdrawals = () => API.get('/static/withdrawals');
 
 // API TO VERIFY INVESTORS
 export const verifyUser = (values) => API.post('/identity', values);

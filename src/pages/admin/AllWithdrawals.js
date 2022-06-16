@@ -1,15 +1,11 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
   Table,
   Stack,
-  Avatar,
-  Button,
-  Checkbox,
   TableRow,
   TableBody,
   TableCell,
@@ -23,20 +19,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import Page from '../../components/Page';
 import Label from '../../components/Label';
 import Scrollbar from '../../components/Scrollbar';
-import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
 import { UserListHead, UserMoreMenu } from '../../sections/@dashboard/user';
 
-import { getProperties, getAllWithdrwals } from '../../redux/actions/data';
-import { fCurrency, fPercent } from '../../utils/formatNumber';
+import { getStaticWithdrawal } from '../../redux/actions/data';
+import { fCurrency } from '../../utils/formatNumber';
+import { fToNow } from '../../utils/formatTime';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'title', label: 'Title', alignRight: false },
-  { id: 'totalInvestment', label: 'Total Investment', alignRight: false },
-  { id: 'totalTokens', label: 'Total Tokens', alignRight: false },
-  { id: 'expectedIncome', label: 'Expected Income', alignRight: false },
+  { id: 'date', label: 'Date', alignRight: false },
+  { id: 'amount', label: 'Amount', alignRight: false },
+  { id: 'wallet', label: 'Wallet', alignRight: false },
+  { id: 'user', label: 'User ID', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   // { id: '' },
 ];
@@ -74,14 +70,12 @@ function applySortFilter(array, comparator, query) {
 
 export default function AllWithdrawals() {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getProperties());
+    dispatch(getStaticWithdrawal());
   }, [dispatch]);
-  useEffect(() => {
-    dispatch(getAllWithdrwals());
-  }, [dispatch]);
-  const { properties, withdrawals } = useSelector((state) => state.data);
-  console.log(withdrawals);
+  const { staticWithdrawals } = useSelector((state) => state.data);
+  console.log(staticWithdrawals);
 
   const [page, setPage] = useState(0);
 
@@ -93,7 +87,7 @@ export default function AllWithdrawals() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(15);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -103,7 +97,7 @@ export default function AllWithdrawals() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = properties.map((n) => n.name);
+      const newSelecteds = staticWithdrawals.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -138,15 +132,15 @@ export default function AllWithdrawals() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - properties.length) : 0;
-  const filteredInvestment = applySortFilter(properties, getComparator(order, orderBy), filterName);
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - staticWithdrawals.length) : 0;
+  const filteredInvestment = applySortFilter(staticWithdrawals, getComparator(order, orderBy), filterName);
   const isInvestmentNotFound = filteredInvestment.length === 0;
   return (
-    <Page title="All Withdrawals">
+    <Page title="Withdrawal Request">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            All Withdrawals
+            Withdrawal Request
           </Typography>
         </Stack>
         <Card>
@@ -157,15 +151,15 @@ export default function AllWithdrawals() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={properties.length}
+                  rowCount={staticWithdrawals.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredInvestment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { _id, title, financials, status, totalTokens, images } = row;
-                    const isItemSelected = selected.indexOf(title) !== -1;
+                    const { _id, amount, btcWalletAddress, createdAt, status, user } = row;
+                    const isItemSelected = selected.indexOf(amount) !== -1;
                     return (
                       <TableRow
                         hover
@@ -174,22 +168,24 @@ export default function AllWithdrawals() {
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
-                        component={RouterLink}
-                        to={`/admin/withdrawals/${_id}`}
                       >
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={title} src={images[0]} />
-                            <Typography variant="subtitle2" noWrap>
-                              {title}
-                            </Typography>
+                            <Typography variant="subtitle2">{fToNow(createdAt)}</Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{fCurrency(financials.totalInvestment)}</TableCell>
-                        <TableCell align="left">{totalTokens}</TableCell>
-                        <TableCell align="left">{fPercent(financials.expectedIncome)}</TableCell>
+                        <TableCell align="left">{fCurrency(amount)}</TableCell>
+                        <TableCell align="left">{btcWalletAddress}</TableCell>
+                        <TableCell align="left">{user}</TableCell>
                         <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
+                          <Label
+                            variant="ghost"
+                            color={
+                              (status === 'cancelled' && 'error') ||
+                              (status === 'pending' && 'warning') ||
+                              (status === 'complete' && 'success')
+                            }
+                          >
                             {sentenceCase(status)}
                           </Label>
                         </TableCell>
@@ -218,9 +214,9 @@ export default function AllWithdrawals() {
             </TableContainer>
           </Scrollbar>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[]}
             component="div"
-            count={properties.length}
+            count={staticWithdrawals.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

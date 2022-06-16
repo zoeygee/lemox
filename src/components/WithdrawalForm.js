@@ -20,6 +20,7 @@ import { withdrawFunds } from '../redux/actions/data';
 
 export default function WithdrawalForm() {
   const [open, setOpen] = React.useState(false);
+  const [toastMsg, setToastMsg] = React.useState('');
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
@@ -42,9 +43,9 @@ export default function WithdrawalForm() {
       btcWalletAddress: '',
     },
     validationSchema: withdrawalSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values, { setSubmitting, resetForm }) => {
       console.log(values);
-      dispatch(withdrawFunds(values, setSubmitting));
+      dispatch(withdrawFunds(values, setSubmitting, resetForm, setToastMsg));
     },
   });
 

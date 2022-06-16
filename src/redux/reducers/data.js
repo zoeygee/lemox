@@ -61,6 +61,8 @@ export default (
       return { ...state, staticInvestments: action.payload };
     case actions.GET_IDENTITIES:
       return { ...state, identities: action.payload };
+    case actions.STATIC_WITHDRAWALS:
+      return { ...state, staticWithdrawals: action.payload };
     case actions.GET_IDENTITY:
       return { ...state, identity: action.payload };
     case actions.VERIFY_USER:

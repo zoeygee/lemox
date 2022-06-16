@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Typography, Stack } from '@mui/material';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
+import { fNumber, fPercent } from '../../../utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
@@ -22,8 +22,6 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 const PERCENT = 0.15;
 export default function AppMiniCard({ title, total, icon }) {
-  const theme = useTheme();
-
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
@@ -32,7 +30,7 @@ export default function AppMiniCard({ title, total, icon }) {
           <IconWrapperStyle>
             <Icon width={16} height={16} icon={icon} />
           </IconWrapperStyle>
-          <Typography variant="h3">{fCurrency(total)}</Typography>
+          <Typography variant="h3">{fNumber(total)}</Typography>
         </Stack>
       </Box>
     </Card>
