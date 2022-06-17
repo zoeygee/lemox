@@ -29,3 +29,5 @@ export { default as SuccessVerification } from './SuccessVerification';
 export { default as PaymentCancelled } from './PaymentCancelled';
 export { default as PaymentSuccess } from './PaymentSuccess';
 export { default as PrivatePlacement } from './legal/privatePlacement';
+export { default as Verify } from './Verify';
+export { default as CheckEmailVerification } from './CheckEmailVerification';

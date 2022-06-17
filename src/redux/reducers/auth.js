@@ -3,7 +3,6 @@ import { AUTH, LOGOUT, EDIT_PROFILE, FORGOT_PASSWORD, AUTH_ERROR } from '../acti
 export default (state = { error: null, authData: [], propertiesById: [] }, action) => {
   switch (action.type) {
     case AUTH:
-      localStorage.setItem('profile', JSON.stringify({ ...action?.data }));
       return { ...state, authData: action?.data, error: null };
     case LOGOUT:
       localStorage.clear();
@@ -13,7 +12,7 @@ export default (state = { error: null, authData: [], propertiesById: [] }, actio
       return {
         ...state,
         authData: state.authData.map((auth) => (auth._id === action?.payload?.data?._id ? action?.data : auth)),
-        error: null,   
+        error: null,
       };
     // return { ...state,  };
     case AUTH_ERROR:

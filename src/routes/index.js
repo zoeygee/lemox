@@ -43,6 +43,8 @@ import {
   PaymentCancelled,
   PaymentSuccess,
   PrivatePlacement,
+  Verify,
+  CheckEmailVerification,
 } from '../pages';
 // ----------------------------------------------------------------------
 
@@ -66,6 +68,7 @@ export default function Router() {
         { path: '/marketplace/:id/checkout/:charge', element: <Checkout /> },
         { path: '/marketplace/:id/checkout/:charge/cancelled', element: <PaymentCancelled /> },
         { path: '/marketplace/:id/checkout/:charge/success', element: <PaymentSuccess /> },
+        { path: '404', element: <NotFound /> },
       ],
     },
     {
@@ -87,6 +90,7 @@ export default function Router() {
         { path: 'sell-token', element: <SellToken /> },
         { path: 'referral', element: <Referral /> },
         { path: 'id-verification/pending', element: <PendingVerification /> },
+
         { path: 'id-verification/success', element: <SuccessVerification /> },
       ],
     },
@@ -121,14 +125,32 @@ export default function Router() {
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: 'forgot-password', element: <ForgotPassword /> },
-        { path: 'reset-password', element: <ResetPassword /> },
+        { path: 'reset-password/:token', element: <ResetPassword /> },
         { path: 'reset-instruction', element: <PasswordInstruction /> },
+        { path: 'check-email', element: <Verify /> },
+        { path: 'verify/:token', element: <CheckEmailVerification /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
-    { path: '/webmail' },
-    { path: '/cpanel'  },
   ]);
 }
+
+// Bro I noticed there’s not verification email and signup email.
+// There’s meant to be an a verification email to verify your email address.
+// Then another email for successful signup.
+
+// There’s also meant to be emails for investment.
+// Email to validate payment and payment complete.
+
+// Should I list all the emails out for you?
+
+// - Email verification email
+// - signup successful email
+// - investment complete email
+
+// coinbase commerce api key 6a1cd34a-17bb-4e59-9e98-962513ff81c5
+
+// Address
+// 26, Boulevard Royal. Luxembourg 2449

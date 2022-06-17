@@ -10,7 +10,7 @@ export default function Team() {
     },
     {
       fullName: 'Tiffany Frazee',
-      role: 'Cheif Fianancial Officer',
+      role: 'Chief Fianancial Officer',
       image: 'https://res.cloudinary.com/codack/image/upload/v1654384253/lemox/team/photo1654373309_dgfa3n.jpg',
     },
     {

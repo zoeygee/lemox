@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { Navigate } from 'react-router-dom';
 import { AUTH, EDIT_PROFILE, FORGOT_PASSWORD } from './actionTypes';
 import * as api from '../api';
-import { PATH_DASHBOARD, PATH_ADMIN } from '../../routes/paths';
+import { PATH_DASHBOARD, PATH_ADMIN, PATH_PAGE, PATH_AUTH } from '../../routes/paths';
 
 const auth = JSON.parse(localStorage.getItem('profile'));
 export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navigate, location) => async (dispatch) => {
@@ -15,7 +15,12 @@ export const signin = (values, setErrorHandler, setSubmitting, setToastMsg, navi
     console.log(data);
     if (location.state?.from) {
       navigate(location.state?.from);
-    } else navigate(data.result.role === 'investor' ? PATH_DASHBOARD.user : PATH_ADMIN.dashboard);
+    } else if (data.result.verified === true) {
+      localStorage.setItem('profile', JSON.stringify({ ...data }));
+      navigate(data.result.role === 'investor' ? PATH_DASHBOARD.user : PATH_ADMIN.dashboard);
+    } else {
+      navigate(PATH_AUTH.verify);
+    }
   } catch (error) {
     console.log(error);
     setErrorHandler({ hasError: true, message: error?.response?.data?.msg });
@@ -29,7 +34,7 @@ export const signup = (values, navigate, setSubmitting, setToastMsg) => async (d
     const { data } = await api.register(values);
     dispatch({ type: AUTH, data });
     setSubmitting(false);
-    navigate(PATH_DASHBOARD.user);
+    navigate(PATH_AUTH.verify);
   } catch (error) {
     console.log(error);
     setSubmitting(false);

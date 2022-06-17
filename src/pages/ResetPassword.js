@@ -12,6 +12,7 @@ import useResponsive from '../hooks/useResponsive';
 import { MHidden } from '../components/@material-extend';
 import Logo from '../components/Logo';
 import { PATH_AUTH } from '../routes/paths';
+import Iconify from '../components/Iconify';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -69,7 +70,11 @@ export default function ResetPassword() {
         },
       };
       try {
-        const { data } = await axios.put(`http://localhost:4000/reset-password/${params.token}`, password, config);
+        const { data } = await axios.put(
+          `${process.eng.REACT_APP_API_KEY}/auth/reset-password/${params.token}`,
+          password,
+          config
+        );
         setSuccess(data);
       } catch (error) {
         setError(error.response.data);
@@ -98,7 +103,9 @@ export default function ResetPassword() {
 
       <Container maxWidth="sm">
         <ContentStyle>
-          <Stack sx={{ mb: 2 }}>MailIcon</Stack>
+          <Stack sx={{ mb: 2 }}>
+            <Iconify icon="fluent:mail-alert-24-regular" height={80} width={80} />
+          </Stack>
 
           <Stack sx={{ mb: 3 }}>
             <Typography variant="h3" gutterBottom>

@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
-import { PATH_AUTH, PATH_PAGE } from '../../routes/paths';
+import { PATH_PAGE, PATH_AUTH } from '../../routes/paths';
 import { getUser } from '../../redux/actions/data';
 
 // ----------------------------------------------------------------------
@@ -47,6 +47,11 @@ export default function DashboardLayout() {
   const { user } = useSelector((state) => state.data);
   console.log(user.verified);
 
+  useEffect(() => {
+    if (user.verified === false) {
+      navigate(PATH_PAGE.verify);
+    }
+  }, []);
   useEffect(() => {
     const { token } = auth;
     // JWT check if token expired
