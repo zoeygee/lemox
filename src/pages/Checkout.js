@@ -103,12 +103,11 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                   <div className="card-body">
                     <div className="row mb-4">
                       <div className="col-sm-6">
-                        <h6 className="mb-3">From:</h6>
                         <div>
                           <strong>Lemox</strong>
                         </div>
                         <Typography variant="body2">Email: info@lemox.co</Typography>
-                        <Typography variant="body2">Phone: +48 444 666 3333</Typography>
+                        <Typography variant="body2">26, Boulevard Royal. Luxembourg 2449</Typography>
                       </div>
 
                       <div className="col-sm-6">

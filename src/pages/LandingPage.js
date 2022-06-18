@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { PATH_PAGE, PATH_DASHBOARD } from '../routes/paths';
 import Page from '../components/Page';
-import { Benefits, WatchInvestmentGrow, StepsToStart } from '../sections/@external/LandingPage';
+import { Benefits, WatchInvestmentGrow, StepsToStart, VideoIllustration } from '../sections/@external/LandingPage';
 
 export default function LandingPage() {
   return (
@@ -273,6 +273,7 @@ export default function LandingPage() {
       </div>
       <StepsToStart />
       <WatchInvestmentGrow />
+      <VideoIllustration />
 
       <section
         className="pt-10 pt-md-12 pb-11 pb-md-13"

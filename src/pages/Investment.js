@@ -33,7 +33,7 @@ import { fCurrency, fPercent } from '../utils/formatNumber';
 const TABLE_HEAD = [
   { id: 'title', label: 'Title', alignRight: false },
   { id: 'investment', label: 'Investment', alignRight: false },
-  { id: 'income', label: 'Income', alignRight: false },
+  { id: 'income', label: 'Weekly Income', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   // { id: '' },
 ];

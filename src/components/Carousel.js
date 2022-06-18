@@ -3,7 +3,7 @@ import React from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { RViewer, RViewerTrigger } from 'react-viewerjs';
 
-function PropertyCarousel({ images }) {
+export default function PropertyCarousel({ images }) {
   const opt = {
     rewind: true,
     fixedWidth: '100%',
@@ -28,7 +28,7 @@ function PropertyCarousel({ images }) {
               <SplideSlide key={index}>
                 <RViewerTrigger index={index}>
                   <img src={image} alt="... 1" />
-                </RViewerTrigger> 
+                </RViewerTrigger>
               </SplideSlide>
             ))}
             <div className="my-slider-progress">
@@ -40,5 +40,3 @@ function PropertyCarousel({ images }) {
     </div>
   );
 }
-
-export default PropertyCarousel;
