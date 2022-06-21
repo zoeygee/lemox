@@ -3,14 +3,10 @@ export default function VideoIllustration() {
     <div className="container pb-12">
       <div className="row">
         <div className="col-10 col-sm-12 mx-auto">
-          <div className="row">
-            <div className="col-8 col-sm-12 mx-auto text-center">
-              <h1 className="display-4 mb-4">Invest easily in real estate</h1>
-              <p className="text-muted">
-                Buy slices of properties. Enjoy the financial benefits of ownership and let Lemox manage the rest.
-              </p>
-            </div>
-          </div>
+          <h1 className="display-4 mb-4">Invest easily in real estate</h1>
+          <p className="text-muted">
+            Buy slices of properties. Enjoy the financial benefits of ownership and let Lemox manage the rest.
+          </p>
 
           <video width="100%" height="auto" controls loop muted={false} autoPlay>
             <source src="static/videos/video-illustration.mp4" type="video/mp4" />

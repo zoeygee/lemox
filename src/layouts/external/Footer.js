@@ -25,7 +25,7 @@ export default function Footer() {
       icon: 'ant-design:medium-circle-filled',
     },
     {
-      name: 'Medium',
+      name: 'Linkedin',
       link: 'https://www.linkedin.com/company/lemox_co',
       icon: 'entypo-social:linkedin-with-circle',
     },

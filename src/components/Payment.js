@@ -51,7 +51,7 @@ export default function Payment({ property, user }) {
   };
   const paymentSchema = Yup.object().shape({
     amount: Yup.number().min(1000, 'Minimum investment is $1,000').required('This field is required!'),
-    ethToken: Yup.string().required('Please enter your ETH wallet address'),
+    ethToken: Yup.string().required('Please enter your BSC wallet address'),
   });
   const thisUserIdentity = identities.find((i) => i.user === user._id);
 
@@ -132,7 +132,7 @@ export default function Payment({ property, user }) {
                     <FormHelperText>Min 10Tokens/investor - max 200 Token/investor</FormHelperText>
                     <TextField
                       margin="dense"
-                      label="Input your ETH wallet address"
+                      label="Input your BSC wallet address"
                       type="text"
                       fullWidth
                       variant="outlined"
@@ -151,7 +151,7 @@ export default function Payment({ property, user }) {
                     Don’t have an ETH wallet? Use *
                     <Link
                       component="a"
-                      href="https://medium.com/@lemox/metamask-testnet-wallet-setup-for-blockchain-development-1b44672576f2"
+                      href="https://medium.com/@lemox/metamask-is-one-of-the-most-popular-crypto-wallet-where-you-can-manage-your-eth-and-erc-20-type-5a841986ef37"
                       target="_blank"
                     >
                       Metamask
@@ -159,7 +159,7 @@ export default function Payment({ property, user }) {
                     * or *
                     <Link
                       component="a"
-                      href="https://medium.com/@lemox/how-to-set-up-trust-wallet-what-is-trust-wallet-f50427bb81ed"
+                      href="https://medium.com/@lemox/how-to-create-and-receive-lemox-token-to-trust-wallet-2ca574b77e78"
                       target="_blank"
                     >
                       Trustwallet

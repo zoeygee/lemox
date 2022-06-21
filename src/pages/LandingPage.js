@@ -2,7 +2,13 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { PATH_PAGE, PATH_DASHBOARD } from '../routes/paths';
 import Page from '../components/Page';
-import { Benefits, WatchInvestmentGrow, StepsToStart, VideoIllustration } from '../sections/@external/LandingPage';
+import {
+  Benefits,
+  WatchInvestmentGrow,
+  StepsToStart,
+  VideoIllustration,
+  Badges,
+} from '../sections/@external/LandingPage';
 
 export default function LandingPage() {
   return (
@@ -309,6 +315,7 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+      <Badges />
       <Benefits />
     </Page>
   );

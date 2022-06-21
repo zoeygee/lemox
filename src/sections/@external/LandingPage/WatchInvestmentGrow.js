@@ -22,8 +22,8 @@ export default function WatchInvestmentGrow() {
             <ul className="mb-0">
               <li className="mb-3">Browse our marketplace and select the best investment for you. </li>
               <li className="mb-3">
-                Input amount and your ETH wallet address, Token will be sent to that address immediately payment has
-                been received.{' '}
+                Input amount and your Binance Smart Chain wallet address, Token will be sent to that address immediately
+                payment has been received.{' '}
               </li>
               <li className="mb-3">Watch your investment grow in value over time.</li>
               <li className="mb-3">Receive percentage rent/token weekly from tenants.</li>
