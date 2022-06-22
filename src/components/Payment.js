@@ -73,13 +73,11 @@ export default function Payment({ property, user }) {
           resetForm
         )
       );
-      console.log(values);
     },
   });
 
   const { handleSubmit, getFieldProps, setFieldValue, touched, errors, isSubmitting, values } = formik;
-  console.log(user);
-  console.log(identities);
+
   return (
     <Box py={4}>
       {thisUserIdentity?.verified === 'false' || thisUserIdentity?.verified === undefined ? (

@@ -69,17 +69,14 @@ export default function ForgotPassword() {
     },
     validationSchema: emailSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      console.log(values);
       setSubmitting(true);
       await axios
         .post(`${process.env.REACT_APP_API_KEY}/auth/forgot-password`, { email: values.email }, config)
         .then((res) => {
-          console.log(res);
           setSubmitting(false);
           navigate('/auth/reset-instruction');
         })
         .catch((err) => {
-          console.log(err);
           setSubmitting(false);
         });
     },

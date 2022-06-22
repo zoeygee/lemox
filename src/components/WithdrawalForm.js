@@ -44,7 +44,6 @@ export default function WithdrawalForm() {
     },
     validationSchema: withdrawalSchema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      console.log(values);
       dispatch(withdrawFunds(values, setSubmitting, resetForm, setToastMsg));
     },
   });

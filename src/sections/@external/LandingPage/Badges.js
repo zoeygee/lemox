@@ -13,15 +13,15 @@ export default function Badges() {
     },
     { name: 'binance', img: 'static/badges/binance.png' },
     { name: 'probate', img: 'static/badges/probate.jpeg' },
-    { name: 'probate', img: 'static/badges/photo1655789947.jpeg' },
+    { name: 'bnb', img: 'static/badges/bnb.jpeg' },
   ];
   return (
     <>
       <section>
         <div className="container-lg mt-12">
           <div className="row mt-n5" style={{ justifyContent: 'center', alignItems: 'baseline' }}>
-            {allbadges.map((badge) => (
-              <div className="col-4 col-md-2 mt-5">
+            {allbadges.map((badge, index) => (
+              <div className="col-4 col-md-2 mt-5" key={index}>
                 {badge.link ? (
                   <a href={badge.link} target="_blank" rel="noreferrer">
                     <div className="img-fluid svg-shim mx-auto" style={{ maxWidth: '112px' }}>

@@ -55,12 +55,10 @@ export default function CheckEmailVerification() {
       await axios
         .patch(`${process.env.REACT_APP_API_KEY}/auth/verify-email/${token}`)
         .then((res) => {
-          console.log(res);
           setSuccess(true);
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
           setError(error);
           setLoading(false);
         });

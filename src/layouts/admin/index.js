@@ -45,7 +45,6 @@ export default function AdminLayout() {
     dispatch(getUser(auth.result._id));
   }, [dispatch]);
   const { user } = useSelector((state) => state.data);
-  console.log(user.verified);
 
   useEffect(() => {
     const { token } = auth;

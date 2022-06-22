@@ -75,7 +75,7 @@ export default function IdVerification() {
     },
   });
   const thisUserIdentity = identities.find((i) => i.user === user._id);
-  console.log(thisUserIdentity);
+
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values, setFieldValue } = formik;
   const selectedCountryCode = countries.find((c) => c.label === values.country);
 
@@ -86,7 +86,7 @@ export default function IdVerification() {
     } else if (thisUserIdentity?.verified === 'true') {
       navigate(PATH_DASHBOARD.successVerification, { replace: true });
     }
-  }, []);
+  }, [thisUserIdentity]);
   return (
     <Container>
       <Wrapper>
@@ -278,7 +278,7 @@ export default function IdVerification() {
                   </Stack>
                   <Typography variant="body1">SELFIE - NOT FROM YOUR ID</Typography>
                   <Box role="button" tabIndex="0" className="profilePic">
-                    <Avatar className="avatar" alt="thumb" size={70} src={user.profilePic} sx={{ borderRadius: 3 }}>
+                    <Avatar className="avatar" alt="thumb" size={70} src={values.selfie} sx={{ borderRadius: 3 }}>
                       <Box
                         component={FileBase64}
                         multiple={false}
@@ -305,7 +305,7 @@ export default function IdVerification() {
                     </TextField>
                     <Typography variant="body1">{values.idType === '' ? '' : `Upload ${values.idType}`}</Typography>
                     <Box role="button" tabIndex="0" className="profilePic">
-                      <Avatar className="avatar" alt="thumb" size={70} src={user.profilePic} sx={{ borderRadius: 3 }}>
+                      <Avatar className="avatar" alt="thumb" size={70} src={values.idImage} sx={{ borderRadius: 3 }}>
                         <Box
                           component={FileBase64}
                           multiple={false}

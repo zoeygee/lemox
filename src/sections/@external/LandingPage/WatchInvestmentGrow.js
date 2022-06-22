@@ -1,3 +1,5 @@
+import { Typography } from '@mui/material';
+
 export default function WatchInvestmentGrow() {
   return (
     <section className="pt-10 pt-md-12 pb-11 pb-md-13">
@@ -10,10 +12,12 @@ export default function WatchInvestmentGrow() {
               alt="..."
             />
           </div>
-          <div className="col-md-7 col-lg-6 order-md-0">
+          <div className="col-md-7 col-lg-6 order-md-0 text-muted">
             <hr className="hr-sm bg-warning ms-0 mb-6" />
 
-            <h2 className="display-4 mb-4">Hold your Lemox Tokens and watch your investment grow over time.</h2>
+            <Typography variant="h2" className="display-4 mb-4" color="primary.main">
+              Hold your Lemox Tokens and watch your investment grow over time.
+            </Typography>
 
             <p className="text-muted">
               Watch the value of your investment grow and receive rents weekly in our ever growing real estate markets.

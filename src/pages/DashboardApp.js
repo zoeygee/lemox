@@ -25,12 +25,11 @@ export default function DashboardApp() {
 
   const { investments, isLoading, investment } = useSelector((state) => state.data);
 
-  const investmentIds = investments.map((id) => id?._id).toString();
-  console.log(investmentIds);
   // Populate investmentIds with all the current investment ID
 
   // Total investment
   const amountInvested = investments.reduce((e, i) => e + i?.amount, 0);
+  const allIncrementedAmount = investments.reduce((e, i) => e + i?.incrementAmount, 0);
 
   const incrementDate = new Date(investment?.incrementedAt);
   const roi = (10 / 100) * amountInvested;
@@ -42,18 +41,20 @@ export default function DashboardApp() {
 
   // increment config
   const dateToString = new Date().toISOString();
-  const config = {
-    incrementAmount: updatedAmount,
-  };
-  useEffect(() => {
-    if (!isLoading) dispatch(getUpdatedInvestment(investmentIds, config));
-  }, [isLoading]);
 
-  setInterval(() => {
-    if (sevenDaysAfter - incrementDate === daysInMilliseconds) {
-      dispatch(getUpdatedInvestment(investmentId, config));
+  useEffect(() => {
+    if (investments.length) {
+      investments.forEach((i) => {
+        dispatch(getUpdatedInvestment(i._id, { incrementAmount: roi + i?.incrementAmount, incrementedAt: Date.now }));
+      });
     }
-  }, daysInMilliseconds);
+  }, []);
+
+  // setInterval(() => {
+  //   if (sevenDaysAfter - incrementDate === daysInMilliseconds) {
+  //     dispatch(getUpdatedInvestment(investmentId, config));
+  //   }
+  // }, daysInMilliseconds);
 
   return (
     <Page title="Dashboard">
@@ -75,12 +76,12 @@ export default function DashboardApp() {
             <AppMiniCard title="Total investment" total={amountInvested} icon={'bxs:badge-dollar'} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppMiniCard title="Earnings" total={investment?.incrementAmount} icon={'bxs:badge-dollar'} />
+            <AppMiniCard title="Earnings" total={allIncrementedAmount} icon={'bxs:badge-dollar'} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <AppMiniCard
               title="Available balance"
-              total={amountInvested + investment?.incrementAmount}
+              total={amountInvested + allIncrementedAmount}
               icon={'bxs:badge-dollar'}
             />
           </Grid>

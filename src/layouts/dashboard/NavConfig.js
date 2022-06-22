@@ -27,7 +27,6 @@ const navConfig = [
     path: '/dashboard/withdrawal',
     icon: getIcon('fa6-solid:money-check-dollar'),
   },
-  { title: 'referral', path: '/dashboard/referral', icon: getIcon('nimbus:marketing') },
   {
     title: 'Account details',
     path: '/dashboard/account-details',

@@ -26,9 +26,7 @@ export default function ChangePassword() {
     },
     validationSchema: ChangePassWordSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      //   alert(JSON.stringify(values, null, 2));
       dispatch(editProfile(user?._id, { password: values.password }, setSubmitting, setToastMsg));
-      //   console.log(values);
     },
   });
 

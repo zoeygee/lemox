@@ -30,7 +30,6 @@ export default function Contact() {
           resetForm();
         })
         .catch((err) => {
-          console.log(err);
           setSubmitting(false);
         });
     },

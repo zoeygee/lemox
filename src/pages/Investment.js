@@ -79,7 +79,6 @@ export default function Investment() {
     dispatch(getInvestments());
   }, [dispatch]);
   const { investments } = useSelector((state) => state.data);
-  console.log(investments);
 
   const [page, setPage] = useState(0);
 

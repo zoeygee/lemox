@@ -25,8 +25,6 @@ export default function Checkout() {
     dispatch(getUser(auth.result._id));
   }, [dispatch, auth.result._id]);
   const { property, user } = useSelector((state) => state.data);
-  console.log(property);
-  console.log(user);
 
   // fetch charge with charge code
   useEffect(() => {
