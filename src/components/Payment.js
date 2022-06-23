@@ -146,7 +146,7 @@ export default function Payment({ property, user }) {
                   </Typography>
 
                   <DialogContentText sx={{ mt: 2 }}>
-                    Don’t have an ETH wallet? Use *
+                    Don’t have an BSC wallet? Use *
                     <Link
                       component="a"
                       href="https://medium.com/@lemox/metamask-is-one-of-the-most-popular-crypto-wallet-where-you-can-manage-your-eth-and-erc-20-type-5a841986ef37"

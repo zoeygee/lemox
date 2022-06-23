@@ -6,7 +6,7 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@
 import PropTypes from 'prop-types';
 // components
 import MenuPopover from '../../components/MenuPopover';
-import { PATH_AUTH, PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_AUTH, PATH_DASHBOARD, PATH_PAGE } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +25,11 @@ const MENU_OPTIONS = [
     label: 'Account details',
     icon: 'eva:settings-2-fill',
     linkTo: PATH_DASHBOARD.accountDetails,
+  },
+  {
+    label: 'Marketplace',
+    icon: 'eva:settings-2-fill',
+    linkTo: PATH_PAGE.marketplace,
   },
 ];
 
