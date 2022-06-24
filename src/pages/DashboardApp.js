@@ -6,6 +6,7 @@ import { Grid, Container, Typography, Link, Stack, Button } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addDays, endOfDay } from 'date-fns';
+import moment from 'moment';
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -34,6 +35,11 @@ export default function DashboardApp() {
   // increment config
   const dateToString = new Date().toISOString();
 
+  // useEffect(() => {
+  //   dispatch(getUpdatedInvestment('62acf928aa84b578d96f7ccd', { incrementAmount: 1000, incrementedAt: dateToString }));
+  // }, []);
+
+  // console.log(convertMilliSecondsToDate(1655846087531));
   useEffect(() => {
     if (investments.length) {
       investments.forEach((i) => {
@@ -44,6 +50,8 @@ export default function DashboardApp() {
         const updatedAmount = roi + investment?.incrementAmount;
         const currentDate = endOfDay(new Date());
         console.log(currentDate);
+        console.log(sevenDaysAfter);
+        console.log(i._id);
         setInterval(() => {
           if (sevenDaysAfter - incrementDate) {
             dispatch(
@@ -53,7 +61,7 @@ export default function DashboardApp() {
         }, daysInMilliseconds);
       });
     }
-  }, []);
+  }, [investments.length]);
 
   return (
     <Page title="Dashboard">

@@ -50,7 +50,7 @@ export default function Payment({ property, user }) {
     setOpen(false);
   };
   const paymentSchema = Yup.object().shape({
-    amount: Yup.number().min(1000, 'Minimum investment is $1,000').required('This field is required!'),
+    // amount: Yup.number().min(, 'Minimum investment is $1,000').required('This field is required!'),
     ethToken: Yup.string().required('Please enter your BSC wallet address'),
   });
   const thisUserIdentity = identities.find((i) => i.user === user._id);
