@@ -59,7 +59,7 @@ export default function AdminDashboardApp() {
                   title: i?.charge?.pricing?.local?.amount,
                   description: i?.charge?.description,
                   image: i?.property?.images[0],
-                  postedAt: i?.charge?.timeline[0]?.time,
+                  postedAt: i?.charge?.timeline?.at(-1)?.time,
                   key: index,
                 }))}
               />

@@ -30,7 +30,7 @@ export default function RegisterForm() {
     tel: Yup.string()
       .matches(phoneRegEx, 'Phone number is invalid')
       .required('Phone number is required')
-      .min(10, 'Phone number is invalid')
+      .min(9, 'Phone number is invalid')
       .max(11, 'Phone number is invalid'),
     password: Yup.string().required('Password is required'),
   });

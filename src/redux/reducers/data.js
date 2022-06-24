@@ -14,6 +14,7 @@ export default (
     user: {},
     userDetail: {},
     staticInvestments: [],
+    staticWithdrawals: [],
     identities: [],
     identity: {},
   },

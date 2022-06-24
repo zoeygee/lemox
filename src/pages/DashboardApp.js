@@ -31,30 +31,29 @@ export default function DashboardApp() {
   const amountInvested = investments.reduce((e, i) => e + i?.amount, 0);
   const allIncrementedAmount = investments.reduce((e, i) => e + i?.incrementAmount, 0);
 
-  const incrementDate = new Date(investment?.incrementedAt);
-  const roi = (10 / 100) * amountInvested;
-  const sevenDaysAfter = addDays(incrementDate, 7);
-  const daysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
-  const updatedAmount = roi + investment?.incrementAmount;
-  const currentDate = endOfDay(new Date());
-  console.log(currentDate);
-
   // increment config
   const dateToString = new Date().toISOString();
 
   useEffect(() => {
     if (investments.length) {
       investments.forEach((i) => {
-        dispatch(getUpdatedInvestment(i._id, { incrementAmount: roi + i?.incrementAmount, incrementedAt: Date.now }));
+        const incrementDate = new Date(investment?.incrementedAt);
+        const roi = (10 / 100) * amountInvested;
+        const sevenDaysAfter = addDays(incrementDate, 7);
+        const daysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+        const updatedAmount = roi + investment?.incrementAmount;
+        const currentDate = endOfDay(new Date());
+        console.log(currentDate);
+        setInterval(() => {
+          if (sevenDaysAfter - incrementDate) {
+            dispatch(
+              getUpdatedInvestment(i._id, { incrementAmount: roi + i?.incrementAmount, incrementedAt: Date.now })
+            );
+          }
+        }, daysInMilliseconds);
       });
     }
   }, []);
-
-  // setInterval(() => {
-  //   if (sevenDaysAfter - incrementDate === daysInMilliseconds) {
-  //     dispatch(getUpdatedInvestment(investmentId, config));
-  //   }
-  // }, daysInMilliseconds);
 
   return (
     <Page title="Dashboard">

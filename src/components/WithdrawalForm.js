@@ -17,12 +17,18 @@ import { LoadingButton } from '@mui/lab';
 import Iconify from './Iconify';
 import { fCurrency } from '../utils/formatNumber';
 import { withdrawFunds } from '../redux/actions/data';
+import { useInvestment } from '../hooks/useInvestment';
 
 export default function WithdrawalForm() {
   const [open, setOpen] = React.useState(false);
   const [toastMsg, setToastMsg] = React.useState('');
   const dispatch = useDispatch();
+  const investments = useInvestment();
+  // Total investment
+  const amountInvested = investments.reduce((e, i) => e + i?.amount, 0);
+  const allIncrementedAmount = investments.reduce((e, i) => e + i?.incrementAmount, 0);
 
+  console.log(investments);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -30,10 +36,10 @@ export default function WithdrawalForm() {
   const handleClose = () => {
     setOpen(false);
   };
-  const earning = 1000;
+  const earning = amountInvested + allIncrementedAmount;
   const withdrawalSchema = Yup.object().shape({
     amount: Yup.number()
-      .max(earning, `Your earning is ${fCurrency(earning)}`)
+      .max(earning, `Your current balance is ${fCurrency(earning)}`)
       .required('Please enter amount to withdraw'),
     btcWalletAddress: Yup.string().required('Enter your BTC wallet address'),
   });

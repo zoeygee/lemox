@@ -133,14 +133,6 @@ export default function AllInvestments() {
           <Typography variant="h4" gutterBottom>
             Investments
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/marketplace"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            Marketplace
-          </Button>
         </Stack>
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -178,7 +170,9 @@ export default function AllInvestments() {
                           </Stack>
                         </TableCell>
                         <TableCell align="left">{fCurrency(amount)}</TableCell>
-                        <TableCell align="left">{user}</TableCell>
+                        <TableCell align="left">
+                          {user?.firstName} {user?.lastName}
+                        </TableCell>
                         <TableCell align="left">{ethToken}</TableCell>
                         <TableCell align="left">{fCurrency(incrementAmount)}</TableCell>
                         <TableCell align="left">

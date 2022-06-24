@@ -10,29 +10,6 @@ import { PATH_AUTH, PATH_DASHBOARD, PATH_PAGE } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
-const MENU_OPTIONS = [
-  {
-    label: 'Dashboard',
-    icon: 'eva:person-fill',
-    linkTo: PATH_DASHBOARD.user,
-  },
-  {
-    label: 'My investment',
-    icon: 'eva:person-fill',
-    linkTo: PATH_DASHBOARD.investment,
-  },
-  {
-    label: 'Account details',
-    icon: 'eva:settings-2-fill',
-    linkTo: PATH_DASHBOARD.accountDetails,
-  },
-  {
-    label: 'Marketplace',
-    icon: 'eva:settings-2-fill',
-    linkTo: PATH_PAGE.marketplace,
-  },
-];
-
 // ----------------------------------------------------------------------
 AccountPopover.propTypes = {
   auth: PropTypes.object,
@@ -54,7 +31,28 @@ export default function AccountPopover({ auth }) {
     localStorage.clear();
     navigate(PATH_AUTH.login);
   };
-
+  const MENU_OPTIONS = [
+    {
+      label: 'Dashboard',
+      icon: 'eva:person-fill',
+      linkTo: PATH_DASHBOARD.user,
+    },
+    {
+      label: 'My investment',
+      icon: 'eva:person-fill',
+      linkTo: PATH_DASHBOARD.investment,
+    },
+    {
+      label: 'Account details',
+      icon: 'eva:settings-2-fill',
+      linkTo: PATH_DASHBOARD.accountDetails,
+    },
+    {
+      label: 'Marketplace',
+      icon: 'eva:settings-2-fill',
+      linkTo: PATH_PAGE.marketplace,
+    },
+  ];
   return (
     <>
       <IconButton
