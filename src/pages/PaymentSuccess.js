@@ -50,7 +50,7 @@ export default function PaymentSuccess() {
             <Iconify icon="clarity:success-line" sx={{ fontSize: 50, color: 'error.main' }} />
             <Typography variant="h3">Success</Typography>
             <Typography variant="body1">
-              Your investment for <strong>{property?.title}</strong> is Unsuccessful
+              Your investment for <strong>{property?.title}</strong> was successful.
             </Typography>
           </Stack>
           <Link component={RouterLink} to={`/marketplace/${id}`}>
