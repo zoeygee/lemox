@@ -50,7 +50,7 @@ export default function PaymentCancelled() {
             <Iconify icon="iconoir:cancel" sx={{ fontSize: 50, color: 'error.main' }} />
             <Typography variant="h3">Failure</Typography>
             <Typography variant="body1">
-              Your investment for <strong>{property?.title}</strong> is Unsuccessful
+              Your investment for <strong>{property?.title}</strong> was Unsuccessful
             </Typography>
           </Stack>
           <Link component={RouterLink} to={`/marketplace/${id}`}>
