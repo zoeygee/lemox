@@ -32,12 +32,11 @@ import { fCurrency, fPercent } from '../../utils/formatNumber';
 
 const TABLE_HEAD = [
   { id: 'property', label: 'Property', alignRight: false },
-  { id: 'amount', label: 'Investment', alignRight: false },
-  { id: 'user_id', lable: 'User ID', alignRight: false },
-  { id: 'ethtoken', lable: 'ETH Token', alignRight: false },
+  { id: 'amount', label: 'Amount', alignRight: false },
+  { id: 'user', lable: 'User', alignRight: false },
+  { id: 'eth token', lable: 'ETH Token', alignRight: false },
   { id: 'earning', label: 'Earning', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
-  // { id: '' },
 ];
 
 // ----------------------------------------------------------------------
@@ -171,10 +170,10 @@ export default function AllInvestments() {
                         </TableCell>
                         <TableCell align="left">{fCurrency(amount)}</TableCell>
                         <TableCell align="left">
-                          {user?.firstName} {user?.lastName}
+                        <Typography variant="subtitle2" noWrap> {user?.firstName} {user?.lastName}</Typography>
                         </TableCell>
                         <TableCell align="left">{ethToken}</TableCell>
-                        <TableCell align="left">{fCurrency(incrementAmount)}</TableCell>
+                        <TableCell align="left">{fCurrency(0)}</TableCell>
                         <TableCell align="left">
                           <Label
                             variant="ghost"

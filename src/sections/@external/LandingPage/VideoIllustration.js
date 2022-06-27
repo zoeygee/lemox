@@ -8,7 +8,7 @@ export default function VideoIllustration() {
             Buy slices of properties. Enjoy the financial benefits of ownership and let Lemox manage the rest.
           </p>
 
-          <video width="100%" height="auto" controls loop muted={false} autoPlay>
+          <video width="100%" height="auto" controls loop muted={false} autoPlay={false}>
             <source src="static/videos/video-illustration.mp4" type="video/mp4" />
             <track src="captions_en.vtt" kind="captions" srcLang="en" label="english_captions" />
           </video>

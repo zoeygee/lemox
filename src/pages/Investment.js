@@ -159,7 +159,7 @@ export default function Investment() {
                 <TableBody>
                   {filteredInvestment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { _id, charge, property } = row;
-                    const isItemSelected = selected.indexOf(property.title) !== -1;
+                    const isItemSelected = selected.indexOf(charge.description) !== -1;
 
                     return (
                       <TableRow
@@ -172,7 +172,7 @@ export default function Investment() {
                       >
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={property.title} src={property.images[0]} />
+                            {/* <Avatar alt={property.title} src={property.images[0]} /> */}
                             <Typography variant="subtitle2" noWrap>
                               {property?.title}
                             </Typography>

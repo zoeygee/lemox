@@ -13,12 +13,12 @@ import NoInternetConnection from './components/NoInternetConnection';
 export default function App() {
   return (
     <ThemeProvider>
-      <NoInternetConnection>
-        <ScrollToTop />
-        <BaseOptionChartStyle />
-        <Router />
-        <Toaster />
-      </NoInternetConnection>
+      {/* <NoInternetConnection> */}
+      <ScrollToTop />
+      <BaseOptionChartStyle />
+      <Router />
+      <Toaster />
+      {/* </NoInternetConnection> */}
     </ThemeProvider>
   );
 }
