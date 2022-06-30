@@ -27,6 +27,7 @@ import SearchNotFound from '../../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../sections/@dashboard/user';
 import { getInvestments, getStaticInvestments } from '../../redux/actions/data';
 import { fCurrency, fPercent } from '../../utils/formatNumber';
+import { PATH_ADMIN } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -154,15 +155,17 @@ export default function AllInvestments() {
                     return (
                       <TableRow
                         hover
-                        key={_id}
+                        key={row?._id}
                         tabIndex={-1}
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
+                        component={RouterLink}
+                        to={`${PATH_ADMIN.investments}/${row?._id}?id=${user?._id}`}
                       >
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={property?.title} src={property?.images[0]} />
+                            {/* <Avatar alt={property?.title} src={property?.images[0]} /> */}
                             <Typography variant="subtitle2" noWrap>
                               {property?.title}
                             </Typography>
@@ -170,14 +173,21 @@ export default function AllInvestments() {
                         </TableCell>
                         <TableCell align="left">{fCurrency(amount)}</TableCell>
                         <TableCell align="left">
-                        <Typography variant="subtitle2" noWrap> {user?.firstName} {user?.lastName}</Typography>
+                          <Typography variant="subtitle2" noWrap>
+                            {' '}
+                            {user?.firstName} {user?.lastName}
+                          </Typography>
                         </TableCell>
                         <TableCell align="left">{ethToken}</TableCell>
                         <TableCell align="left">{fCurrency(0)}</TableCell>
                         <TableCell align="left">
                           <Label
                             variant="ghost"
-                            color={(charge && charge?.timeline?.at(-1).status === 'NEW' && 'success') || 'error'}
+                            color={
+                              (charge?.timeline?.at(-1).status === 'NEW' && 'warning') ||
+                              (charge?.timeline?.at(-1).status === 'PENDING' && 'warning') ||
+                              (charge?.timeline?.at(-1).status === 'COMPLETED' && 'success')
+                            }
                           >
                             {charge?.timeline?.at(-1).status && charge?.timeline?.at(-1).status}
                           </Label>

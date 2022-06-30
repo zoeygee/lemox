@@ -45,6 +45,7 @@ import {
   PrivatePlacement,
   Verify,
   CheckEmailVerification,
+  UserInvestment,
 } from '../pages';
 // ----------------------------------------------------------------------
 
@@ -66,7 +67,7 @@ export default function Router() {
         { path: '/private-placement-memorandum-lemoxtoken', element: <PrivatePlacement /> },
         { path: '/referral', element: <ReferPage /> },
         { path: '/marketplace/:id/checkout/:charge', element: <Checkout /> },
-        { path: '/marketplace/:id/checkout/:charge/cancelled', element: <PaymentCancelled /> },
+        { path: '/marketplace/:id/checkout/:charge/pending-charge', element: <PaymentCancelled /> },
         { path: '/marketplace/:id/checkout/:charge/success', element: <PaymentSuccess /> },
         { path: '404', element: <NotFound /> },
       ],
@@ -112,6 +113,7 @@ export default function Router() {
         { path: 'withdrawals', element: <AllWithdrawals /> },
         { path: 'withdrawals/:id', element: <WithdrawalDetail /> },
         { path: 'investments/', element: <AllInvestments /> },
+        { path: 'investments/:ivid', element: <UserInvestment /> },
       ],
     },
     {

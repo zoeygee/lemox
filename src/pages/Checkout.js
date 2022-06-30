@@ -63,11 +63,12 @@ CheckoutComponent.propTypes = {
 function CheckoutComponent({ chargeData, property, user, charge, id }) {
   const navigate = useNavigate();
   const onClosed = () => {
-    navigate(`/marketplace/${id}/checkout/${charge}/cancelled`, { replace: true });
+    navigate(`/marketplace/${id}/checkout/${charge}/pending-charge`, { replace: true });
   };
   const onSuccess = () => {
     navigate(`/marketplace/${id}/checkout/${charge}/success`, { replace: true });
   };
+  console.log(chargeData);
   return (
     <>
       <Page title="Checkout">
@@ -80,22 +81,7 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                     {/* Invoice <strong>{fDate(chargeData?.data?.data?.created_at)}</strong> */}
                     <span className="float-right">
                       <strong>Status: </strong>
-                      {/* <Label
-                        variant="ghost"
-                        color={
-                          (statusProgress.status === 'NEW' && 'success') ||
-                          (statusProgress.status === 'PENDING' && 'error') ||
-                          (statusProgress.status === 'COMPLETED' && 'success')
-                        }
-                      >
-                      
-                      </Label> */}
-                      <Label
-                        variant="ghost"
-                        color={(chargeData && chargeData?.timeline?.at(-1).status === 'NEW' && 'success') || 'error'}
-                      >
-                        {chargeData?.timeline?.at(-1).status && chargeData?.timeline?.at(-1).status}
-                      </Label>
+                      {!chargeData?.timeline?.at(-1).status && chargeData?.timeline?.at(-1).status}
                     </span>
                   </div>
                   <div className="card-body">
@@ -107,7 +93,6 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                         <Typography variant="body2">Email: info@lemox.co</Typography>
                         <Typography variant="body2">26, Boulevard Royal. Luxembourg 2449</Typography>
                       </div>
-
                       <div className="col-sm-6">
                         <h6 className="mb-3">To:</h6>
                         <div>
@@ -120,7 +105,6 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                         <Typography variant="body2">Phone: {user && user?.tel}</Typography>
                       </div>
                     </div>
-
                     <div className="table-responsive-sm">
                       <table className="table table-striped">
                         <thead>
@@ -128,11 +112,9 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                             <th className="left">
                               <Typography variant="subtitle2">Property</Typography>
                             </th>
-
                             <th>
                               <Typography variant="subtitle2">Description</Typography>
                             </th>
-
                             <th className="right">
                               <Typography variant="subtitle2">Total</Typography>
                             </th>
@@ -163,24 +145,6 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                       <div className="col-lg-4 col-sm-5 ml-auto">
                         <table className="table table-clear">
                           <tbody>
-                            {/* <tr>
-                            <td className="left">
-                              <strong>Subtotal</strong>
-                            </td>
-                            <td className="right">$8.497,00</td>
-                          </tr>
-                          <tr>
-                            <td className="left">
-                              <strong>Discount (20%)</strong>
-                            </td>
-                            <td className="right">$1,699,40</td>
-                          </tr>
-                          <tr>
-                            <td className="left">
-                              <strong>VAT (10%)</strong>
-                            </td>
-                            <td className="right">$679,76</td>
-                          </tr> */}
                             <tr>
                               <td className="left">
                                 <strong>Total</strong>
@@ -190,9 +154,7 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                               </td>
                               <td className="right">
                                 {(chargeData?.timeline?.at(-1).status === 'CANCELED' && (
-                                  <Typography variant="body1" color="text.error">
-                                    YOU CANCELLED PAYMENT
-                                  </Typography>
+                                  <h4> YOU CANCELLED PAYMENT</h4>
                                 )) ||
                                   (chargeData?.timeline?.at(-1).status === 'NEW' && (
                                     <CoinbaseCommerceButton
@@ -204,8 +166,8 @@ function CheckoutComponent({ chargeData, property, user, charge, id }) {
                                       Pay now
                                     </CoinbaseCommerceButton>
                                   )) ||
-                                  (chargeData?.timeline?.at(-1).status === 'PENDING' && 'PAYMENT IS PENDING') ||
-                                  (chargeData?.timeline?.at(-1).status === 'COMPLETED' && 'PAID')}
+                                  (chargeData?.timeline?.at(-1).status === 'PENDING' && <p>PAYMENT IS PENDING</p>) ||
+                                  (chargeData?.timeline?.at(-1).status === 'COMPLETED' && <p>PAID</p>)}
                               </td>
                             </tr>
                           </tbody>

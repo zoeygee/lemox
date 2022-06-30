@@ -10,6 +10,7 @@ import Page from '../components/Page';
 import Iconify from '../components/Iconify';
 import useResponsive from '../hooks/useResponsive';
 import { MHidden } from '../components/@material-extend';
+import { PATH_AUTH } from '../routes/paths';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -52,7 +53,7 @@ export default function PasswordInstruction() {
         {smUp && (
           <Typography variant="body2" sx={{ mt: { md: -2 } }}>
             Don’t have an account? {''}
-            <Link variant="subtitle2" component={RouterLink} to="/auth/register">
+            <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
               Get started
             </Link>
           </Typography>
@@ -83,7 +84,7 @@ export default function PasswordInstruction() {
 
           <Stack spacing={3}>
             <Stack>
-              <LoadingButton fullWidth size="large" component={RouterLink} to="/auth/login" variant="contained">
+              <LoadingButton fullWidth size="large" component={RouterLink} to={PATH_AUTH.login} variant="contained">
                 Return to login
               </LoadingButton>
             </Stack>
@@ -92,7 +93,7 @@ export default function PasswordInstruction() {
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="/auth/register">
+              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
                 Get started
               </Link>
             </Typography>

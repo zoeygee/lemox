@@ -186,9 +186,9 @@ export default function Withdrawals() {
                           <Label
                             variant="ghost"
                             color={
-                              (status === 'cancelled' && 'error') ||
-                              (status === 'pending' && 'warning') ||
-                              (status === 'complete' && 'success')
+                              (status === 'CANCELLED' && 'error') ||
+                              (status === 'PENDING' && 'warning') ||
+                              (status === 'COMPLETED' && 'success')
                             }
                           >
                             {sentenceCase(status)}

@@ -68,13 +68,18 @@ export const getSingleInvestment = (id) => async (dispatch) => {
   }
 };
 
-export const getUpdatedInvestment = (id, values) => async (dispatch) => {
+export const updateInvestment = (id, values, setSubmitting, setToastMsg) => async (dispatch) => {
   try {
+    setSubmitting(true);
     const { data } = await api.fetchUpdatedInvestment(id, values);
     dispatch({ type: actions.INCREMENT_INVESTMENT, payload: data });
     console.log(data);
+    setSubmitting(false);
+    setToastMsg(toast.success('Investment updated successfully', { duration: 5000 }));
   } catch (error) {
     console.log(error);
+    setSubmitting(false);
+    setToastMsg(toast.error('Network error, try again', { duration: 5000 }));
   }
 };
 

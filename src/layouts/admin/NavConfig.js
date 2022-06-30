@@ -16,6 +16,7 @@ const navConfig = [
     path: '/admin/investments',
     icon: getIcon('fluent:person-money-20-filled'),
   },
+
   {
     title: 'withdrawal requests',
     path: '/admin/withdrawals',

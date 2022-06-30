@@ -31,3 +31,4 @@ export { default as PaymentSuccess } from './PaymentSuccess';
 export { default as PrivatePlacement } from './legal/privatePlacement';
 export { default as Verify } from './Verify';
 export { default as CheckEmailVerification } from './CheckEmailVerification';
+export { default as UserInvestment } from './admin/UserInvestment';

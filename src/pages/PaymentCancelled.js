@@ -46,11 +46,13 @@ export default function PaymentCancelled() {
     <Container className="py-10">
       <Grid container>
         <Grid item sm={12} md={6} justifyContent="center" alignItems="baseline">
-          <Stack spacing={1} mb={5}>
-            <Iconify icon="iconoir:cancel" sx={{ fontSize: 50, color: 'error.main' }} />
-            <Typography variant="h3">Failure</Typography>
+          <Stack spacing={1} mb={5} maxWidth="400px">
+            <Typography variant="h1" color="warning.main">
+              ...
+            </Typography>
+            <Typography variant="h3">Awaiting transaction</Typography>
             <Typography variant="body1">
-              Your investment for <strong>{property?.title}</strong> was Unsuccessful
+              We're constantly monitoring the transaction made on investment for <strong>{property?.title}</strong>.
             </Typography>
           </Stack>
           <Link component={RouterLink} to={`/marketplace/${id}`}>
@@ -74,7 +76,7 @@ export default function PaymentCancelled() {
                     </TableRow>
                     <TableRow>
                       <TableCell>Transaction status</TableCell>
-                      <TableCell>Cancelled</TableCell>
+                      <TableCell>Pending</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Amount</TableCell>
@@ -88,8 +90,8 @@ export default function PaymentCancelled() {
                     </TableRow>
                     <TableRow>
                       <TableCell>
-                        <Typography variant="caption" color="error.main">
-                          *Transaction cancelled
+                        <Typography variant="caption" color="warning.main">
+                          *Awaiting transaction
                         </Typography>
                       </TableCell>
                     </TableRow>

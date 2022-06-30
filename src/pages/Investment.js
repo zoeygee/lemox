@@ -183,7 +183,11 @@ export default function Investment() {
                         <TableCell align="left">
                           <Label
                             variant="ghost"
-                            color={(charge && charge?.timeline?.at(-1).status === 'NEW' && 'success') || 'error'}
+                            color={
+                              (charge?.timeline?.at(-1).status === 'NEW' && 'warning') ||
+                              (charge?.timeline?.at(-1).status === 'PENDING' && 'warning') ||
+                              (charge?.timeline?.at(-1).status === 'COMPLETED' && 'success')
+                            }
                           >
                             {charge?.timeline?.at(-1).status && charge?.timeline?.at(-1).status}
                           </Label>
