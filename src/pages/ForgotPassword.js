@@ -78,6 +78,7 @@ export default function ForgotPassword() {
         })
         .catch((err) => {
           setSubmitting(false);
+          console.log(err);
         });
     },
   });

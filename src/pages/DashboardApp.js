@@ -12,7 +12,7 @@ import Page from '../components/Page';
 import Iconify from '../components/Iconify';
 // sections
 import { AppRecent, AppMiniCard } from '../sections/@dashboard/app';
-import { getInvestments, getUpdatedInvestment, getSingleInvestment } from '../redux/actions/data';
+import { getInvestments } from '../redux/actions/data';
 import { PATH_DASHBOARD, PATH_PAGE } from '../routes/paths';
 // ----------------------------------------------------------------------
 

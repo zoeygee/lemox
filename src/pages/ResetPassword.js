@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useFormik, FormikProvider, Form } from 'formik';
 import { Typography, Stack, Container, Link, TextField, InputAdornment, IconButton } from '@mui/material';
 import { Icon } from '@iconify/react';
+import toast from 'react-hot-toast';
 import { LoadingButton } from '@mui/lab';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
@@ -78,6 +79,8 @@ export default function ResetPassword() {
         setSuccess(data);
       } catch (error) {
         setError(error.response.data);
+        console.log(error);
+        toast.error('Network error', { duration: '7000' });
       }
     },
   });
