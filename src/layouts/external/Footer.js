@@ -11,7 +11,7 @@ export default function Footer() {
     },
     {
       name: 'Telegram',
-      link: 'https://t.me/+2V-pZb0MjvkwZGZk',
+      link: 'https://t.me/lemoxco',
       icon: 'akar-icons:telegram-fill',
     },
     {
