@@ -63,7 +63,7 @@ export default function AccountGeneral() {
   });
 
   const { values, errors, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } = formik;
-  console.log(values.profilePic);
+  
 
   return (
     <FormikProvider value={formik}>

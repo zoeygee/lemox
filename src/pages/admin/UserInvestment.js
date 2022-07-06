@@ -40,7 +40,7 @@ export default function UserInvestment() {
     dispatch(getUserDetail(userId));
   }, []);
   const { properties, userDetail, investment } = useSelector((state) => state.data);
-  console.log(properties, userDetail, investment);
+
   const [toastMsg, setToastMsg] = useState('');
   const formik = useFormik({
     enableReinitialize: true,

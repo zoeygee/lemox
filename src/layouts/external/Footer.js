@@ -76,6 +76,11 @@ export default function Footer() {
                     Marketplace
                   </Link>
                 </li>
+                <li className="mb-3">
+                  <a href="https://affiliate.lemox.co" rel="noreferrer" target="_blank" className="text-white-60">
+                    Become an affiliate
+                  </a>
+                </li>
               </ul>
             </div>
             <div className="col-6 col-md">

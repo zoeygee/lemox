@@ -27,6 +27,11 @@ const navConfig = [
     path: '/admin/users',
     icon: getIcon('fluent:database-person-20-filled'),
   },
+  {
+    title: 'Affiliate',
+    path: '/admin/affiliate',
+    icon: getIcon('fluent:database-person-20-filled'),
+  },
 ];
 
 export default navConfig;

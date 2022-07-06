@@ -19,25 +19,25 @@ import {
 } from '@mui/material';
 // components
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import Page from '../../components/Page';
 import Label from '../../components/Label';
 import Scrollbar from '../../components/Scrollbar';
 import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../sections/@dashboard/user';
-import { getInvestments, getStaticInvestments } from '../../redux/actions/data';
 import { fCurrency, fPercent } from '../../utils/formatNumber';
-import { PATH_ADMIN } from '../../routes/paths';
+import { getStaticInvestments } from '../../redux/actions/data';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'property', label: 'Property', alignRight: false },
-  { id: 'amount', label: 'Amount', alignRight: false },
-  { id: 'user', lable: 'User', alignRight: false },
-  { id: 'eth token', lable: 'ETH Token', alignRight: false },
-  { id: 'earning', label: 'Earning', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'fullName', label: 'Full name', alignRight: false },
+  { id: 'commission', label: 'Commission', alignRight: false },
+  { id: 'referralCode', label: 'Referral Code', alignRight: false },
+  { id: 'peopleReferred', label: 'People referred', alignRight: false },
+  { id: 'email', label: 'Email', alignRight: false },
+  // { id: '' },
 ];
 
 // ----------------------------------------------------------------------
@@ -66,18 +66,38 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_investment) => _investment?.title.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(
+      array,
+      (_investment) => _investment?.property?.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    );
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function AllInvestments() {
+export default function Affiliate() {
+  const [loading, setLoading] = useState(false);
+  const [affiliateUsers, setAffiliateUsers] = useState([]);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getStaticInvestments());
-  }, [dispatch]);
+  }, []);
+
   const { staticInvestments } = useSelector((state) => state.data);
+  console.log(staticInvestments);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get('https://lemox-affiliate.herokuapp.com/api/v1/users')
+      .then(({ data }) => {
+        setAffiliateUsers(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  console.log(affiliateUsers);
 
   const [page, setPage] = useState(0);
 
@@ -99,7 +119,7 @@ export default function AllInvestments() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = staticInvestments.map((n) => n.name);
+      const newSelecteds = affiliateUsers.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -119,22 +139,24 @@ export default function AllInvestments() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - staticInvestments.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - affiliateUsers.length) : 0;
 
-  const filteredInvestment = applySortFilter(staticInvestments, getComparator(order, orderBy), filterName);
+  const filteredInvestment = applySortFilter(affiliateUsers, getComparator(order, orderBy), filterName);
 
   const isInvestmentNotFound = filteredInvestment.length === 0;
 
   return (
-    <Page title="Investments">
+    <Page title="All affiliate users">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1.5}>
           <Typography variant="h4" gutterBottom>
-            Investments
+            Registered Affiliate users and their commission
           </Typography>
         </Stack>
+        <Stack spacing={3} direction="row" mb={4}>
+          <Typography variant="subtitle1">Total affiliate users: {affiliateUsers.length}</Typography>=
+        </Stack>
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -142,55 +164,39 @@ export default function AllInvestments() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={staticInvestments.length}
+                  rowCount={affiliateUsers.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredInvestment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { _id, charge, amount, property, ethToken, user, incrementAmount } = row;
-                    const isItemSelected = selected.indexOf(property?.title) !== -1;
+                    const { _id, referralCode, email, profilePic, firstName, lastName } = row;
+                    const isItemSelected = selected.indexOf(firstName) !== -1;
+                    const referredUsers = staticInvestments?.filter((i) => i?.user?.referredBy === referralCode);
+                    const commission = referredUsers.reduce((acc, investment) => investment + acc * 0.1, 0);
+
                     return (
                       <TableRow
                         hover
-                        key={row?._id}
+                        key={_id}
                         tabIndex={-1}
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
-                        component={RouterLink}
-                        to={`${PATH_ADMIN.investments}/${row?._id}?id=${user?._id}`}
                       >
-                        <TableCell component="th" scope="row" padding="none">
+                        <TableCell component="th" scope="row" padding="checkbox">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            {/* <Avatar alt={property?.title} src={property?.images[0]} /> */}
+                            <Avatar alt={firstName} src={profilePic} />
                             <Typography variant="subtitle2" noWrap>
-                              {property?.title}
+                              {firstName} {lastName}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{fCurrency(amount)}</TableCell>
-                        <TableCell align="left">
-                          <Typography variant="subtitle2" noWrap>
-                            {' '}
-                            {user?.firstName} {user?.lastName}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="left">{ethToken}</TableCell>
-                        <TableCell align="left">{fCurrency(0)}</TableCell>
-                        <TableCell align="left">
-                          <Label
-                            variant="ghost"
-                            color={
-                              (charge?.timeline?.at(-1).status === 'NEW' && 'warning') ||
-                              (charge?.timeline?.at(-1).status === 'PENDING' && 'warning') ||
-                              (charge?.timeline?.at(-1).status === 'COMPLETED' && 'success')
-                            }
-                          >
-                            {charge?.timeline?.at(-1).status && charge?.timeline?.at(-1).status}
-                          </Label>
-                        </TableCell>
+                        <TableCell align="left">{fCurrency(commission)} </TableCell>
+                        <TableCell align="left">{referralCode}</TableCell>
+                        <TableCell align="left">{referredUsers.length}</TableCell>
+                        <TableCell align="left">{email}</TableCell>
                       </TableRow>
                     );
                   })}
@@ -215,9 +221,9 @@ export default function AllInvestments() {
           </Scrollbar>
 
           <TablePagination
-            rowsPerPageOptions={[]}
+            rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={staticInvestments.length}
+            count={affiliateUsers.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

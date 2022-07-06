@@ -25,7 +25,7 @@ export default function DashboardApp() {
   }, [dispatch]);
 
   const { investments, isLoading, investment } = useSelector((state) => state.data);
-  console.log(investments);
+
   // Total investment
   const amountInvested = investments.reduce((e, i) => e + i?.amount, 0);
   const allIncrementedAmount = investments.reduce((e, i) => e + i?.incrementAmount, 0);
@@ -54,10 +54,14 @@ export default function DashboardApp() {
                 <AppMiniCard title="Total investment" total={amountInvested} icon={'bxs:badge-dollar'} />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <AppMiniCard title="Earnings" total={0} icon={'bxs:badge-dollar'} />
+                <AppMiniCard title="Earnings" total={allIncrementedAmount} icon={'bxs:badge-dollar'} />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <AppMiniCard title="Available balance" total={amountInvested} icon={'bxs:badge-dollar'} />
+                <AppMiniCard
+                  title="Available balance"
+                  total={amountInvested + allIncrementedAmount}
+                  icon={'bxs:badge-dollar'}
+                />
               </Grid>
               <Grid item xs={12} md={6} lg={8}>
                 {!investments.length || isLoading ? (

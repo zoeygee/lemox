@@ -32,3 +32,4 @@ export { default as PrivatePlacement } from './legal/privatePlacement';
 export { default as Verify } from './Verify';
 export { default as CheckEmailVerification } from './CheckEmailVerification';
 export { default as UserInvestment } from './admin/UserInvestment';
+export { default as Affiliate } from './admin/Affiliate';

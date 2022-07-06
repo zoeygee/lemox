@@ -14,7 +14,7 @@ export default function Marketplace() {
   }, [dispatch]);
 
   const { properties, isLoading } = useSelector((state) => state.data);
-  console.log(properties);
+
   return (
     <Page title="Marketplace">
       <section className="pt-6 pt-md-11 bg-dark">

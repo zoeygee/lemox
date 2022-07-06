@@ -46,6 +46,7 @@ import {
   Verify,
   CheckEmailVerification,
   UserInvestment,
+  Affiliate,
 } from '../pages';
 // ----------------------------------------------------------------------
 
@@ -114,6 +115,7 @@ export default function Router() {
         { path: 'withdrawals/:id', element: <WithdrawalDetail /> },
         { path: 'investments/', element: <AllInvestments /> },
         { path: 'investments/:ivid', element: <UserInvestment /> },
+        { path: 'affiliate', element: <Affiliate /> },
       ],
     },
     {
@@ -138,21 +140,3 @@ export default function Router() {
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
-
-// Bro I noticed there’s not verification email and signup email.
-// There’s meant to be an a verification email to verify your email address.
-// Then another email for successful signup.
-
-// There’s also meant to be emails for investment.
-// Email to validate payment and payment complete.
-
-// Should I list all the emails out for you?
-
-// - Email verification email
-// - signup successful email
-// - investment complete email
-
-// coinbase commerce api key 6a1cd34a-17bb-4e59-9e98-962513ff81c5
-
-// Address
-// 26, Boulevard Royal. Luxembourg 2449
